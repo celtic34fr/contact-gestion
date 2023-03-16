@@ -1,0 +1,39 @@
+{
+  "name": "celtic34fr/contact-gestion",
+  "description": "📦 Bolt extension Contact formular and managment.",
+  "type": "bolt-extension",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gilbert ARMENGAUD",
+      "email": "gilbert.armengaud@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=8.1",
+    "twig/twig": "^2.12 | ^3.0",
+    "bolt/core": "~5.1.0",
+    "celtic34fr/contact-core": "dev-master"
+  },
+  "require-dev": {
+    "symplify/easy-coding-standard": "^8.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Celtic34fr\\ContactGestion\\": "src/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "entrypoint": "Celtic34fr\\ContactGestion\\Extension"
+  },
+  "config": {
+    "allow-plugins": {
+      "symfony/flex": true,
+      "drupol/composer-packages": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "franzl/studio": true
+    }
+  }
+}
