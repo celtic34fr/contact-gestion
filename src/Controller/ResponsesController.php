@@ -3,11 +3,11 @@
 namespace Celtic34fr\ContactGestion\Controller;
 
 use Bolt\Controller\Backend\BackendZoneInterface;
-use Celtic34fr\ContactGestion\Entity\CrmCategories;
-use Celtic34fr\ContactGestion\Entity\CrmResponses;
+use Celtic34fr\ContactGestion\Entity\Categories;
+use Celtic34fr\ContactGestion\Entity\Responses;
 use Celtic34fr\ContactGestion\Form\SearchFormType;
 use Celtic34fr\ContactGestion\FormEntity\SearchForm;
-use Celtic34fr\CrmCore\Trait\DbPaginateTrait;
+use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use JetBrains\PhpStorm\Pure;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,7 +33,7 @@ class ResponsesController extends AbstractController implements BackendZoneInter
         $dbCategories = [];
         $cPage = 1;
         $limit = 10;
-        $categories = $this->entityManager->getRepository(CrmCategories::class)->findAll();
+        $categories = $this->entityManager->getRepository(Categories::class)->findAll();
         if ($categories) {
             foreach ($categories as $category) {
                 $dbCategories[] = ['value' => $category->getCategory(), 'label' => $category->getCategory()];
@@ -41,7 +41,7 @@ class ResponsesController extends AbstractController implements BackendZoneInter
         }
 
         $searchForm = new SearchForm();
-        $reponses = $this->entityManager->getRepository(CrmResponses::class)->findQrPaginate();
+        $reponses = $this->entityManager->getRepository(Responses::class)->findQrPaginate();
         $reset = true;
 
         $form = $this->createForm(SearchFormType::class, $searchForm);
@@ -50,7 +50,7 @@ class ResponsesController extends AbstractController implements BackendZoneInter
         if ($form->isSubmitted() && $form->isValid()) {
             if ($request->getMethod() === "POST") {
                 if ($form->get('submit')->isClicked()) {
-                    $reponses = $this->entityManager->getRepository(CrmResponses::class)
+                    $reponses = $this->entityManager->getRepository(Responses::class)
                         ->findMatchText($form->get('searchText')->getData(), $form->get('categories')->getData());
                     $reponses = $this->paginateManual($reponses, $cPage, $limit);
                     $reponses = $this->formatSearchReturn($reponses);
@@ -61,7 +61,7 @@ class ResponsesController extends AbstractController implements BackendZoneInter
             }
         }
 
-        return $this->render('@crm-contact/responses/search.html.twig', [
+        return $this->render('@contact-gestion/responses/search.html.twig', [
             'dbCategories' => $dbCategories,
             'form' => $form->createView(),
             'reponses' => $reponses['datas'],
@@ -78,7 +78,7 @@ class ResponsesController extends AbstractController implements BackendZoneInter
     #[Pure] private function formatSearchReturn(array $reponses): array
     {
         $datas_output = [];
-        /** @var CrmResponses $data */
+        /** @var Responses $data */
         foreach ($reponses['datas'] as $data) {
             $datas_output[] = [
                 'sujet' => $data->getContact()->getSujet(),
