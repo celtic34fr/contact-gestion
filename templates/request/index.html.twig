@@ -1,7 +1,7 @@
-{% extends '@crm-core/layout_backend.html.twig' %}
-{% import '@crm-core/macros/form_classic.html.twig' as forms %}
-{% import '@crm-core/macros/paginate.html.twig' as navigate %}
-{% import '@crm-core/macros/form_classic.html.twig' as forms %}
+{% extends '@contact-core/layout_backend.html.twig' %}
+{% import '@contact-core/macros/form_classic.html.twig' as forms %}
+{% import "@contact-core/macros/paginate.html.twig" as navigate %}
+{% import "@contact-core/macros/form_classic.html.twig" as forms %}
 
 {% block shoulder %}
     {{ 'Requêtes adressées par les internautes ' }}
@@ -118,13 +118,13 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('crm-assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('contact-assets/js/bootstrap.min.js') }}"></script>
 
     <script>
         function redirect(url) {
             window.location.href = url;
         }
     </script>
-    {% include "@crm-core/includes/_paginate.js" %}
-    {% include "@crm-core/includes/_goPage.js" %}
+    <script src="{{ asset('contact-assets/js/_paginate.js') }}"></script>
+    <script src="{{ asset('contact-assets/js/_goPage.js') }}"></script>
 {% endblock %}

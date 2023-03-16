@@ -14,7 +14,7 @@ class Extension extends BaseExtension
      */
     public function getName(): string
     {
-        return 'Celtic34fr CRM Contact Extension';
+        return 'Celtic34fr Contact Formular and Managment Extension';
     }
 
     /**
@@ -27,7 +27,7 @@ class Extension extends BaseExtension
     public function initialize($cli = false): void
     {
         /** ajout de l'espace de nommage pour accès aux templates de l'extension */
-        $this->addTwigNamespace("crm-contact", __DIR__."/../templates");
+        $this->addTwigNamespace("contact-gestion", __DIR__."/../templates");
     }
 
     /**

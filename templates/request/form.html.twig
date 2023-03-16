@@ -1,6 +1,6 @@
-{% extends '@crm-core/layout_backend.html.twig' %}
-{% import "@crm-core/macros/form_type.html.twig" as fields %}
-{% import "@crm-core/macros/form_classic.html.twig" as forms %}
+{% extends '@contact-core/layout_backend.html.twig' %}
+{% import "@contact-core/macros/form_type.html.twig" as fields %}
+{% import "@contact-core/macros/form_classic.html.twig" as forms %}
 
 {% block shoulder %}
     {{ "Traitement de la requête d'un internaute" }}
@@ -39,7 +39,7 @@
             background-color: #dedede;
         }
     </style>
-    <link rel="stylesheet" href="{{ asset('crm-assets/css/tom-select.default.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('contact-assets/css/tom-select.default.css') }}"/>
 {% endblock %}
 
 {% block main %}
@@ -119,8 +119,8 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('crm-assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('crm-assets/js/tom-select.complete.js') }}"></script>
+    <script src="{{ asset('contact-assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('contact-assets/js/tom-select.complete.js') }}"></script>
     <script>
         const $tomSelectObj = {};
 

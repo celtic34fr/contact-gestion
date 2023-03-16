@@ -1,8 +1,8 @@
-{% extends '@crm-core/layout_backend.html.twig' %}
-{% import '@bolt/_macro/_macro.html.twig' as macro %}
-{% import "@crm-core/macros/form_type.html.twig" as fields %}
-{% import '@crm-core/macros/paginate.html.twig' as navigate %}
-{% import '@crm-core/macros/form_classic.html.twig' as forms %}
+{% extends "@contact-core/layout_backend.html.twig" %}
+{% import "@bolt/_macro/_macro.html.twig" as macro %}
+{% import "@contact-core/macros/form_type.html.twig" as fields %}
+{% import "@contact-core/macros/paginate.html.twig" as navigate %}
+{% import "@contact-core/macros/form_classic.html.twig" as forms %}
 
 {% block shoulder %}
     {{ 'Recherche dans les réponses envoyées aux internautes' }}
@@ -17,7 +17,7 @@
     {{ parent() }}
     <!-- Bootstrap Font Icon CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="{{ asset('crm-assets/css/tom-select.default.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('contact-assets/css/tom-select.default.css') }}"/>
     <style>
         .bg-light-gray {
             background-color: lightgray !important;
@@ -127,8 +127,8 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('crm-assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('crm-assets/js/tom-select.complete.js') }}"></script>
+    <script src="{{ asset('contact-assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('contact-assets/js/tom-select.complete.js') }}"></script>
     <script>
         const $tomSelectObj = {};
 
@@ -145,6 +145,6 @@
             });
         }
     </script>
-    {% include "@crm-core/includes/_paginate.js" %}
-    {% include "@crm-core/includes/_goPage.js" %}
+    <script src="{{ asset('contact-assets/js/_paginate.js') }}"></script>
+    <script src="{{ asset('contact-assets/js/_goPage.js') }}"></script>
 {% endblock %}
