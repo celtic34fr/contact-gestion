@@ -1,4 +1,4 @@
-# Celtic34fr CRM Contact Extension
+# Celtic34fr Contact Managment Extension v0.0.1-dev
 
 Author: Gilbert ARMENGAUD
 
@@ -8,18 +8,18 @@ Installation:
 
 for last stable version
 ```bash
-composer require celtic34fr/crm-contact
+composer require celtic34fr/contact-gestion
 ```
 for current development version
 ```bash
-composer req celtic34fr/crm-contact:dev-master
+composer req celtic34fr/contact-gestion:dev-master
 ```
 
 ## Running PHPStan and Easy Codings Standard
 
 First, make sure dependencies are installed:
 
-    celtic34fr/crm-core
+    celtic34fr/contact-core
 
 ```
 COMPOSER_MEMORY_LIMIT=-1 composer update
