@@ -49,7 +49,7 @@ class Extension extends BaseExtension
 
         /** test existance crm_assets/css */
         $source = dirname(__DIR__) . '/public';
-        $destination = $projectDir . '/public/crm-assets';
+        $destination = $projectDir . '/public/contact-assets';
         if (!$filesystem->exists($destination)) {
             $filesystem->mkdir($destination);
             $filesystem->chgrp($destination, 'www-data', true);
