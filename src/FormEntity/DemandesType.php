@@ -1,0 +1,119 @@
+<?php
+
+namespace Celtic34fr\ContactGestion\FormEntity;
+
+class DemandesType
+{
+    private int $id;
+    private string $nom;
+    private string $prenom;
+    private string $adr_courriel;
+    private string $telephone;
+    private bool $contact_me;
+    private string $sujet;
+    private string $demande;
+
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(string $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    public function getNom(): string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+        return $this;
+    }
+
+    public function getPrenom(): string
+    {
+        return $this->prenom;
+    }
+
+    public function isEmptyPrenom(): string
+    {
+        return empty($this->prenom);
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+        return $this;
+    }
+
+    public function getAdrCourriel(): ?string
+    {
+        return $this->adr_courriel;
+    }
+
+    public function setAdrCourriel(string $adr_courriel): self
+    {
+        $this->adr_courriel = $adr_courriel;
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function isEmptyTelephone(): bool
+    {
+        return empty($this->telephone);
+    }
+
+    public function setTelephone(string $telephone): self
+    {
+        $this->telephone = $telephone;
+        return $this;
+    }
+
+    public function isContactMe(): ?bool
+    {
+        return $this->contact_me ?? false;
+    }
+
+    public function setContactMe(bool $contact_me): self
+    {
+        $this->contact_me = $contact_me;
+        return $this;
+    }
+
+    public function getSujet(): ?string
+    {
+        return $this->sujet;
+    }
+
+    public function setSujet(string $sujet): self
+    {
+        $this->sujet = $sujet;
+        return $this;
+    }
+
+    public function getDemande(): ?string
+    {
+        return $this->demande;
+    }
+
+    public function setDemande(string $demande): self
+    {
+        $this->demande = $demande;
+        return $this;
+    }
+
+    public function isEmptyDemande(): bool
+    {
+        return empty($this->demande);
+    }
+}

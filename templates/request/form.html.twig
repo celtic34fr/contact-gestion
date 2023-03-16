@@ -1,0 +1,178 @@
+{% extends '@crm-core/layout_backend.html.twig' %}
+{% import "@crm-core/macros/form_type.html.twig" as fields %}
+{% import "@crm-core/macros/form_classic.html.twig" as forms %}
+
+{% block shoulder %}
+    {{ "Traitement de la requête d'un internaute" }}
+{% endblock shoulder %}
+
+{% block title %}
+    <i class="fas mr-2 link--icon fa-clipboard-question"></i>
+    Requêtes de
+    <strong>{{ requete.getClient().getFullname() }}</strong> ({{ requete.getClient().getClient().getCourriel() }}) du
+    <strong>{{ requete.createdAt|date("d/m/Y") }}</strong>
+    {% if requete.isContactMe() != false %}
+        <span style="color: red !important;" title="Contacter le client">
+            <i class="fa fa-phone"></i> {{ requete.getClient().getTelephone() }}
+        </span>
+        {% if isExtensionInstall('crmrdv') and isRouteDefined('new-meeting') %}
+            {{ forms.btn('news_rdv', '<i class="fas fa-calendar-alt"></i>', {
+                'class': 'button btn-success text-center', 'title': 'Prendre un rendez-vous',
+                'event': 'onclick', 'codeJS': 'openInNewTab("'~
+                path('new-meeting', {"customer": requete.getClient().getId(), "demande": requete.id})
+                                                            ~'");',
+            }) }}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <style>
+        .requete .cadre {
+            border: solid 1px #565656;
+        }
+
+        .requete .label {
+            background-color: #dedede;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ asset('crm-assets/css/tom-select.default.css') }}"/>
+{% endblock %}
+
+{% block main %}
+    {# entête de traitement de la requete #}
+    <div class="col-12 row m-0 mb-4 requete">
+        <div class="col-12 cadre row m-0 p-0">
+            <div class="col-3 m-0 label">
+                Sujet de la demande :
+            </div>
+            <div class="col-9 m-0 valeur">
+                {{ requete.getSujet() }}
+            </div>
+            <div class="col-3 m-0 label">
+                Postée le :
+            </div>
+            <div class="col-3 m-0 valeur">
+                {{ requete.getCreatedAt()|date("d/m/Y") }}
+            </div>
+            <div class="col-3 m-0 label">
+                Traitée depuis le :
+            </div>
+            <div class="col-3 m-0 valeur">
+                {{ requete.getTreatedAt() != NULL ? requete.getTReatedAt()|date("d/m/Y") :"" }}
+            </div>
+        </div>
+        <div class="col-12 cadre row m-0 mt-3 p-0">
+            <div class="col-12 m-0 label">
+                Demande proprement dite :
+            </div>
+            <div class="col-12 mt-2 mb-4 valeur">
+                {{ requete.getDemande() }}
+            </div>
+        </div>
+    </div>
+
+    {{ form_start(form) }}
+    {{ form_row(form._token) }}
+    <div class="col-12 row m-0 mt-2 p-0">
+        {{ fields.textarea(form.reponse, "Réponse", {
+            'class': 'col-12 p-2 m-0', 'placeholder': 'Réponse à la requête', 'rows': 5, 'cols': 72,
+            'tl_class': {'label': 'col-2 p-0 m-0 pl-3', 'textarea': 'col-10 p-0 m-0 pl-3'},
+            'value': form.reponse.vars.data
+        }) }}
+    </div>
+    <div class="col-12 row m-0 mt-2 p-0">
+        {{ fields.select(form.categories, "Catégories", {
+            'class': 'col-12 p-2 m-0 categories', 'placeholder': 'Choisissez ou saisissez une catégorie',
+            'multiple': true, 'sl_class' : {'label': "col-4", 'select': 'col-8'}, 'choices': dbCategories,
+        }) }}
+    </div>
+    <div class="col-12 row m-0 mt-5 p-0">
+        <div class="col-3 row  m-0 p-2">
+            {{ fields.submitbtn(form.record, '', {
+                'class': 'col-12 btn btn-success text-white',
+            }) }}
+        </div>
+        <div class="col-3 row  m-0 p-2">
+            {{ fields.submitbtn(form.send, "", {
+                'class': 'col-12 btn btn-primary text-white',
+            }) }}
+        </div>
+        <div class="col-3 row  m-0 p-2">
+            {{ fields.submitbtn(form.close, "", {
+                'class': 'col-12 btn btn-danger text-white',
+            }) }}
+        </div>
+        <div class="col-3 row  m-0 p-2">
+            {{ fields.submitbtn(form.cancel, "", {
+                'class': 'col-12 btn btn-bs-warning',
+            }) }}
+        </div>
+    </div>
+    {{ form_end(form, {render_rest: false}) }}
+{% endblock %}
+
+{% block aside %}{{ parent() }}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('crm-assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('crm-assets/js/tom-select.complete.js') }}"></script>
+    <script>
+        const $tomSelectObj = {};
+
+        function initTomSelect(objSelect, options = {}) {
+            $tomSelectObj[objSelect.id] = new TomSelect(objSelect, options);
+        }
+
+        const categories = document.querySelector(".categories select");
+        if (categories) {
+            initTomSelect(categories, {
+                persist: false,
+                createOnBlur: true,
+                create: true
+            });
+        }
+        const operateur = document.querySelector(".operateur select");
+        if (operateur) {
+            initTomSelect(operateur, {
+                persist: false,
+                createOnBlur: true,
+                create: true,
+                timeout: 10000
+            });
+        }
+
+        function docReady(fn) {
+            // see if DOM is already available
+            if (document.readyState === "complete" || document.readyState === "interactive") {
+                // call on next available tick
+                setTimeout(fn, 1);
+            } else {
+                document.addEventListener("DOMContentLoaded", fn);
+            }
+        }
+
+        function openInNewTab(url) {
+            window.open(url, '_blank').focus();
+        }
+
+        {% if errors is defined and errors is not empty %}
+            {% for error in errors %}
+                window.createNotification({
+                    closeOnClick: true,
+                    displayCloseButton: true,
+                    positionClass: 'nfc-bottom-right',
+                    showDuration: 3000,
+                    theme: '{{ error.type }}-long'
+                })({
+                    title: '{{ error.title }}',
+                    message: '{{ error.body }}'
+                });
+            {% endfor %}
+        {% endif %}
+    </script>
+{% endblock %}

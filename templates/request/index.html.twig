@@ -1,0 +1,130 @@
+{% extends '@crm-core/layout_backend.html.twig' %}
+{% import '@crm-core/macros/form_classic.html.twig' as forms %}
+{% import '@crm-core/macros/paginate.html.twig' as navigate %}
+{% import '@crm-core/macros/form_classic.html.twig' as forms %}
+
+{% block shoulder %}
+    {{ 'Requêtes adressées par les internautes ' }}
+{% endblock shoulder %}
+
+{% block title %}
+    <i class="fas mr-2 link--icon fa-clipboard-question"></i>
+    Liste des requêtes en base
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+
+    <style>
+        .r-table, .r-th, .r-td {
+            border: dotted 1px lightgray;
+        }
+
+        .r-th {
+            background-color: lightgray;
+        }
+
+        .r-table {
+            border-collapse: collapse;
+            border-spacing: unset;
+        }
+
+        .button-success {
+            color: white;
+            background-color: green;
+        }
+
+        .button-info {
+            color: white;
+            background-color: blue;
+        }
+
+        .button-warning {
+            color: black;
+            background-color: orange;
+        }
+
+        .col-2 {
+            width: 16.67%;
+            float: left;
+        }
+
+        .col-3 {
+            width: 25%;
+            float: left;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <div class="table-request w-full">
+        <div class="w-full r-table">
+            <div class="w-full r-thead">
+                <div class="w-full r-tr">
+                    <div class="w-full r-tr">
+                        <div class="col-2 text-center r-th">Saisie le</div>
+                        <div class="col-3 text-start r-th">De</div>
+                        <div class="col-3 text-start r-th">A propos de</div>
+                        <div class="col-2 text-center r-th">Traité depuis le</div>
+                        <div class="col-2 text-center r-th hei mb-2">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="w-full  r-tbody">
+                    {% for request in requests %}
+                        {% set fullname = request.getNom() ~ (request.isEmptyPrenom() ? "" : " "~request.getPrenom() ) %}
+                        <div class="w-full r-tr">
+                            <div class="col-2 text-center r-td">{{ request.getCreatedAt()|date("d/m/Y") }}</div>
+                            <div class="col-3 text-start r-td">{{ fullname }}</div>
+                            <div class="col-3 text-start r-td">{{ request.getsujet() }}</div>
+                            <div class="col-2 text-center r-td">
+                                {{ request.getTreatedAt() ? request.getTreatedAt()|date("d/m/Y") : "" }}
+                            </div>
+                            <div class="col-2 text-center r-td row">
+                                {{ forms.btn('edit'~request.id, '<i class="fa fa-pen"></i>',
+                                    {'class': 'edit-request w-6 px-1 col-4 button-success text-center',
+                                        'title': 'Répondre à la demande', 'type': 'button',
+                                        'event': 'onClick', 'codeJS': 'redirect("'~canonical('request_answer',
+                                        {'id': request.id})~'");',
+                                    }) }}
+                                {{ forms.btn('send'~request.id, '<i class="fa fa-envelope"></i>',
+                                    {'class': 'send-request w-6 px-1 col-4 button-info text-center',
+                                        'title': 'Envoyer la réponse', 'type': 'button',
+                                        'event': 'onClick', 'codeJS': 'redirect("'~canonical('send_answer',
+                                        {'id': request.id})~'");',
+                                    }) }}
+                                {{ forms.btn('close'~request.id, '<i class="fa fa-times"></i>',
+                                    {'class': 'send-request w-6 px-1 col-4 button-warning text-center',
+                                        'title': 'Clôturer la réponse', 'type': 'button',
+                                        'event': 'onClick', 'codeJS': 'redirect("'~canonical('request_close',
+                                        {'id': request.id})~'");',
+                                    }) }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ navigate.page_navigate({
+        'currentPage': currentPage,
+        'pages': pages,
+        'prefix': 'r',
+        'route': 'request_list',
+        'class': 'col-12 row',
+    }) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('crm-assets/js/bootstrap.min.js') }}"></script>
+
+    <script>
+        function redirect(url) {
+            window.location.href = url;
+        }
+    </script>
+    {% include "@crm-core/includes/_paginate.js" %}
+    {% include "@crm-core/includes/_goPage.js" %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{# template de base pour envoi de courriel si aucun modèle de rendu n'est précisé #}
+{% extends '@crm-core/layout.mail.twig' %}
+
+{% block header %}
+    <h1 style="text-align: center">{{ config.get('general/sitename') }}</h1>
+    <h3 style="text-align: center">{{ config.get('general/payoff') }}</h3>
+{% endblock %}
+
+{% block corps %}
+    {{ body|raw }}
+{% endblock %}

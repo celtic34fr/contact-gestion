@@ -1,0 +1,20 @@
+# An example of a services.yaml file in an extension
+
+doctrine:
+  orm:
+    auto_generate_proxy_classes: '%kernel.debug%'
+    naming_strategy: doctrine.orm.naming_strategy.underscore
+    auto_mapping: true
+    mappings:
+      CRM_Contact:
+        is_bundle: false
+        type: attribute
+        dir: '%kernel.project_dir%/vendor/celtic34fr/contact-gestion/src/Entity'
+        prefix: 'Celtic34fr\ContactGestion'
+        alias: ContactGestion
+
+services:
+  Celtic34fr\ContactGestion\AdminMenu:
+    class: Celtic34fr\ContactGestion\AdminMenu
+    arguments: [ '@Symfony\Component\Routing\Generator\UrlGeneratorInterface' ]
+    tags: [ 'bolt.extension_backend_menu' ]
