@@ -42,7 +42,7 @@ class MySQLiDemandes
     {
         $this->mysqli_construct();
         $this->dbPrefix = $_ENV['DB_PREFIX'] ?? "";
-        $this->dbName = $this->dbPrefix . "crm_demandes";
+        $this->dbName = $this->dbPrefix . "demandes";
         $this->className = MSIDemandes::class;
         $this->structure = $this->getTableColumns();
     }

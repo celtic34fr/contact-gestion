@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: CategoriesRepository::class)]
-#[ORM\Table('crm_categories')]
+#[ORM\Table('categories')]
 class Categories
 {
     #[ORM\Id]

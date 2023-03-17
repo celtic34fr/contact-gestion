@@ -30,7 +30,7 @@ class ContactController extends AbstractController
      * @param ExtensionConfig $extConfigy
      * @return Response
      */
-    #[Route('/', name: 'crm_contact')]
+    #[Route('/', name: 'contact')]
     public function __invoke(Request $request, EntityManagerInterface $entityManager, ConfigService $config,
                           Utilities $utilit, ExtensionConfig $extConfig): Response
     {

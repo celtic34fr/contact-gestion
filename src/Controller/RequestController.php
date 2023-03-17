@@ -49,7 +49,7 @@ class RequestController extends AbstractController
         $requests = [];
         $dbPrefix = $this->getParameter('bolt.table_prefix');
 
-        if ($utility->existsTable($dbPrefix.'crm_demandes') == true) {
+        if ($utility->existsTable($dbPrefix.'demandes') == true) {
             $requests = $this->entityManager->getRepository(Demandes::class)
                 ->findRequestAll($currentPage);
             /**
@@ -84,7 +84,7 @@ class RequestController extends AbstractController
         $err_msg = [];
         $dbPrefix = $this->getParameter('bolt.table_prefix');
 
-        if ($utility->existsTable($dbPrefix.'crm_demandes') == true) {
+        if ($utility->existsTable($dbPrefix.'demandes') == true) {
             /** @var User $operateur */
             $operateur = $this->getUser();
             if (!$response) {
@@ -212,7 +212,7 @@ class RequestController extends AbstractController
         $sendMail = new SendMailer();
         $dbPrefix = $this->getParameter('bolt.table_prefix');
 
-        if ($utility->existsTable($dbPrefix.'crm_demandes')) {
+        if ($utility->existsTable($dbPrefix.'demandes')) {
             $flashMessage = $this->isEmptyReponse($id);
             if ($flashMessage) {
                 $this->addFlash($flashMessage['type'], $flashMessage['corps']);
@@ -252,7 +252,7 @@ class RequestController extends AbstractController
     {
         $dbPrefix = $this->getParameter('bolt.table_prefix');
 
-        if ($utility->existsTable($dbPrefix.'crm_demandes')) {
+        if ($utility->existsTable($dbPrefix.'demandes')) {
             $flashMessage = $this->isEmptyReponse($id);
             if ($flashMessage) {
                 $this->addFlash($flashMessage['type'], $flashMessage['corps']);
