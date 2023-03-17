@@ -1,0 +1,14 @@
+{% set background = 'background: #C8E8C2;' %}
+{% set background_title = 'background: #344830; color: white;' %}
+<div class="card mb-4">
+    <div class="card-header" style="{{ background_title }}">
+        <i class="fas fa-user-shield"></i> CRM Demands Informations Control
+    </div>
+    <div class="image card-img-top"
+         style="{{ background }} height: 120px; padding-top: 10px; background-size: cover; background-position: center center;">
+        <div class="w-full text-left ml-1">{{ sprintf("%'.02d\n", crminfos.a_traiter) }} => Requêtes à traiter</div>
+        <div class="w-full text-left ml-1">{{ sprintf("%'.02d\n", crminfos.last2weeks) }} => Requêtes Crées sur 2 semaines</div>
+        <div class="w-full text-left ml-1">{{ sprintf("%'.02d\n", crminfos.goToEnd) }} => Requêtes Arrivant à terme</div>
+        <div class="w-full text-left ml-1">{{ sprintf("%'.02d\n", crminfos.outOfTime) }} => Requêtes Hors Délai de traitement</div>
+    </div>
+</div>

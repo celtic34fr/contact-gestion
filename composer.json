@@ -13,7 +13,8 @@
     "php": ">=8.1",
     "twig/twig": "^2.12 | ^3.0",
     "bolt/core": "~5.1.0",
-    "celtic34fr/contact-core": "dev-master"
+    "celtic34fr/contact-core": "dev-master",
+    "ext-mysqli": "*"
   },
   "require-dev": {
     "symplify/easy-coding-standard": "^8.3"
