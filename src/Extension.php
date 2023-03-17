@@ -56,7 +56,7 @@ class Extension extends BaseExtension
         $filesystem = new Filesystem();
         $projectDir = $this->getContainer()->getParameter('kernel.project_dir');
 
-        /** test existance crm_assets/css */
+        /** test existance contactassets/css */
         $source = dirname(__DIR__) . '/public';
         $destination = $projectDir . '/public/contact-assets';
         if (!$filesystem->exists($destination)) {
