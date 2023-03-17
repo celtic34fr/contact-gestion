@@ -1,6 +1,6 @@
 <?php
 
-namespace Celtic34fr\ContactGestion\Controller;
+namespace Celtic34fr\ContactGestion\Controller\Backend;
 
 use Bolt\Controller\Backend\BackendZoneInterface;
 use Celtic34fr\ContactGestion\Entity\Categories;

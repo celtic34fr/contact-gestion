@@ -3,6 +3,6 @@ contact:
   controller: Celtic34fr\ContactGestion\Controller\ContactController
 
 reference_extension:
-  resource: '../../vendor/celtic34fr/contact-gestion/src/Controller/'
+  resource: '../../vendor/celtic34fr/contact-gestion/src/Controller/Backend/'
   prefix: '%bolt.backend_url%'
   type: annotation
