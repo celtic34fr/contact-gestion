@@ -27,7 +27,7 @@ class Extension extends BaseExtension
     public function initialize($cli = false): void
     {
         /** ajout de l'espace de nommage pour accès aux templates de l'extension */
-        $this->addTwigNamespace("contact-gestion", __DIR__."/../templates");
+        $this->addTwigNamespace("contact-gestion", dirname(__DIR__)."/templates");
     }
 
     /**
@@ -48,7 +48,7 @@ class Extension extends BaseExtension
         $projectDir = $this->getContainer()->getParameter('kernel.project_dir');
 
         /** test existance crm_assets/css */
-        $source = dirname(__DIR__) . '/../public';
+        $source = dirname(__DIR__) . '/public';
         $destination = $projectDir . '/public/contact-assets';
         if (!$filesystem->exists($destination)) {
             $filesystem->mkdir($destination);
