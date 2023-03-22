@@ -11,9 +11,9 @@ use Bolt\Widget\StopwatchAwareInterface;
 use Bolt\Widget\StopwatchTrait;
 use Bolt\Widget\TwigAwareInterface;
 use Celtic34fr\ContactGestion\MySQLiRepository\MySQLiDemandes;
+use Celtic34fr\ContactGestion\Service\ContactDbInfos;
 use Doctrine\ORM\EntityManagerInterface;
 use JetBrains\PhpStorm\ArrayShape;
-use mysqli;
 
 class Widget extends BaseWidget implements TwigAwareInterface, CacheAwareInterface, StopwatchAwareInterface
 {
@@ -21,9 +21,9 @@ class Widget extends BaseWidget implements TwigAwareInterface, CacheAwareInterfa
     use StopwatchTrait;
 
     private EntityManagerInterface $entityManager;
-    private mysqli $conn;
+    private ContactDbInfos $contactDbInfos;
 
-    public function __construct(mysqli $conn)
+    public function __construct(ContactDbInfos $contactDbInfos)
     {
         $this->name = 'Contact Infos Widget';
         $this->target = ADDITIONALTARGET::WIDGET_BACK_DASHBOARD_ASIDE_TOP;
@@ -31,7 +31,7 @@ class Widget extends BaseWidget implements TwigAwareInterface, CacheAwareInterfa
         $this->template = '@contact-gestion/widget/infos.html.twig';
         $this->zone = RequestZone::FRONTEND;
         $this->cacheDuration = 0;
-        $this->conn = $conn;
+        $this->contactDbInfos = $contactDbInfos;
     }
 
     public function run(array $params = []): ?string
@@ -55,11 +55,10 @@ class Widget extends BaseWidget implements TwigAwareInterface, CacheAwareInterfa
     #[ArrayShape(['a_traiter' => "mixed", 'last2weeks' => "mixed"])]
     private function loadInformation(): array
     {
-        $mySQLiDemandesRepository = new MySQLiDemandes($this->conn);
-        $a_traiter = $mySQLiDemandesRepository->countRequestAll();
-        $last2weeks = $mySQLiDemandesRepository->countLast2WeeksDemands();
-        $goToEnd = $mySQLiDemandesRepository->countDemandGoToEnd();
-        $outOfTime = $mySQLiDemandesRepository->countDemandOutOfTime();
+        $a_traiter = $this->contactDbInfos->countRequestAll();
+        $last2weeks = $this->contactDbInfos->countLast2WeeksDemands();
+        $goToEnd = $this->contactDbInfos->countDemandGoToEnd();
+        $outOfTime = $this->contactDbInfos->countDemandOutOfTime();
         return [
             'a_traiter' => $a_traiter,
             'last2weeks' => $last2weeks,
