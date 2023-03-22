@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace Celtic34fr\ContactGestion;
 
 use Bolt\Extension\BaseExtension;
-use Celtic34fr\ContactCore\Trait\MySQLiTrait;
+use Celtic34fr\ContactGestion\Service\ContactDbInfos;
 use Symfony\Component\Filesystem\Filesystem;
-use mysqli;
 
 class Extension extends BaseExtension
 {
-    protected mysqli $conn;
 
-    use MySQLiTrait {
-        MySQLiTrait::__construct as mysqli_construct;
+    private ContactDbInfos $contactDbInfos;
+
+    public function __construct(ContactDbInfos $contactDbInfos)
+    {
+        parent::__construct();
+        $this->contactDbInfos = $contactDbInfos;
     }
 
     /**
@@ -36,7 +38,7 @@ class Extension extends BaseExtension
     {
         /** ajout de l'espace de nommage pour accès aux templates de l'extension */
         $this->addTwigNamespace("contact-gestion", dirname(__DIR__)."/templates");
-        $this->addWidget(new Widget($this->conn));
+        $this->addWidget(new Widget($this->contactDbInfos));
     }
 
     /**
