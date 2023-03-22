@@ -15,7 +15,6 @@ class Extension extends BaseExtension
 
     public function __construct(ContactDbInfos $contactDbInfos)
     {
-        parent::__construct();
         $this->contactDbInfos = $contactDbInfos;
     }
 
