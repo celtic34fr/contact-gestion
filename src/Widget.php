@@ -11,7 +11,6 @@ use Bolt\Widget\StopwatchAwareInterface;
 use Bolt\Widget\StopwatchTrait;
 use Bolt\Widget\TwigAwareInterface;
 use Celtic34fr\ContactGestion\Service\ContactDbInfos;
-use Doctrine\ORM\EntityManagerInterface;
 use JetBrains\PhpStorm\ArrayShape;
 
 class Widget extends BaseWidget implements TwigAwareInterface, CacheAwareInterface, StopwatchAwareInterface
@@ -19,7 +18,6 @@ class Widget extends BaseWidget implements TwigAwareInterface, CacheAwareInterfa
     use CacheTrait;
     use StopwatchTrait;
 
-    private EntityManagerInterface $entityManager;
     private ContactDbInfos $contactDbInfos;
 
     public function __construct(ContactDbInfos $contactDbInfos)
