@@ -10,11 +10,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class Extension extends BaseExtension
 {
-
-    public function __construct(ContactDbInfos $contactDbInfos)
-    {
-        $this->contactDcInfos = $contactDbInfos;
-    }
     /**
      * Return the full name of the extension
      */
