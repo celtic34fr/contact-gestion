@@ -11,6 +11,10 @@ use Symfony\Component\Filesystem\Filesystem;
 class Extension extends BaseExtension
 {
 
+    public function __construct(ContactDbInfos $contactDbInfos)
+    {
+        $this->contactDcInfos = $contactDbInfos;
+    }
     /**
      * Return the full name of the extension
      */
@@ -30,7 +34,7 @@ class Extension extends BaseExtension
     {
         /** ajout de l'espace de nommage pour accès aux templates de l'extension */
         $this->addTwigNamespace("contact-gestion", dirname(__DIR__)."/templates");
-        $this->addWidget(new Widget());
+        $this->addWidget(new Widget($this->contactDcInfos));
     }
 
     /**

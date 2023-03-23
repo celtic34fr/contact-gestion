@@ -19,6 +19,6 @@ services:
     arguments: [ '@Symfony\Component\Routing\Generator\UrlGeneratorInterface' ]
     tags: [ 'bolt.extension_backend_menu' ]
 
-  Celtic34fr\ContactGestion\Widget:
-    class: Celtic34fr\ContactGestion\Widget
+  Celtic34fr\ContactGestion\Extension:
+    class: Celtic34fr\ContactGestion\Extension
     arguments: [ 'Celtic34fr\ContactGestion\Service\ContactDbInfos' ]
