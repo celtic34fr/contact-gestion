@@ -10,7 +10,6 @@ use Bolt\Widget\Injector\RequestZone;
 use Bolt\Widget\StopwatchAwareInterface;
 use Bolt\Widget\StopwatchTrait;
 use Bolt\Widget\TwigAwareInterface;
-use Celtic34fr\ContactGestion\MySQLiRepository\MySQLiDemandes;
 use Celtic34fr\ContactGestion\Service\ContactDbInfos;
 use Doctrine\ORM\EntityManagerInterface;
 use JetBrains\PhpStorm\ArrayShape;
