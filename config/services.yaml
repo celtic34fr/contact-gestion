@@ -22,6 +22,6 @@ services:
   Celtic34fr\ContactGestion\:
     resource: '%kernel.project_dir%/vendor/celtic34fr/contact-gestion/src/*'
     exclude:
-      - %kernel.project_dir%/vendor/celtic34fr/contact-gestion/src/Entity/
-      - %kernel.project_dir%/vendor/celtic34fr/contact-gestion/src/Extension.php
-      - %kernel.project_dir%/vendor/celtic34fr/contact-gestion/src/AdminMenu.php
+      - '%kernel.project_dir%/vendor/celtic34fr/contact-gestion/src/Entity/'
+      - '%kernel.project_dir%/vendor/celtic34fr/contact-gestion/src/Extension.php'
+      - '%kernel.project_dir%/vendor/celtic34fr/contact-gestion/src/AdminMenu.php'
