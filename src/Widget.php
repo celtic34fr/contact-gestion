@@ -28,10 +28,6 @@ class Widget extends BaseWidget implements TwigAwareInterface, CacheAwareInterfa
 
     public function run(array $params = []): ?string
     {
-        if (empty($crminfos)) {
-            return null;
-        }
-
         return parent::run([]);
     }
 }
