@@ -6,7 +6,7 @@ doctrine:
     naming_strategy: doctrine.orm.naming_strategy.underscore
     auto_mapping: true
     mappings:
-      CRM_Contact:
+      ContactGestion:
         is_bundle: false
         type: attribute
         dir: '%kernel.project_dir%/vendor/celtic34fr/contact-gestion/src/Entity'
