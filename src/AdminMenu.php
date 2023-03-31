@@ -20,23 +20,23 @@ class AdminMenu implements ExtensionBackendMenuInterface
                 'extras' => [
                     'name' => 'Gestion des Contacts',
                     'type' => 'separator',
-                    'group' => 'CRM',
+                    'group' => 'Contact',
                 ]
             ]);
         }
 
         $children = $menu->getChildren();
         $childrenUpdated = [];
-        $crm = false;
+        $contact = false;
         $saveName = "";
         $idx = 0;
 
         foreach ($children as $name => $child) {
-            if ((!$child->getExtra('group') || $child->getExtra('group') != 'CRM') && !$crm) {
+            if ((!$child->getExtra('group') || $child->getExtra('group') != 'Contact') && !$contact) {
                 $childrenUpdated[$name] = $child;
                 $idx += 1;
-            } elseif (!$crm) {
-                $crm = true;
+            } elseif (!$contact) {
+                $contact = true;
                 $childrenUpdated[$name] = $child;
                 $idx += 1;
             } else {
@@ -51,7 +51,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
                 'slug' => 'demande_contact',
             ]),
            'extras' => [
-                'group' => 'CRM',
+                'group' => 'Contact',
                 'name' => 'Demandes de contact',
                 'slug' => 'demande_contact',
             ]
@@ -61,14 +61,14 @@ class AdminMenu implements ExtensionBackendMenuInterface
             'uri' => $this->urlGenerator->generate('request_list'),
             'extras' => [
                 'icon' => 'fa-clipboard-question',
-                'group' => 'CRM',
+                'group' => 'Contact',
             ]
         ]);
         $menu['Demandes de contact']->addChild('Recherche dans les réponses', [
             'uri' => $this->urlGenerator->generate('search_responses'),
             'extras' => [
                 'icon' => 'fa-envelope-circle-check',
-                'group' => 'CRM',
+                'group' => 'Contact',
             ]
         ]);
 
