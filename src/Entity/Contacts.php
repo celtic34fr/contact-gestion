@@ -3,15 +3,15 @@
 namespace Celtic34fr\ContactGestion\Entity;
 
 use Celtic34fr\ContactCore\Entity\CliInfos;
-use Celtic34fr\ContactGestion\Repository\DemandesRepository;
+use Celtic34fr\ContactGestion\Repository\ContactsRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
 
-#[ORM\Entity(repositoryClass: DemandesRepository::class)]
+#[ORM\Entity(repositoryClass: ContactsRepository::class)]
 #[ORM\Index(columns: ["sujet", "demande"], name: "search_idx", flags: ['fulltext'])]
-class Demandes
+class Contacts
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

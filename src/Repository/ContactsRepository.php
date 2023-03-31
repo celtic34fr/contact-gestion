@@ -2,7 +2,7 @@
 
 namespace Celtic34fr\ContactGestion\Repository;
 
-use Celtic34fr\ContactGestion\Entity\Demandes;
+use Celtic34fr\ContactGestion\Entity\Contacts;
 use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -11,23 +11,23 @@ use Exception;
 use JetBrains\PhpStorm\ArrayShape;
 
 /**
- * @extends ServiceEntityRepository<Demandes>
+ * @extends ServiceEntityRepository<Contacts>
  *
- * @method Demandes|null find($id, $lockMode = null, $lockVersion = null)
- * @method Demandes|null findOneBy(array $criteria, array $orderBy = null)
- * @method Demandes[]    findAll()
- * @method Demandes[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Contacts|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Contacts|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Contacts[]    findAll()
+ * @method Contacts[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class DemandesRepository extends ServiceEntityRepository
+class ContactsRepository extends ServiceEntityRepository
 {
     use DbPaginateTrait;
 
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Demandes::class);
+        parent::__construct($registry, Contacts::class);
     }
 
-    public function save(Demandes $entity, bool $flush = false): void
+    public function save(Contacts $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
         if ($flush) {
@@ -35,7 +35,7 @@ class DemandesRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Demandes $entity, bool $flush = false): void
+    public function remove(Contacts $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
         if ($flush) {
