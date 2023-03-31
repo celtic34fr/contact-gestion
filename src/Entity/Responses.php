@@ -31,7 +31,7 @@ class Responses
 
     #[ORM\OneToOne(inversedBy: 'reponse', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Demandes $contact = null;
+    private ?Contacts $contact = null;
 
     #[ORM\ManyToMany(targetEntity: Categories::class)]
     private Collection $categories;
@@ -97,18 +97,18 @@ class Responses
     }
 
     /**
-     * @return Demandes|null
+     * @return Contacts|null
      */
-    public function getContact(): ?Demandes
+    public function getContact(): ?Contacts
     {
         return $this->contact;
     }
 
     /**
-     * @param Demandes $contact
+     * @param Contacts $contact
      * @return Responses
      */
-    public function setContact(Demandes $contact): self
+    public function setContact(Contacts $contact): self
     {
         $this->contact = $contact;
         return $this;

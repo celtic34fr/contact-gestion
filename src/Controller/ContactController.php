@@ -5,7 +5,7 @@ namespace Celtic34fr\ContactGestion\Controller;
 use Celtic34fr\ContactGestion\Service\ConfigService;
 use Celtic34fr\ContactCore\Entity\Clientele;
 use Celtic34fr\ContactCore\Entity\CliInfos;
-use Celtic34fr\ContactGestion\Entity\Demandes;
+use Celtic34fr\ContactGestion\Entity\Contacts;
 use Celtic34fr\ContactCore\Enum\CustomerEnums;
 use Celtic34fr\ContactGestion\Form\ContactType;
 use Celtic34fr\ContactGestion\FormEntity\DemandesType;
@@ -124,7 +124,7 @@ class ContactController extends AbstractController
             }
             $cliInfos->setClient($clientele);
 
-            $demande = new Demandes();
+            $demande = new Contacts();
             $demande->setSujet($contact->getSujet());
             $demande->setDemande($contact->getDemande());
             $demande->setContactMe($contact->isContactMe());

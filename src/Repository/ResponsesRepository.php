@@ -2,7 +2,7 @@
 
 namespace Celtic34fr\ContactGestion\Repository;
 
-use Celtic34fr\ContactGestion\Entity\Demandes;
+use Celtic34fr\ContactGestion\Entity\Contacts;
 use Celtic34fr\ContactGestion\Entity\Responses;
 use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
