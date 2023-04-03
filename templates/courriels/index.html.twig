@@ -1,0 +1,58 @@
+{% extends '@contact-core/layout_backend.html.twig' %}
+{% import '@contact-core/macros/form_classic.html.twig' as forms %}
+{% import "@contact-core/macros/paginate.html.twig" as navigate %}
+{% import "@contact-core/macros/form_classic.html.twig" as forms %}
+
+{% block shoulder %}
+    {{ "Liste des Courriels générés par l'pplication" }}
+{% endblock shoulder %}
+
+{% block title %}
+    <i class="fas mr-2 link--icon fa-clipboard-question"></i>
+    Liste des Courriels en base
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <div class="table-request w-full">
+        <div class="w-full r-table">
+            <div class="w-full r-thead">
+                <div class="w-full r-tr">
+                    <div class="w-full r-tr">
+                        <div class="col-2 text-center r-th"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full  r-tbody">
+                {% for courriel in courriels %}
+                    <div class="w-full r-tr">
+                        <div class="col-2 text-center r-td">{{ courriel.getCreatedAt()|date("d/m/Y") }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {{ navigate.page_navigate({
+        'currentPage': currentPage,
+        'pages': pages,
+        'prefix': 'r',
+        'route': 'courriel_list',
+        'class': 'col-12 row',
+    }) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('contact-assets/js/bootstrap.min.js') }}"></script>
+
+    <script>
+        function redirect(url) {
+            window.location.href = url;
+        }
+    </script>
+    <script src="{{ asset('contact-assets/js/_paginate.js') }}"></script>
+    <script src="{{ asset('contact-assets/js/_goPage.js') }}"></script>
+{% endblock %}

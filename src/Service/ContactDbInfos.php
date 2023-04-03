@@ -2,9 +2,10 @@
 
 namespace Celtic34fr\ContactGestion\Service;
 
+use Celtic34fr\ContactCore\Entity\Courriels;
 use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
-use Celtic34fr\ContactGestion\Entity\Demandes;
-use Celtic34fr\ContactGestion\Repository\DemandesRepository;
+use Celtic34fr\ContactGestion\Entity\Contacts;
+use Celtic34fr\ContactGestion\Repository\ContactsRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -13,17 +14,18 @@ class ContactDbInfos
     use DbPaginateTrait;
 
     private EntityManagerInterface $entityManager;
-    private DemandesRepository $demandesRepository;
+    private ContactsRepository $contactsRepository;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->demandesRepository = $this->entityManager->getRepository(Demandes::class);
+        $this->contactsRepository = $this->entityManager->getRepository(Contacts::class);
+        $this->courrielsRepository = $this->entityManager->getRepository(Courriels::class);
     }
 
     public function findRequestAll(int $currentPage = 1, int $limit = 10): array
     {
-        $qb = $this->demandesRepository
+        $qb = $this->contactsRepository
             ->createQueryBuilder("dem")
             ->where('dem.closed_at IS NULL')
             ->orderBy('dem.created_at', 'DESC')
@@ -39,7 +41,7 @@ class ContactDbInfos
     public function findLast2WeeksDemands(int $currentPage = 1, int $limit = 10): array
     {
         $date = (new DateTimeImmutable('now'))->modify("-2 weeks");
-        $qb = $this->demandesRepository
+        $qb = $this->contactsRepository
             ->createQueryBuilder("dem")
             ->where('dem.created_at > :date')
             ->orderBy('dem.created_at', 'DESC')
@@ -48,7 +50,7 @@ class ContactDbInfos
         return $this->paginateDoctrine($qb, $currentPage, $limit);
     }
 
-    public function countLast2WeeksDemands()
+    public function countLast2WeeksDemands(): int
     {
         return sizeof($this->findLast2WeeksDemands(0, 0)['datas']) ?? 0;
     }
@@ -57,7 +59,7 @@ class ContactDbInfos
     {
         $dateDeb = (new DateTimeImmutable('now'))->modify("-2 weeks");
         $dateFin = $dateDeb->modify('+1 day');
-        $qb = $this->demandesRepository
+        $qb = $this->contactsRepository
             ->createQueryBuilder("dem")
             ->where('dem.created_at >= :dateDeb')
             ->andWhere('dem.created_at <= :dateFin')
@@ -68,7 +70,7 @@ class ContactDbInfos
         return $this->paginateDoctrine($qb, $currentPage, $limit);
     }
 
-    public function countDemandGoToEnd()
+    public function countDemandGoToEnd(): int
     {
         return sizeof($this->findDemandGoToEnd(0, 0)['datas']) ?? 0;
     }
@@ -76,7 +78,7 @@ class ContactDbInfos
     public function findDemandOutOfTime(int $currentPage = 1, int $limit = 10): array
     {
         $date = (new DateTimeImmutable('now'))->modify("-2 weeks");
-        $qb = $this->demandesRepository
+        $qb = $this->contactsRepository
             ->createQueryBuilder("dem")
             ->where('dem.created_at >= :date')
             ->andWhere('dem.closed_at IS NULL')
@@ -86,7 +88,7 @@ class ContactDbInfos
         return $this->paginateDoctrine($qb, $currentPage, $limit);
     }
 
-    public function countDemandOutOfTime()
+    public function countDemandOutOfTime(): int
     {
         return sizeof($this->findDemandOutOfTime(0, 0)['datas']) ?? 0;
     }

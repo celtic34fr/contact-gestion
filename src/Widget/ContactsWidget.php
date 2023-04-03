@@ -1,6 +1,6 @@
 <?php
 
-namespace Celtic34fr\ContactGestion;
+namespace Celtic34fr\ContactGestion\Widget;
 
 use Bolt\Widget\BaseWidget;
 use Bolt\Widget\CacheAwareInterface;
@@ -11,7 +11,7 @@ use Bolt\Widget\StopwatchAwareInterface;
 use Bolt\Widget\StopwatchTrait;
 use Bolt\Widget\TwigAwareInterface;
 
-class Widget extends BaseWidget implements TwigAwareInterface, CacheAwareInterface, StopwatchAwareInterface
+class ContactsWidget extends BaseWidget implements TwigAwareInterface, CacheAwareInterface, StopwatchAwareInterface
 {
     use CacheTrait;
     use StopwatchTrait;
