@@ -14,10 +14,18 @@ doctrine:
         alias: ContactGestion
 
 services:
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
   Celtic34fr\ContactGestion\AdminMenu:
     class: Celtic34fr\ContactGestion\AdminMenu
     arguments: [ '@Symfony\Component\Routing\Generator\UrlGeneratorInterface' ]
     tags: [ 'bolt.extension_backend_menu' ]
 
-  Celtic34fr\ContactGestion\Widget:
+  Celtic34fr\ContactGestion\Widget\ContactsWidget:
     autowire: true
+
+  Celtic34fr\ContactGestion\Controller\Backend\SearchController:
+    arguments:
+      $autocompleteContactFinder: '@typesense.finder'

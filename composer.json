@@ -13,7 +13,8 @@
     "php": ">=8.1",
     "twig/twig": "^2.12 | ^3.0",
     "bolt/core": "~5.1.0",
-    "celtic34fr/contact-core": "dev-master"
+    "celtic34fr/contact-core": "dev-master",
+    "acseo/typesense-bundle": "^0.7.1"
   },
   "require-dev": {
     "symplify/easy-coding-standard": "^8.3"
@@ -33,7 +34,8 @@
       "symfony/flex": true,
       "drupol/composer-packages": true,
       "dealerdirect/phpcodesniffer-composer-installer": true,
-      "franzl/studio": true
+      "franzl/studio": true,
+      "php-http/discovery": true
     }
   }
 }
