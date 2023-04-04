@@ -58,16 +58,6 @@ class Extension extends BaseExtension
             $filesystem->chmod($destination, 0777);
         }
         $this->doCopy($source, $destination, $filesystem);
-
-        /** Ajout des variables d'environnement pour Typesence */
-        $source = dirname(__DIR__);
-        $env = file_get_contents($source.'/.env');
-        if ($env) {
-            if (!$filesystem->exists(($projectDir.'.env.local'))) {
-                $filesystem->touch($projectDir.'/.env.local');
-            }
-            $filesystem->appendToFile($projectDir.'/.env.local', $env);
-        }
     }
 
     /**
