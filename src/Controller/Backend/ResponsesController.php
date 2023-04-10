@@ -20,11 +20,8 @@ class ResponsesController extends AbstractController implements BackendZoneInter
 {
     use DbPaginateTrait;
 
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     #[Route('/search', name: 'search_responses')]

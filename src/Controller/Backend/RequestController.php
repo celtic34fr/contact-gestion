@@ -27,12 +27,10 @@ use Twig\Error\SyntaxError;
 #[Route('request')]
 class RequestController extends AbstractController
 {
-    public function __construct(private EntityManagerInterface $entityManager, private Environment $twigEnvironment,
-                                private ContainerInterface $container)
+    public function __construct(private EntityManagerInterface $entityManager, private Environment $twigEnvironment)
     {
         $this->entityManager = $entityManager;
         $this->twigEnvironment = $twigEnvironment;
-        $this->container = $container;
     }
 
     #[Route('/list/{currentPage}', name: 'request_list')]
