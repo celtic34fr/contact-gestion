@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace Celtic34fr\ContactGestion;
 
-use Celtic34fr\ContactCore\Service\ExtensionConfig;
-use Symfony\Component\Routing\RouterInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Celtic34fr\ContactGestion\Service\ContactDbInfos;
 
 class Twig extends AbstractExtension
 {
-
-    private ContactDbInfos $contactDbInfos;
-
-    public function __construct(ContactDbInfos $contactDbInfos)
+    public function __construct(private ContactDbInfos $contactDbInfos)
     {
         $this->contactDbInfos = $contactDbInfos;
     }

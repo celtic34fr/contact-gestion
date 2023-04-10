@@ -8,9 +8,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AdminMenu implements ExtensionBackendMenuInterface
 {
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator)
     {
-        $this->urlGenerator = $urlGenerator;
     }
 
     public function addItems(MenuItem $menu): void

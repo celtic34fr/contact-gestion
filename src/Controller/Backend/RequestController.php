@@ -27,12 +27,8 @@ use Twig\Error\SyntaxError;
 #[Route('request')]
 class RequestController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
-    private Environment $twigEnvironment;
-    protected $container;
-
-    public function __construct(EntityManagerInterface $entityManager, Environment $twigEnvironment,
-                                ContainerInterface $container)
+    public function __construct(private EntityManagerInterface $entityManager, private Environment $twigEnvironment,
+                                private ContainerInterface $container)
     {
         $this->entityManager = $entityManager;
         $this->twigEnvironment = $twigEnvironment;
