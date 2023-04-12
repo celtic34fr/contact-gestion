@@ -31,6 +31,7 @@ class DatabaseActivitySubscriber implements EventSubscriberInterface
             $srcArray = $entity->toTntArray();
             $this->manageTntIndexes->updateContactsIDX($srcArray, 'i');
         }
+        return;
     }
 
     public function postRemove(LifecycleEventArgs $args): void
@@ -40,6 +41,7 @@ class DatabaseActivitySubscriber implements EventSubscriberInterface
             $srcArray = $entity->toTntArray();
             $this->manageTntIndexes->updateContactsIDX($srcArray, 'd');
         }
+        return;
     }
 
     public function postUpdate(LifecycleEventArgs $args): void
@@ -49,5 +51,6 @@ class DatabaseActivitySubscriber implements EventSubscriberInterface
             $srcArray = $entity->toTntArray();
             $this->manageTntIndexes->updateContactsIDX($srcArray, 'u');
         }
+        return;
     }
 }
