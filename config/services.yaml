@@ -26,50 +26,10 @@ services:
   Celtic34fr\ContactGestion\Widget\ContactsWidget:
     autowire: true
 
-  Celtic34fr\EventListener\ContactInsertNotifier:
-    arguments: ['@Celtic34fr\ContactGestion\ManageTntIndexes']
+  Celtic34fr\EventListener\DatabaseActivitySubscriber:
+    arguments: ['Celtic34fr\ContactGestion\ManageTntIndexes']
     tags:
-      -
-        name: 'doctrine.orm.entity_listener'
-        event: 'postInsert'
-        entity: 'Celtic34fr\ContactGestion\Entity\Contacts'
+      - name: 'doctrine.event_subscriber'
+        priority: 500
+        connection: 'default'
 
-  Celtic34fr\EventListener\ContactUpdateNotifier:
-    arguments: ['@Celtic34fr\ContactGestion\ManageTntIndexes']
-    tags:
-      -
-        name: 'doctrine.orm.entity_listener'
-        event: 'postUpdate'
-        entity: 'Celtic34fr\ContactGestion\Entity\Contacts'
-
-  Celtic34fr\EventListener\ContactRemoveNotifier:
-    arguments: ['@Celtic34fr\ContactGestion\ManageTntIndexes']
-    tags:
-      -
-        name: 'doctrine.orm.entity_listener'
-        event: 'postRemove'
-        entity: 'Celtic34fr\ContactGestion\Entity\Contacts'
-
-  Celtic34fr\EventListener\ResponseInsertNotifier:
-    arguments: ['@Celtic34fr\ContactGestion\ManageTntIndexes']
-    tags:
-      -
-        name: 'doctrine.orm.entity_listener'
-        event: 'postInsert'
-        entity: 'Celtic34fr\ContactGestion\Entity\Responses'
-
-  Celtic34fr\EventListener\ResponseUpdateNotifier:
-    arguments: ['@Celtic34fr\ContactGestion\ManageTntIndexes']
-    tags:
-      -
-        name: 'doctrine.orm.entity_listener'
-        event: 'postUpdate'
-        entity: 'Celtic34fr\ContactGestion\Entity\Responses'
-
-  Celtic34fr\EventListener\ResponseRemoveNotifier:
-    arguments: ['@Celtic34fr\ContactGestion\ManageTntIndexes']
-    tags:
-      -
-        name: 'doctrine.orm.entity_listener'
-        event: 'postRemove'
-        entity: 'Celtic34fr\ContactGestion\Entity\Responses'
