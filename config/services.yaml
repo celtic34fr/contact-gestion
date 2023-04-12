@@ -25,11 +25,3 @@ services:
 
   Celtic34fr\ContactGestion\Widget\ContactsWidget:
     autowire: true
-
-  Celtic34fr\EventListener\DatabaseActivitySubscriber:
-    arguments: ['Celtic34fr\ContactGestion\ManageTntIndexes']
-    tags:
-      - name: 'doctrine.event_subscriber'
-        priority: 500
-        connection: 'default'
-
