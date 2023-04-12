@@ -10,25 +10,29 @@ use Symfony\Component\Filesystem\Filesystem;
 class ManageTntIndexes
 {
     private string $prefix;
+    private string $queryContacts;
+    private string $queryResponses;
+    private string $indexesContacts;
+    private string $indexesResponses;
 
     public function __construct(private IndexGenerator $idxGenerator, private ExtensionConfig $extensionConfig,
                                 private ConnectionConfig $connectionConfig)
     {
         $this->prefix = $this->extensionConfig->get('bolt/table_prefix');
+        $this->queryContacts = "SELECT idx.id, idx.sujet, idx.demande FROM ".$this->prefix."_contacts idx ";
+        $this->queryResponses = "SELECT idx.id, idx.reponse FROM ".$this->prefix."_responses idx ";
+        $this->indexesContacts = 'contacts';
+        $this->indexesResponses = 'responses';
     }
 
     public function generateContactsIDX()
     {
-        $sql = "SELECT idx.id, idx.sujet, idx.demande FROM ".$this->prefix."_contacts idx ";
-        $indexes = 'contacts';
-        $this->idxGenerator->generate($sql, $indexes);
+        $this->idxGenerator->generate($this->queryContacts, $this->indexesContacts);
     }
 
     public function generateResponsesIDX()
     {
-        $sql = "SELECT idx.id, idx.reponse FROM ".$this->prefix."_responses idx ";
-        $indexes = 'responses';
-        $this->idxGenerator->generate($sql, $indexes);
+        $this->idxGenerator->generate($this->queryResponses, $this->indexesResponses);
     }
 
     public function generate()
@@ -63,5 +67,13 @@ class ManageTntIndexes
     {
         $this->refreshContactsIDX();
         $this->refreshResponsesIDX();
+    }
+
+    public function updateContactsIDX(array $srcArray, string $operation) {
+        $this->idxGenerator->updateByArray($this->indexesContacts, $srcArray,  $operation);
+    }
+
+    public function updateResponsesIDX(array $srcArray, string $operation) {
+        $this->idxGenerator->updateByArray($this->indexesResponses, $srcArray, $operation);
     }
 }

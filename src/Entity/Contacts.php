@@ -216,4 +216,12 @@ class Contacts
         $this->closed_at = $closed_at;
         return $this;
     }
+
+    public function toTntArray() {
+        return [
+            'id' => $this->id,
+            'sujet' => $this->sujet,
+            'demande' => $this->demande,
+        ];
+    }
 }

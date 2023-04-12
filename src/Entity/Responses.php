@@ -161,4 +161,11 @@ class Responses
         $this->operateur = $operateur;
         return $this;
     }
+
+    public function toTntArray() {
+        return [
+            'id' => $this->id,
+            'reponse' => $this->reponse,
+        ];
+    }
 }
