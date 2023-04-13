@@ -21,7 +21,7 @@ class ManageTntIndexes
                                 private ConnectionConfig $connectionConfig, private EntityManagerInterface $entityManager)
     {
         $dql = $this->entityManager->createQueryBuilder()
-                ->select('idx.id, idx.sujet, idx.demande')
+                ->select(['idx.id', 'idx.sujet', 'idx.demande'])
                 ->from(Contacts::class, 'idx');
         $sql = $dql->getQuery()->getSQL();
 
