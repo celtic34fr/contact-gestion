@@ -78,7 +78,7 @@ class RequestController extends AbstractController
         $dbCategories = [];
         $err_msg = [];
         $dbPrefix = $this->getParameter('bolt.table_prefix');
-        $operation = 'u'
+        $operation = 'u';
 
         if ($utility->existsTable($dbPrefix.'demandes') == true) {
             /** @var User $operateur */
