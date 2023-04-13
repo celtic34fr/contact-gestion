@@ -20,7 +20,7 @@ class ManageTntIndexes
     public function __construct(private IndexGenerator $idxGenerator, private ExtensionConfig $extensionConfig,
                                 private ConnectionConfig $connectionConfig, private EntityManagerInterface $entityManager)
     {
-        $dql = $this->entityManager->createQueryBuilder('idx')
+        $dql = $this->entityManager->createQueryBuilder()
                 ->select('idx.id, idx.sujet, idx.demande')
                 ->from(Contacts::class, 'idx');
         $sql = $dql->getQuery()->getSQL();
