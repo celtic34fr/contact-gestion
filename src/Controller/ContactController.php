@@ -11,6 +11,7 @@ use Celtic34fr\ContactGestion\Form\ContactType;
 use Celtic34fr\ContactGestion\FormEntity\DemandesType;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
 use Celtic34fr\ContactCore\Service\Utilities;
+use Celtic34fr\ContactGestion\ManageTntIndexes;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -102,7 +103,7 @@ class ContactController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return bool
      */
-    private function create_request(DemandesType $contact, EntityManagerInterface $entityManager): bool
+    private function create_request(DemandesType $contact, EntityManagerInterface $entityManager, ManageTntIndexes $manageIdx): bool
     {
         $rc = null;
         try {
@@ -137,6 +138,8 @@ class ContactController extends AbstractController
             $entityManager->persist($demande);
 
             $entityManager->flush();
+
+            $manageIdx->updateContactsIDX($demande->toTntArray(), 'i');
 
             $rc = true;
         } catch (Exception $exception) {

@@ -10,6 +10,7 @@ use Celtic34fr\ContactCore\Service\ExtensionConfig;
 use Bolt\Entity\User;
 use Celtic34fr\ContactCore\Service\SendMailer;
 use Celtic34fr\ContactCore\Service\Utilities;
+use Celtic34fr\ContactGestion\ManageTntIndexes;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -69,7 +70,7 @@ class RequestController extends AbstractController
      * @throws Exception
      */
     #[Route('/answer/{id}', name: 'request_answer')]
-    public function answer(string $id, Request $request, Utilities $utility, ExtensionConfig $extConfig): HttpResponse
+    public function answer(string $id, Request $request, Utilities $utility, ExtensionConfig $extConfig, ManageTntIndexes $manageIdx): HttpResponse
     {
         $id = (int)$id;
         $requete = $this->entityManager->getRepository(Contacts::class)->find($id);
@@ -77,6 +78,7 @@ class RequestController extends AbstractController
         $dbCategories = [];
         $err_msg = [];
         $dbPrefix = $this->getParameter('bolt.table_prefix');
+        $operation = 'u'
 
         if ($utility->existsTable($dbPrefix.'demandes') == true) {
             /** @var User $operateur */
@@ -86,6 +88,7 @@ class RequestController extends AbstractController
                 $response->setOperateur($operateur);
                 /* lien avec la requête de l'internaure */
                 $response->setContact($requete);
+                $operation = 'i';
             }
             $categories = $this->entityManager->getRepository(Categories::class)->findAll();
             if ($categories) {
@@ -94,6 +97,7 @@ class RequestController extends AbstractController
                 }
             }
 
+            /** @var Responses $response */
             $form = $this->createForm(ResponseType::class, $response);
             $form->handleRequest($request);
 
@@ -163,6 +167,8 @@ class RequestController extends AbstractController
                                 $response->setSendAt(new DateTimeImmutable('now'));
                                 $response->setClosedAt(new DateTimeImmutable('now'));
                                 $this->entityManager->flush();
+                                $manageIdx->updateResponsesIDX($response->toTntArray(), $operation);
+
                                 return $this->redirectToRoute('request_list');
                                 break;
                             case ($form->get('close')->isClicked())://traitement réponse + cloture
