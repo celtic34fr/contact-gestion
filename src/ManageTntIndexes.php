@@ -18,7 +18,7 @@ class ManageTntIndexes
     public function __construct(private IndexGenerator $idxGenerator, private ExtensionConfig $extensionConfig,
                                 private ConnectionConfig $connectionConfig)
     {
-        $this->prefix = $this->extensionConfig->get('celtic34fr_contactcore/prefix');
+        $this->prefix = $this->extensionConfig->get('celtic34fr-contactcore/prefix');
         $this->queryContacts = "SELECT idx.id, idx.sujet, idx.demande FROM ".$this->prefix."_contacts idx ";
         $this->queryResponses = "SELECT idx.id, idx.reponse FROM ".$this->prefix."_responses idx ";
         $this->indexesContacts = 'contacts';
