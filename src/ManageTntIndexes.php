@@ -20,10 +20,12 @@ class ManageTntIndexes
     public function __construct(private IndexGenerator $idxGenerator, private ExtensionConfig $extensionConfig,
                                 private ConnectionConfig $connectionConfig, private EntityManagerInterface $entityManager)
     {
+        $table = $this->entityManager->getClassMetadata(Contacts::class)->getTableName();
         $dql = $this->entityManager->createQueryBuilder()
                 ->select(['idx.id', 'idx.sujet', 'idx.demande'])
                 ->from(Contacts::class, 'idx');
-        $sql = $dql->getQuery()->getSQL();
+        $sql = $dql->getQuery()->getDQL();
+        $sql = str_replace(Contacts::class, $table, $sql);
 
 
         $this->prefix = $this->extensionConfig->get('celtic34fr-contactcore/prefix');
