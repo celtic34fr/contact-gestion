@@ -2,7 +2,6 @@
 
 namespace Celtic34fr\ContactGestion\Controller;
 
-use Celtic34fr\ContactGestion\Service\ConfigService;
 use Celtic34fr\ContactCore\Entity\Clientele;
 use Celtic34fr\ContactCore\Entity\CliInfos;
 use Celtic34fr\ContactGestion\Entity\Contacts;
@@ -10,7 +9,6 @@ use Celtic34fr\ContactCore\Enum\CustomerEnums;
 use Celtic34fr\ContactGestion\Form\ContactType;
 use Celtic34fr\ContactGestion\FormEntity\DemandesType;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
-use Celtic34fr\ContactCore\Service\Utilities;
 use Celtic34fr\ContactGestion\ManageTntIndexes;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -24,23 +22,25 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController
 {
     /**
-     * @param Request $request
      * @param EntityManagerInterface $entityManager
-     * @param ConfigService $config
-     * @param Utilities $utilit
      * @param ExtensionConfig $extConfigy
      * @return Response
      */
+    public function __construct(private EntityManagerInterface $entityManager,  
+        private ExtensionConfig $extConfig, private ManageTntIndexes $manageIdx)
+    {       
+    }
+
     #[Route('/', name: 'contact')]
-    public function __invoke(Request $request, EntityManagerInterface $entityManager, ConfigService $config,
-                          Utilities $utilit, ExtensionConfig $extConfig): Response
+    /**
+     * @param Request $request
+     */
+    public function index(Request $request): Response
     {
         $contact = new DemandesType();
         $no_error = true;
-//        $extConfig->initialize($this->getParameter('kernel.project_dir'));
 
         $form = $this->createForm(ContactType::class, $contact);
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if (array_key_exists('contact_demande', $_POST)) $contact->setDemande($_POST['contact_demande']);
@@ -59,8 +59,7 @@ class ContactController extends AbstractController
             }
 
             if ($no_error) {
-                $rc = $this->create_request($contact, $entityManager);
-
+                $rc = $this->create_request($contact);
                 if ($rc) {
                     $titre = "Enreistrement de votre demande";
                     $corps = "Votre demande vient d'être enregistrée dans nos bases";
@@ -76,15 +75,15 @@ class ContactController extends AbstractController
                 }
                 /** forward pour afficher la page mail-success.twig avec redirection vars la page d'accueil */
                 $this->addFlash($type, $corps);
-                $redirectRoute = $extConfig->get('celtic34fr-contactgestion/redirect_after_record');
+                $redirectRoute = $this->extConfig->get('celtic34fr-contactgestion/redirect_after_record');
                 return $this->redirectToRoute($redirectRoute);
             }
         }
 
-        $coordonnees = $extConfig->get('celtic34fr-contactgestion/coordonnees');
-        $adresse = $extConfig->get('celtic34fr-contactgestion/adresse');
-        $OSM_params = $extConfig->get('celtic34fr-contactgestion/OSM');
-        $template = $extConfig->get('celtic34fr-contactgestion/contact_form_template');
+        $coordonnees = $this->extConfig->get('celtic34fr-contactgestion/coordonnees');
+        $adresse = $this->extConfig->get('celtic34fr-contactgestion/adresse');
+        $OSM_params = $this->extConfig->get('celtic34fr-contactgestion/OSM');
+        $template = $this->extConfig->get('celtic34fr-contactgestion/contact_form_template');
 
 
         return $this->render('@'.$template, [
@@ -100,14 +99,13 @@ class ContactController extends AbstractController
 
     /**
      * @param DemandesType $contact
-     * @param EntityManagerInterface $entityManager
      * @return bool
      */
-    private function create_request(DemandesType $contact, EntityManagerInterface $entityManager, ManageTntIndexes $manageIdx): bool
+    private function create_request(DemandesType $contact): bool
     {
         $rc = null;
         try {
-            $clientele = $entityManager->getRepository(Clientele::class)->findOneBy(['courriel' => $contact->getAdrCourriel()]);
+            $clientele = $this->entityManager->getRepository(Clientele::class)->findOneBy(['courriel' => $contact->getAdrCourriel()]);
             if (!$clientele) {
                 $prospect = CustomerEnums::Prospect->_toString();
                 $clientele = new Clientele();
@@ -132,14 +130,14 @@ class ContactController extends AbstractController
             $demande->setClient($cliInfos);
 
             if (!$clientele->getId()) {
-                $entityManager->persist($cliInfos);
+                $this->entityManager->persist($cliInfos);
             }
-            $entityManager->persist($clientele);
-            $entityManager->persist($demande);
+            $this->entityManager->persist($clientele);
+            $this->entityManager->persist($demande);
 
-            $entityManager->flush();
+            $this->entityManager->flush();
 
-            $manageIdx->updateContactsIDX($demande->toTntArray(), 'i');
+            $this->manageIdx->updateContactsIDX($demande->toTntArray(), 'i');
 
             $rc = true;
         } catch (Exception $exception) {
