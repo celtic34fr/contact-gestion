@@ -35,7 +35,7 @@ class ContactController extends AbstractController
     /**
      * @param Request $request
      */
-    public function index(Request $request): Response
+    public function __invoke(Request $request): Response
     {
         $contact = new DemandesType();
         $no_error = true;
