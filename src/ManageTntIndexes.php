@@ -6,12 +6,12 @@ use Celtic34fr\ContactCore\Doctrine\ConnectionConfig;
 use Celtic34fr\ContactCore\IndexGenerator;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
 use Celtic34fr\ContactGestion\Entity\Contacts;
+use Celtic34fr\ContactGestion\Entity\Responses;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 class ManageTntIndexes
 {
-    private string $prefix;
     private string $queryContacts;
     private string $queryResponses;
     private string $indexesContacts;
@@ -25,12 +25,15 @@ class ManageTntIndexes
                 ->select(['idx.id', 'idx.sujet', 'idx.demande'])
                 ->from(Contacts::class, 'idx');
         $sql = $dql->getQuery()->getDQL();
-        $sql = str_replace(Contacts::class, $table, $sql);
+        $this->queryContacts = str_replace(Contacts::class, $table, $sql);
 
+        $table = $this->entityManager->getClassMetadata(Responses::class)->getTableName();
+        $dql = $this->entityManager->createQueryBuilder()
+                ->select(['idx.id', 'idx.reponse'])
+                ->from(Contacts::class, 'idx');
+        $sql = $dql->getQuery()->getDQL();
+        $this->queryResponses = str_replace(Contacts::class, $table, $sql);
 
-        $this->prefix = $this->extensionConfig->get('celtic34fr-contactcore/prefix');
-        $this->queryContacts = "SELECT idx.id, idx.sujet, idx.demande FROM ".$this->prefix."_contacts idx ";
-        $this->queryResponses = "SELECT idx.id, idx.reponse FROM ".$this->prefix."_responses idx ";
         $this->indexesContacts = 'contacts';
         $this->indexesResponses = 'responses';
     }
