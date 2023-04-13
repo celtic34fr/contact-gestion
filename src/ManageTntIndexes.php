@@ -5,6 +5,8 @@ namespace Celtic34fr\ContactGestion;
 use Celtic34fr\ContactCore\Doctrine\ConnectionConfig;
 use Celtic34fr\ContactCore\IndexGenerator;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Celtic34fr\ContactGestion\Entity\Contacts;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 class ManageTntIndexes
@@ -16,8 +18,14 @@ class ManageTntIndexes
     private string $indexesResponses;
 
     public function __construct(private IndexGenerator $idxGenerator, private ExtensionConfig $extensionConfig,
-                                private ConnectionConfig $connectionConfig)
+                                private ConnectionConfig $connectionConfig, private EntityManagerInterface $entityManager)
     {
+        $dql = $this->entityManager->createQueryBuilder('idx')
+                ->select('idx.id, idx.sujet, idx.demande')
+                ->from(Contacts::class, 'idx');
+        $sql = $dql->getQuery()->getSQL();
+
+
         $this->prefix = $this->extensionConfig->get('celtic34fr-contactcore/prefix');
         $this->queryContacts = "SELECT idx.id, idx.sujet, idx.demande FROM ".$this->prefix."_contacts idx ";
         $this->queryResponses = "SELECT idx.id, idx.reponse FROM ".$this->prefix."_responses idx ";
