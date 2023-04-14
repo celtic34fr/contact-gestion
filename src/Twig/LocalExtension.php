@@ -8,7 +8,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Celtic34fr\ContactGestion\Service\ContactDbInfos;
 
-class Twig extends AbstractExtension
+class LocalExtension extends AbstractExtension
 {
     public function __construct(private ContactDbInfos $contactDbInfos)
     {
@@ -25,7 +25,7 @@ class Twig extends AbstractExtension
         ];
 
         return [
-            new TwigFunction('crminfos', [$this, 'twigFunction_crminfos'], $safe),
+            new TwigFunction('contactInfos', [$this, 'twigFunction_contactInfos'], $safe),
         ];
     }
 
@@ -53,7 +53,7 @@ class Twig extends AbstractExtension
     /**
      * méthodes d'encapsulation de fonction ou traitements en Php
      */
-    public function twigFunction_crminfos()
+    public function twigFunction_contactInfos()
     {
         $a_traiter = $this->contactDbInfos->countRequestAll();
         $last2weeks = $this->contactDbInfos->countLast2WeeksDemands();
