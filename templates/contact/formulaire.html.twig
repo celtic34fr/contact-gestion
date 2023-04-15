@@ -7,9 +7,6 @@
     <!-- Bootstrap Font Icon CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('contact-assets/css/bootstrap.min.css') }}"/>
-{% endblock %}
-
-{% block main %}
     <style>
         textarea {
             max-width: 100%;
@@ -55,36 +52,37 @@
         }
 
         .lmt-8 {
-            top: 2rem;
             position: relative;
         }
     </style>
     {% include '@contact-core/includes/_map_css.twig' %}
+{% endblock %}
 
-    <section class="mt-16 w-full mx-4 px-4 mb-4">
+{% block content %}
+    <section class="mt-16 w-full mx-4 px-4 my-4">
         <div class="container px-5 py-8 mx-auto bg-gray-100">
-            <span class="text-2xl font-semibold px-2">Formulaire de constact</span>
-            <div class="px-2">
+            <h2 class="text-2xl font-semibold px-2 text-center my-2">Formulaire de contact</h2>
+            <div class="px-2 mt-4 mb-2 row">
                 {% if coordonnees.visu %}
-                    <div class="w-50p h-auto">
-                        <div class="w-full">
-                            <div class="w-full mb-2 px-2">
-                                <span class="text-lg">Nous contacter</span>
-                                <p class="text-xs">Vous pouvre nous contacter en remplissant le formulaire si contre ou
+                    <div class="col-6 h-auto">
+                        <div class="col-12">
+                            <div class="col-12 mb-2 px-2">
+                                <h3 class="text-lg">Nous contacter</h3>
+                                <p class="text-xs">Vous pouvez nous contacter en remplissant le formulaire si contre ou
                                     par l'un des
                                     moyens suivant.</p>
                             </div>
-                            <div class="w-full mb-2 px-2">
-                                <span class="text-lg">Nous appeler</h3>
+                            <div class="col-12 mb-2 px-2">
+                                <h3 class="text-lg">Nous appeler</h3>
                                     <p class="text-xs">{{ coordonnees.tel }}</p>
                             </div>
-                            <div class="w-full mb-2 px-2">
-                                <span class="text-lg">Nous écrire</span>
+                            <div class="col-12 mb-2 px-2">
+                                <h3 class="text-lg">Nous écrire</h3>
                                 <p class="text-xs"><a href="mailto:{{ coordonnees.courriel }}" class="__cf_email__"
                                                       data-cfemail="8ce5e2eae3cce1ede5e0a2efe3e1">{{ coordonnees.courriel }}</a>
                                 </p>
                             </div>
-                            <div class="w-full mb-2 px-2">
+                            <div class="col-12 mb-2 px-2">
                                 <h3 class="text-lg">Notre Adresse</h3>
                                 <p class="text-xs">{{ adresse.adresse }}</p>
                                 {% if adresse.complement is not empty %}
@@ -95,68 +93,66 @@
                         </div>
                     </div>
                 {% endif %}
-                <div class="{% if coordonnees.visu %}wp-50p lmt-8{% else %}mt-1{% endif %}">
-                    <div class="w-full">
-                        <span class="w-full text-xl">Faite votre demande ici</span>
-                        {{ form_start(form, {'class': 'w-full'}) }}
-                        {{ form_row(form._token) }}
-                        {% set errors = form.vars.errors.form.getErrors(true) %}
-                        {% if errors|length %}
-                            <ul class="errors-form w-full">
-                                {% for error in errors %}
-                                    <li class="error-line w-full">{{ error.message }}</li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                        <div class="w-full mt-2 h-6">
-                            {{ fields.field(form.nom, "Nom", {
-                                'class': 'w-50p mb-2', 'placeholder': 'Votre nom*',
-                                'il_class': {'label': 'w-50p px-2', 'input': 'w-50p'},
-                            }) }}
-                            {{ fields.field(form.prenom, 'Prénom', {
-                                'class': 'w-50p mb-2', 'placeholder': 'Votre prénom',
-                                'il_class': {'label': 'w-50p px-2', 'input': 'w-50p'}
-                            }) }}
-                        </div>
-                        <div class="w-full mt-2 h-6">
-                            {{ fields.field(form.adrCourriel, '@mail', {
-                                'class': 'w-50p mb-2',
-                                'placeholder': "Votre Adresses courriel (@mail)*",
-                                'il_class': {'label': 'w-50p px-2', 'input': 'w-50p'}
-                            }) }}
-                            {{ fields.field(form.telephone, 'Tél.', {
-                                'class': 'w-50p mb-2', 'placeholder': 'Votre téléphone',
-                                'il_class': {'label': 'w-50p px-2', 'input': 'w-50p'}
-                            }) }}
-                        </div>
-                    </div>
-                    <div class="w-full mt-2 no-float">
-                        <div class="w-full mt-2 h-auto">
-                            {{ fields.field(form.sujet, '', {
-                                'class': 'mb-2',
-                                'placeholder': "L'objet de votre demande*",
-                                'il_class': {'label': '', 'input': ''}
-                            }) }}
-                            {% set classTextArea = coordonnees.visu ? 'w-50p' : '' %}
-                            {{ fields.textarea(form.demande, '', {
-                                'class': classTextArea, 'cols': "72", 'rows': "5",
-                                'placeholder': " Saisissez votre demande*",
-                            }) }}
-                        </div>
-                        <div class="w-full mt-2 text-center">
-                            {{ fields.checkbox(form.contactMe, 'Je souhaite que vous me contactiez', {
-                                'class': '', 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
-                            }) }}
-                        </div>
-                        <div class="w-full mt-2">
-                            {{ fields.submitbtn(form.submit, "", {
-                                'class': 'w-full text-white gradient text-center',
-                            }) }}
-                        </div>
+                <div class="{% if coordonnees.visu %}col-6 lmt-8{% else %}col-12 mt-1{% endif %}">
+                    <div class="col-12 row">
+                        <h2 class="col-12 text-xl">Faite votre demande ici</h2>
+                        {{ form_start(form, {'class': 'col-12'}) }}
+                            {{ form_row(form._token) }}
+                            {% set errors = form.vars.errors.form.getErrors(true) %}
+                            {% if errors|length %}
+                                <ul class="errors-form col12 row">
+                                    {% for error in errors %}
+                                        <li class="error-line col-12 text-xs">{{ error.message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            <div class="col-12 mt-2 h-6 row px-0">
+                                {{ fields.field(form.nom, "", {
+                                    'class': 'col-6 mb-2 me-1 px-0', 'placeholder': 'Votre nom*',
+                                    'il_class': {'label': 'col-4 px-2 text-sm', 'input': 'col-8 text-sm'},
+                                }) }}
+                                {{ fields.field(form.prenom, '', {
+                                    'class': 'col-6 mb-2 ms-1 px-0', 'placeholder': 'Votre prénom',
+                                    'il_class': {'label': 'col-4 px-2 text-sm', 'input': 'col-8 text-sm'}
+                                }) }}
+                            </div>
+                            <div class="col-12 mt-2 h-6 row px-0">
+                                {{ fields.field(form.adrCourriel, '', {
+                                    'class': 'col-6 mb-2 me-1 px-0',
+                                    'placeholder': "Votre @mail*",
+                                    'il_class': {'label': 'col-4 px-2 text-sm', 'input': 'col-8 text-sm'}
+                                }) }}
+                                {{ fields.field(form.telephone, '', {
+                                    'class': 'col-6 mb-2 ms-1 px-0', 'placeholder': 'Votre téléphone',
+                                    'il_class': {'label': 'col-4 px-2 text-sm', 'input': 'col-4 text-sm'}
+                                }) }}
+                            </div>
+                            <div class="col-12 row mt-2 px-0">
+                                {{ fields.field(form.sujet, '', {
+                                    'class': 'col-12 mb-2 row px-0',
+                                    'placeholder': "L'objet de votre demande*",
+                                    'il_class': {'label': '', 'input': ''}
+                                }) }}
+                                {% set classTextArea = coordonnees.visu ? 'col-12 px-0' : '' %}
+                                {{ fields.textarea(form.demande, '', {
+                                    'class': classTextArea, 'cols': "72", 'rows': "5",
+                                    'placeholder': " Saisissez votre demande*",
+                                }) }}
+                            </div>
+                            <div class="col-12 row mt-2 text-center px-0">
+                                {{ fields.checkbox(form.contactMe, 'Je souhaite que vous me contactiez', {
+                                    'class': '', 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
+                                }) }}
+                            </div>
+                            <div class="col-12 row mt-2 px-0">
+                                {{ fields.submitbtn(form.submit, "", {
+                                    'class': 'col-12 text-white gradient text-center btn btn-success',
+                                }) }}
+                            </div>
                         {{ form_end(form, {render_rest: false}) }}
-                    </div>
-                    <div class="w-full mt-2 text-right text-gray-600">
-                        * champs obligatoires
+                        <div class="col-12 row mt-2 text-right text-gray-600 px-0">
+                            * champs obligatoires
+                        </div>
                     </div>
                 </div>
             </div>
