@@ -9,6 +9,7 @@ use Celtic34fr\ContactCore\Enum\CustomerEnums;
 use Celtic34fr\ContactGestion\Form\ContactType;
 use Celtic34fr\ContactGestion\FormEntity\DemandesType;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Celtic34fr\ContactGestion\Entity\NewsLetter;
 use Celtic34fr\ContactGestion\ManageTntIndexes;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -129,10 +130,19 @@ class ContactController extends AbstractController
             $demande->setContactMe($contact->isContactMe());
             $demande->setClient($cliInfos);
 
-            if (!$clientele->getId()) {
-                $this->entityManager->persist($cliInfos);
+            if ($contact->isNewsLetter()) {
+                $newsletter = $this->entityManager->getRepository(NewsLetter::class)->findOneBy(['client' => $clientele]);
+                if ($newsletter === null) {
+                    $newsletter = new NewsLetter();
+                    $newsletter->setClient($clientele);
+                    $this->entityManager->persist($newsletter);
+                    }
             }
-            $this->entityManager->persist($clientele);
+
+            if (!$clientele->getId()) {
+                $this->entityManager->persist($clientele);
+            }
+            $this->entityManager->persist($cliInfos);
             $this->entityManager->persist($demande);
 
             $this->entityManager->flush();

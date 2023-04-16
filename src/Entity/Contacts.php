@@ -2,15 +2,15 @@
 
 namespace Celtic34fr\ContactGestion\Entity;
 
-use Celtic34fr\ContactCore\Entity\CliInfos;
-use Celtic34fr\ContactGestion\Repository\ContactsRepository;
 use DateTimeImmutable;
+use JetBrains\PhpStorm\Pure;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Pure;
+use Celtic34fr\ContactCore\Entity\CliInfos;
+use Celtic34fr\ContactGestion\Entity\Responses;
+use Celtic34fr\ContactGestion\Repository\ContactsRepository;
 
 #[ORM\Entity(repositoryClass: ContactsRepository::class)]
-#[ORM\Index(columns: ["sujet", "demande"], name: "search_idx", flags: ['fulltext'])]
 class Contacts
 {
     #[ORM\Id]
@@ -127,12 +127,12 @@ class Contacts
         return $this;
     }
 
-    public function getReponse(): ?CrmResponses
+    public function getReponse(): ?Responses
     {
         return $this->reponse;
     }
 
-    public function setReponse(CrmResponses $reponse): self
+    public function setReponse(Responses $reponse): self
     {
         // set the owning side of the relation if necessary
         if ($reponse->getContact() !== $this) {

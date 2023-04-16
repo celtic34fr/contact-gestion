@@ -5,7 +5,6 @@ namespace Celtic34fr\ContactGestion\Repository;
 use Celtic34fr\ContactGestion\Entity\Contacts;
 use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use JetBrains\PhpStorm\ArrayShape;
@@ -72,7 +71,7 @@ class ContactsRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return CRMDemandes[] Returns an array of CRMDemandes objects
+//     * @return CRMDemandes[] Returns an array of Contacts objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -86,7 +85,7 @@ class ContactsRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?CRMDemandes
+//    public function findOneBySomeField($value): ?Contacts
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

@@ -10,6 +10,7 @@ class DemandesType
     private string $adr_courriel;
     private string $telephone;
     private bool $contact_me;
+    private bool $newsletter;
     private string $sujet;
     private string $demande;
 
@@ -87,6 +88,17 @@ class DemandesType
     public function setContactMe(bool $contact_me): self
     {
         $this->contact_me = $contact_me;
+        return $this;
+    }
+
+    public function isNewsLetter(): ?bool
+    {
+        return $this->newsletter ?? false;
+    }
+
+    public function setNewLetter(bool $newsletter): self
+    {
+        $this->newsletter = $newsletter;
         return $this;
     }
 
