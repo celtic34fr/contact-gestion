@@ -35,7 +35,7 @@ class ContactType extends AbstractType
                 'required' => false,
                 'value' => false,
             ])
-            ->add('newletter', CheckboxType::class, [
+            ->add('newsletter', CheckboxType::class, [
                 'required' => false,
                 'value' => false,
             ])
