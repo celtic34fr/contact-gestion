@@ -62,8 +62,9 @@
     <section class="mt-16 w-full mx-4 px-4 my-4">
         <div class="container px-5 py-8 mx-auto bg-gray-100">
             <h2 class="text-2xl font-semibold px-2 text-center my-2">Formulaire de contact</h2>
-            <div class="px-2 mt-4 mb-2 row">
-                {% if coordonnees.visu %}
+            <div class="px-2 mt-4 mb-2 row mx-0">
+                {% set coordonnees_visu = coordonnees.visu ?? false %}
+                {% if coordonnees_visu %}
                     <div class="col-6 h-auto">
                         <div class="col-12">
                             <div class="col-12 mb-2 px-2">
@@ -72,16 +73,24 @@
                                     par l'un des
                                     moyens suivant.</p>
                             </div>
+                            {% set tel = coordonnees.tel is defined ? coordonnees.tel : '' %}
+                            {% if tel is not empty %}
                             <div class="col-12 mb-2 px-2">
                                 <h3 class="text-lg">Nous appeler</h3>
-                                    <p class="text-xs">{{ coordonnees.tel }}</p>
+                                    <p class="text-xs">{{ coordonnees.tel ?? '' }}</p>
                             </div>
+                            {% endif %}
+                            {% set courriel = coordonnees.courriel is defined ? coordonnees.courriel : '' %}
+                            {% if courriel is not empty %}
                             <div class="col-12 mb-2 px-2">
                                 <h3 class="text-lg">Nous écrire</h3>
-                                <p class="text-xs"><a href="mailto:{{ coordonnees.courriel }}" class="__cf_email__"
+                                <p class="text-xs"><a href="mailto:{{ coordonnees.courriel ?? '' }}" class="__cf_email__"
                                                       data-cfemail="8ce5e2eae3cce1ede5e0a2efe3e1">{{ coordonnees.courriel }}</a>
                                 </p>
                             </div>
+                            {% endif %}
+                            {% if courriel is not empty %}
+                            {% endif %}
                             <div class="col-12 mb-2 px-2">
                                 <h3 class="text-lg">Notre Adresse</h3>
                                 <p class="text-xs">{{ adresse.adresse }}</p>
@@ -93,72 +102,72 @@
                         </div>
                     </div>
                 {% endif %}
-                <div class="{% if coordonnees.visu %}col-6 lmt-8{% else %}col-12 mt-1{% endif %}">
+                <div class="{% if coordonnees_visu %}col-6 lmt-8{% else %}col-12 mt-1{% endif %}">
                     <div class="col-12 row">
                         <h2 class="col-12 text-xl">Faite votre demande ici</h2>
-                        {{ form_start(form, {'class': 'col-12'}) }}
+                        {{ form_start(form, {'class': 'col-12 mx-0 px-0 row'}) }}
                             {{ form_row(form._token) }}
                             {% set errors = form.vars.errors.form.getErrors(true) %}
                             {% if errors|length %}
-                                <ul class="errors-form col12 row">
+                                <ul class="errors-form col12 row px-0 mx-0">
                                     {% for error in errors %}
                                         <li class="error-line col-12 text-xs">{{ error.message }}</li>
                                     {% endfor %}
                                 </ul>
                             {% endif %}
-                            <div class="col-12 mt-2 h-6 row px-0">
+                            <div class="col-12 mt-2 row px-0 mx-0">
                                 {{ fields.field(form.nom, "", {
-                                    'class': 'col-6 mb-2 me-1 px-0', 'placeholder': 'Votre nom*',
+                                    'class': 'col-6 mb-2 mx-0 ps-0 pe-1', 'placeholder': 'Votre nom*',
                                     'il_class': {'label': 'col-4 px-2 text-sm', 'input': 'col-8 text-sm'},
                                 }) }}
                                 {{ fields.field(form.prenom, '', {
-                                    'class': 'col-6 mb-2 ms-1 px-0', 'placeholder': 'Votre prénom',
+                                    'class': 'col-6 mb-2 mx-0 pe-0 ps-1', 'placeholder': 'Votre prénom',
                                     'il_class': {'label': 'col-4 px-2 text-sm', 'input': 'col-8 text-sm'}
                                 }) }}
                             </div>
-                            <div class="col-12 mt-2 h-6 row px-0">
+                            <div class="col-12 mt-2 row px-0 mx-0">
                                 {{ fields.field(form.adrCourriel, '', {
-                                    'class': 'col-6 mb-2 me-1 px-0',
+                                    'class': 'col-6 mb-2 ps-0 pe-1 mx-0',
                                     'placeholder': "Votre @mail*",
                                     'il_class': {'label': 'col-4 px-2 text-sm', 'input': 'col-8 text-sm'}
                                 }) }}
                                 {{ fields.field(form.telephone, '', {
-                                    'class': 'col-6 mb-2 ms-1 px-0', 'placeholder': 'Votre téléphone',
+                                    'class': 'col-6 mb-2 pe-0 ps-1 mx-0', 'placeholder': 'Votre téléphone',
                                     'il_class': {'label': 'col-4 px-2 text-sm', 'input': 'col-4 text-sm'}
                                 }) }}
                             </div>
-                            <div class="col-12 row mt-2 px-0">
+                            <div class="col-12 row mt-2 px-0 mx-0">
                                 {{ fields.field(form.sujet, '', {
-                                    'class': 'col-12 mb-2 row px-0',
+                                    'class': 'col-12 mb-2 row px-0 mx-0',
                                     'placeholder': "L'objet de votre demande*",
                                     'il_class': {'label': '', 'input': ''}
                                 }) }}
-                                {% set classTextArea = coordonnees.visu ? 'col-12 px-0' : '' %}
+                                {% set classTextArea = coordonnees_visu ? 'col-12 px-0' : '' %}
                                 {{ fields.textarea(form.demande, '', {
                                     'class': classTextArea, 'cols': "72", 'rows': "5",
                                     'placeholder': " Saisissez votre demande*",
                                 }) }}
                             </div>
-                            <div class="col-12 row mt-2 text-center px-0">
+                            <div class="col-12 row mt-2 text-center px-0 mx-0">
                                 {{ fields.checkbox(form.contactMe, 'Je souhaite que vous me contactiez', {
                                     'class': '', 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
                                 }) }}
                             </div>
                             {% set newsletter = newsletter.visu ?? false %}
                             {% if newsletter %}
-                            <div class="col-12 row mt-2 text-center px-0">
-                                {{ fields.checkbox(form.newsletter, "Je souhaite recevoir votre lettre d'information", {
+                            <div class="col-12 row mt-2 text-center px-0 mx-0">
+                                {{ fields.checkbox(form.newsletter, "Je souhaite recevoir votre lettre d'informations", {
                                     'class': '', 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
                                 }) }}
                             </div>
                             {% endif %}
-                            <div class="col-12 row mt-2 px-0">
+                            <div class="col-12 row mt-2 px-0 mx-0">
                                 {{ fields.submitbtn(form.submit, "", {
                                     'class': 'col-12 text-white gradient text-center btn btn-success',
                                 }) }}
                             </div>
                         {{ form_end(form, {render_rest: false}) }}
-                        <div class="col-12 row mt-2 text-right text-gray-600 px-0">
+                        <div class="col-12 row mt-2 text-right text-gray-600 px-0 mx-3">
                             * champs obligatoires
                         </div>
                     </div>
@@ -167,7 +176,8 @@
         </div>
     </section>
 
-    {% if OSM_params.visu %}
+    {% set OSM_visu = OSM_params is defined and OSM_params.visu is defined and OSM_params.visu %}
+    {% if OSM_visu %}
         <div class="mt-16 w-full mx-4 px-4 mb-4 map-section">
             <div class="container px-5 py-8 mx-auto bg-gray-100">
                 <div class="w-full">
