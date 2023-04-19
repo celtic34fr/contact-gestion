@@ -22,6 +22,9 @@ OSM:
   zoomMin: 1
   visu: true
 
+newsletter:
+  visu: true
+
 contact_form_template: contact-gestion/contact/formulaire.html.twig
 
 redirect_after_record: homepage

@@ -144,11 +144,14 @@
                                     'class': '', 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
                                 }) }}
                             </div>
+                            {% set newsletter = newsletter.visu ?? false %}
+                            {% if newsletter %}
                             <div class="col-12 row mt-2 text-center px-0">
                                 {{ fields.checkbox(form.newsletter, "Je souhaite recevoir votre lettre d'information", {
                                     'class': '', 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
                                 }) }}
                             </div>
+                            {% endif %}
                             <div class="col-12 row mt-2 px-0">
                                 {{ fields.submitbtn(form.submit, "", {
                                     'class': 'col-12 text-white gradient text-center btn btn-success',

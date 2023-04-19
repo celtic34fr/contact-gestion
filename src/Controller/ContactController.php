@@ -85,7 +85,7 @@ class ContactController extends AbstractController
         $adresse = $this->extConfig->get('celtic34fr-contactgestion/adresse');
         $OSM_params = $this->extConfig->get('celtic34fr-contactgestion/OSM');
         $template = $this->extConfig->get('celtic34fr-contactgestion/contact_form_template');
-
+        $newsletter = $this->extConfig->get('celtic34fr-contactgestion/newsletter');
 
         return $this->render('@'.$template, [
             'controller_name' => 'ContactController',
@@ -95,6 +95,7 @@ class ContactController extends AbstractController
             'coordonnees' => $coordonnees,
             'adresse' => $adresse,
             'OSM_params' => $OSM_params,
+            'newsletter' => $newsletter,
         ]);
     }
 
