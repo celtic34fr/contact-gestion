@@ -96,7 +96,7 @@ class DemandesType
         return $this->newsletter ?? false;
     }
 
-    public function setNewLetter(bool $newsletter): self
+    public function setNewsLetter(bool $newsletter): self
     {
         $this->newsletter = $newsletter;
         return $this;
