@@ -44,7 +44,7 @@
 
 {% block main %}
     {# entête de traitement de la requete #}
-    <div class="col-12 row m-0 mb-4 requete">
+    <div class="col-6 row m-0 mb-4 requete">
         <div class="col-12 cadre row m-0 p-0">
             <div class="col-3 m-0 label">
                 Sujet de la demande :
@@ -74,6 +74,19 @@
             </div>
         </div>
     </div>
+    <div class="col-6 row m-0 mb-4 search">
+        <h3>Recherche dans les demandes et réponses</h3>
+        {{ form_start(formS) }}
+        {{ form_row(formS._token) }}
+            <div class="col-12 row m-0 mt-2 p-0">
+                {{ fields.field(formS.searchText, "Chercher", {
+                    'class': 'col-12 p-2 m-0', 'placeholder': 'Critère de recherche',
+                    'il_class': {'label': 'col-2 p-0 m-0 pl-3', 'input': 'col-10 p-0 m-0 pl-3'},
+                    'value': form.reponse.vars.data
+                }) }}
+            </div>
+        {{ form_end(formS, {render_rest: false}) }}
+    </div>
 
     {{ form_start(form) }}
     {{ form_row(form._token) }}
@@ -83,6 +96,18 @@
             'tl_class': {'label': 'col-2 p-0 m-0 pl-3', 'textarea': 'col-10 p-0 m-0 pl-3'},
             'value': form.reponse.vars.data
         }) }}
+        <div class="col-12 row m-0 mt-5 p-0">
+            <div class="col-6 row  m-0 p-2">
+                {{ fields.submitbtn(formS.submit, 'Exécuter la recherche', {
+                    'class': 'col-12 btn btn-success text-white',
+                }) }}
+            </div>
+            <div class="col-3 row  m-0 p-2">
+                {{ fields.submitbtn(formS.reset, "Supprimer les critères", {
+                    'class': 'col-12 btn btn-primary text-white',
+                }) }}
+            </div>
+        </div>
     </div>
     <div class="col-12 row m-0 mt-2 p-0">
         {{ fields.select(form.categories, "Catégories", {

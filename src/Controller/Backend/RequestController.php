@@ -101,6 +101,8 @@ class RequestController extends AbstractController
             $form = $this->createForm(ResponseType::class, $response);
             $form->handleRequest($request);
 
+            $formS = $this->createForm(SearchType::class);
+
             if ($request->getMethod() == "POST") {
                 if ($form->isSubmitted()) {
                     /** cancel : retour à la liste des demandes ou requêtes d'internautes */
@@ -194,6 +196,7 @@ class RequestController extends AbstractController
             'dbCategories' => $dbCategories,
             'form' => $form->createView(),
             'errors' => $err_msg,
+            'formS' => $formS->createView(),
         ]);
     }
 
