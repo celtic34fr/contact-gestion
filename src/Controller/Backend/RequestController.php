@@ -2,28 +2,29 @@
 
 namespace Celtic34fr\ContactGestion\Controller\Backend;
 
-use Celtic34fr\ContactGestion\Entity\Categories;
+use Exception;
+use Bolt\Entity\User;
+use Twig\Environment;
+use DateTimeImmutable;
+use Twig\Error\LoaderError;
+use Twig\Error\SyntaxError;
+use Twig\Error\RuntimeError;
+use Doctrine\ORM\EntityManagerInterface;
+use Celtic34fr\ContactCore\Service\Utilities;
+use Symfony\Component\HttpFoundation\Request;
+use Celtic34fr\ContactCore\Service\SendMailer;
 use Celtic34fr\ContactGestion\Entity\Contacts;
+use Celtic34fr\ContactGestion\Form\SearchType;
+use Symfony\Component\HttpFoundation\Response;
 use Celtic34fr\ContactGestion\Entity\Responses;
+use Celtic34fr\ContactGestion\ManageTntIndexes;
+use Symfony\Component\Routing\Annotation\Route;
+use Celtic34fr\ContactGestion\Entity\Categories;
 use Celtic34fr\ContactGestion\Form\ResponseType;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
-use Bolt\Entity\User;
-use Celtic34fr\ContactCore\Service\SendMailer;
-use Celtic34fr\ContactCore\Service\Utilities;
-use Celtic34fr\ContactGestion\ManageTntIndexes;
-use DateTimeImmutable;
-use Doctrine\ORM\EntityManagerInterface;
-use Exception;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
-use Symfony\Component\Routing\Annotation\Route;
-use Twig\Environment;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('request')]
 class RequestController extends AbstractController
