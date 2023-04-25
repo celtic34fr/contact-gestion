@@ -80,7 +80,7 @@ class RequestController extends AbstractController
         $dbPrefix = $this->getParameter('bolt.table_prefix');
         $operation = 'u';
 
-        if ($utility->existsTable($dbPrefix.'demandes') == true) {
+        if ($utility->existsTable($dbPrefix.'contacts') == true) {
             /** @var User $operateur */
             $operateur = $this->getUser();
             if (!$response) {
