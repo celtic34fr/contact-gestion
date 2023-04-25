@@ -19,11 +19,9 @@ class SearchType extends AbstractType
             ])
         ->add('submit', SubmitType::class, [
             'label' => 'Soumettre la recherche',
-            'mapped' => false,
             ])
         ->add('reset', SubmitType::class, [
             'label' => 'Supprimer les Critères',
-            'mapped' => false,
             ])
         ;
     }
