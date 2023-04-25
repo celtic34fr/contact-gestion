@@ -43,101 +43,103 @@
 {% endblock %}
 
 {% block main %}
-    {# entête de traitement de la requete #}
-    <div class="col-6 row m-0 mb-4 requete">
-        <div class="col-12 cadre row m-0 p-0">
-            <div class="col-3 m-0 label">
-                Sujet de la demande :
+    <div id="page" class="row">
+        {# entête de traitement de la requete #}
+        <div class="col-6 row m-0 mb-4 requete">
+            <div class="col-12 cadre row m-0 p-0">
+                <div class="col-3 m-0 label">
+                    Sujet de la demande :
+                </div>
+                <div class="col-9 m-0 valeur">
+                    {{ requete.getSujet() }}
+                </div>
+                <div class="col-3 m-0 label">
+                    Postée le :
+                </div>
+                <div class="col-3 m-0 valeur">
+                    {{ requete.getCreatedAt()|date("d/m/Y") }}
+                </div>
+                <div class="col-3 m-0 label">
+                    Traitée depuis le :
+                </div>
+                <div class="col-3 m-0 valeur">
+                    {{ requete.getTreatedAt() != NULL ? requete.getTReatedAt()|date("d/m/Y") :"" }}
+                </div>
             </div>
-            <div class="col-9 m-0 valeur">
-                {{ requete.getSujet() }}
-            </div>
-            <div class="col-3 m-0 label">
-                Postée le :
-            </div>
-            <div class="col-3 m-0 valeur">
-                {{ requete.getCreatedAt()|date("d/m/Y") }}
-            </div>
-            <div class="col-3 m-0 label">
-                Traitée depuis le :
-            </div>
-            <div class="col-3 m-0 valeur">
-                {{ requete.getTreatedAt() != NULL ? requete.getTReatedAt()|date("d/m/Y") :"" }}
+            <div class="col-12 cadre row m-0 mt-3 p-0">
+                <div class="col-12 m-0 label">
+                    Demande proprement dite :
+                </div>
+                <div class="col-12 mt-2 mb-4 valeur">
+                    {{ requete.getDemande() }}
+                </div>
             </div>
         </div>
-        <div class="col-12 cadre row m-0 mt-3 p-0">
-            <div class="col-12 m-0 label">
-                Demande proprement dite :
-            </div>
-            <div class="col-12 mt-2 mb-4 valeur">
-                {{ requete.getDemande() }}
-            </div>
+        <div class="col-6 row m-0 mb-4 search">
+            <h3>Recherche dans les demandes et réponses</h3>
+            {{ form_start(formS) }}
+            {{ form_row(formS._token) }}
+                <div class="col-12 row m-0 mt-2 p-0">
+                    {{ fields.field(formS.searchText, "Chercher", {
+                        'class': 'col-12 p-2 m-0', 'placeholder': 'Critère de recherche',
+                        'il_class': {'label': 'col-2 p-0 m-0 pl-3', 'input': 'col-10 p-0 m-0 pl-3'},
+                        'value': form.reponse.vars.data
+                    }) }}
+                </div>
+                <div class="col-12 row m-0 mt-5 p-0">
+                    <div class="col-6 row  m-0 p-2">
+                        {{ fields.submitbtn(formS.submit, 'Exécuter la recherche', {
+                            'class': 'col-12 btn btn-success text-white',
+                        }) }}
+                    </div>
+                    <div class="col-3 row  m-0 p-2">
+                        {{ fields.submitbtn(formS.reset, "Supprimer les critères", {
+                            'class': 'col-12 btn btn-primary text-white',
+                        }) }}
+                    </div>
+                </div>
+            {{ form_end(formS, {render_rest: false}) }}
         </div>
-    </div>
-    <div class="col-6 row m-0 mb-4 search">
-        <h3>Recherche dans les demandes et réponses</h3>
-        {{ form_start(formS) }}
-        {{ form_row(formS._token) }}
-            <div class="col-12 row m-0 mt-2 p-0">
-                {{ fields.field(formS.searchText, "Chercher", {
-                    'class': 'col-12 p-2 m-0', 'placeholder': 'Critère de recherche',
-                    'il_class': {'label': 'col-2 p-0 m-0 pl-3', 'input': 'col-10 p-0 m-0 pl-3'},
-                    'value': form.reponse.vars.data
-                }) }}
-            </div>
-        {{ form_end(formS, {render_rest: false}) }}
-    </div>
 
-    {{ form_start(form) }}
-    {{ form_row(form._token) }}
-    <div class="col-12 row m-0 mt-2 p-0">
-        {{ fields.textarea(form.reponse, "Réponse", {
-            'class': 'col-12 p-2 m-0', 'placeholder': 'Réponse à la requête', 'rows': 5, 'cols': 72,
-            'tl_class': {'label': 'col-2 p-0 m-0 pl-3', 'textarea': 'col-10 p-0 m-0 pl-3'},
-            'value': form.reponse.vars.data
-        }) }}
+        {{ form_start(form) }}
+        {{ form_row(form._token) }}
+        <div class="col-12 row m-0 mt-2 p-0">
+            {{ fields.textarea(form.reponse, "Réponse", {
+                'class': 'col-12 p-2 m-0', 'placeholder': 'Réponse à la requête', 'rows': 5, 'cols': 72,
+                'tl_class': {'label': 'col-2 p-0 m-0 pl-3', 'textarea': 'col-10 p-0 m-0 pl-3'},
+                'value': form.reponse.vars.data
+            }) }}
+        </div>
+        <div class="col-12 row m-0 mt-2 p-0">
+            {{ fields.select(form.categories, "Catégories", {
+                'class': 'col-12 p-2 m-0 categories', 'placeholder': 'Choisissez ou saisissez une catégorie',
+                'multiple': true, 'sl_class' : {'label': "col-4", 'select': 'col-8'}, 'choices': dbCategories,
+            }) }}
+        </div>
         <div class="col-12 row m-0 mt-5 p-0">
-            <div class="col-6 row  m-0 p-2">
-                {{ fields.submitbtn(formS.submit, 'Exécuter la recherche', {
+            <div class="col-3 row  m-0 p-2">
+                {{ fields.submitbtn(form.record, '', {
                     'class': 'col-12 btn btn-success text-white',
                 }) }}
             </div>
             <div class="col-3 row  m-0 p-2">
-                {{ fields.submitbtn(formS.reset, "Supprimer les critères", {
+                {{ fields.submitbtn(form.send, "", {
                     'class': 'col-12 btn btn-primary text-white',
                 }) }}
             </div>
+            <div class="col-3 row  m-0 p-2">
+                {{ fields.submitbtn(form.close, "", {
+                    'class': 'col-12 btn btn-danger text-white',
+                }) }}
+            </div>
+            <div class="col-3 row  m-0 p-2">
+                {{ fields.submitbtn(form.cancel, "", {
+                    'class': 'col-12 btn btn-bs-warning',
+                }) }}
+            </div>
         </div>
+        {{ form_end(form, {render_rest: false}) }}
     </div>
-    <div class="col-12 row m-0 mt-2 p-0">
-        {{ fields.select(form.categories, "Catégories", {
-            'class': 'col-12 p-2 m-0 categories', 'placeholder': 'Choisissez ou saisissez une catégorie',
-            'multiple': true, 'sl_class' : {'label': "col-4", 'select': 'col-8'}, 'choices': dbCategories,
-        }) }}
-    </div>
-    <div class="col-12 row m-0 mt-5 p-0">
-        <div class="col-3 row  m-0 p-2">
-            {{ fields.submitbtn(form.record, '', {
-                'class': 'col-12 btn btn-success text-white',
-            }) }}
-        </div>
-        <div class="col-3 row  m-0 p-2">
-            {{ fields.submitbtn(form.send, "", {
-                'class': 'col-12 btn btn-primary text-white',
-            }) }}
-        </div>
-        <div class="col-3 row  m-0 p-2">
-            {{ fields.submitbtn(form.close, "", {
-                'class': 'col-12 btn btn-danger text-white',
-            }) }}
-        </div>
-        <div class="col-3 row  m-0 p-2">
-            {{ fields.submitbtn(form.cancel, "", {
-                'class': 'col-12 btn btn-bs-warning',
-            }) }}
-        </div>
-    </div>
-    {{ form_end(form, {render_rest: false}) }}
 {% endblock %}
 
 {% block aside %}{{ parent() }}{% endblock %}
