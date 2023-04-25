@@ -22,7 +22,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Celtic34fr\ContactGestion\Entity\Categories;
 use Celtic34fr\ContactGestion\Form\ResponseType;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
