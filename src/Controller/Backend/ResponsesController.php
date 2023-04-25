@@ -9,8 +9,8 @@ use Celtic34fr\ContactGestion\Form\SearchFormType;
 use Celtic34fr\ContactGestion\FormEntity\SearchForm;
 use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
 use Doctrine\ORM\EntityManagerInterface;
-use JetBrains\PhpStorm\Pure;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -68,11 +68,18 @@ class ResponsesController extends AbstractController implements BackendZoneInter
         ]);
     }
 
+    #[Route('/searchInQR', name: 'searchInQR')]
+    public function searchInQR(Request $request): JsonResponse
+    {
+        dd($request->request);
+        return new JsonResponse();
+    }
+
     /**
      * @param array $reponses
      * @return array
      */
-    #[Pure] private function formatSearchReturn(array $reponses): array
+    private function formatSearchReturn(array $reponses): array
     {
         $datas_output = [];
         /** @var Responses $data */
