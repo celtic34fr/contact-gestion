@@ -166,12 +166,13 @@ class ManageTntIndexes
         ];
     }
 
-    private function array_unique(array $array1, array $array2) {
-        foreach($array2 as $id2 => $data2) {
-            if (!array_key_exists($id2, $array1)) {
-                $array1[$id2] = $data2;
+    private function array_unique(array $array) {
+        $rslt = [];
+        foreach($array as $id => $data) {
+            if (!array_key_exists($id, $rslt)) {
+                $rslt[$id] = $data;
             }
         }
-        return $array1;
+        return $rslt;
     }
 }
