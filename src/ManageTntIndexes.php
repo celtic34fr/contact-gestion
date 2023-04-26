@@ -106,7 +106,7 @@ class ManageTntIndexes
         $tnt->selectIndex($this->indexesContacts);
         $tntResult = $tnt->search($toSearch, $maxResults);
         if ($tntResult) { // la recherche à produit des résultat
-            foreach ($tntResult as $idResult) {
+            foreach ($tntResul['ids'] as $idResult) {
                 $record = $this->entityManager->getRepository(Contacts::class)->find($idResult);
                 $results[$idResult] = $this->formatQR($record, 'contacts');
             }
@@ -124,7 +124,7 @@ class ManageTntIndexes
         $tnt->selectIndex($this->indexesResponses);
         $tntResult = $tnt->search($toSearch, $maxResults);
         if ($tntResult) { // la recherche à produit des résultat
-            foreach ($tntResult as $idResult) {
+            foreach ($tntResult['ids'] as $idResult) {
                 $record = $this->entityManager->getRepository(Responses::class)->find($idResult);
                 $results[$idResult] = $this->formatQR($record, 'contacts');
             }
