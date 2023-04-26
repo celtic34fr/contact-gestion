@@ -2,25 +2,27 @@
 
 namespace Celtic34fr\ContactGestion\Controller\Backend;
 
-use Bolt\Controller\Backend\BackendZoneInterface;
-use Celtic34fr\ContactGestion\Entity\Categories;
-use Celtic34fr\ContactGestion\Entity\Responses;
-use Celtic34fr\ContactGestion\Form\SearchFormType;
-use Celtic34fr\ContactGestion\FormEntity\SearchForm;
-use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
+use TeamTNT\TNTSearch\TNTSearch;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Celtic34fr\ContactGestion\Entity\Responses;
+use Celtic34fr\ContactGestion\ManageTntIndexes;
 use Symfony\Component\Routing\Annotation\Route;
+use Celtic34fr\ContactGestion\Entity\Categories;
+use Bolt\Controller\Backend\BackendZoneInterface;
+use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
+use Celtic34fr\ContactGestion\Entity\Contacts;
+use Celtic34fr\ContactGestion\Form\SearchFormType;
+use Celtic34fr\ContactGestion\FormEntity\SearchForm;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('response')]
 class ResponsesController extends AbstractController implements BackendZoneInterface
 {
     use DbPaginateTrait;
 
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager, private ManageTntIndexes $manageIdx)
     {
     }
 
@@ -28,6 +30,7 @@ class ResponsesController extends AbstractController implements BackendZoneInter
     public function seachInResponses(Request $request): Response
     {
         $dbCategories = [];
+        $results = [];
         $cPage = 1;
         $limit = 10;
         $categories = $this->entityManager->getRepository(Categories::class)->findAll();
@@ -47,11 +50,9 @@ class ResponsesController extends AbstractController implements BackendZoneInter
         if ($form->isSubmitted() && $form->isValid()) {
             if ($request->getMethod() === "POST") {
                 if ($form->get('submit')->isClicked()) {
-                    $reponses = $this->entityManager->getRepository(Responses::class)
-                        ->findMatchText($form->get('searchText')->getData(), $form->get('categories')->getData());
-                    $reponses = $this->paginateManual($reponses, $cPage, $limit);
-                    $reponses = $this->formatSearchReturn($reponses);
-                    $reset = false;
+                    // recherche via le module TntSearch dans ManageTntIndexes
+                    $maxResults = 20;
+                    $results = $this->manageIdx->search($form->get('searchText')->getData(), $maxResults);
                 } else {
                     $searchForm->setSearchText("");
                 }
@@ -65,26 +66,7 @@ class ResponsesController extends AbstractController implements BackendZoneInter
             'currentPage' => $reponses['page'],
             'pages' => $reponses['pages'],
             'reset' => $reset,
+            'results' => $results,
         ]);
-    }
-
-    /**
-     * @param array $reponses
-     * @return array
-     */
-    private function formatSearchReturn(array $reponses): array
-    {
-        $datas_output = [];
-        /** @var Responses $data */
-        foreach ($reponses['datas'] as $data) {
-            $datas_output[] = [
-                'sujet' => $data->getContact()->getSujet(),
-                'reponse' => $data->getReponse(),
-                'created_at' => $data->getContact()->getCreatedAt(),
-                'closed_at' => $data->getClosedAt(),
-            ];
-        }
-        $reponses['datas'] = $datas_output;
-        return $reponses;
     }
 }

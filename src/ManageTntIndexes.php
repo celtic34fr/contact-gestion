@@ -2,20 +2,21 @@
 
 namespace Celtic34fr\ContactGestion;
 
-use Celtic34fr\ContactCore\Doctrine\ConnectionConfig;
+use TeamTNT\TNTSearch\TNTSearch;
+use Doctrine\ORM\EntityManagerInterface;
 use Celtic34fr\ContactCore\IndexGenerator;
-use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Symfony\Component\Filesystem\Filesystem;
 use Celtic34fr\ContactGestion\Entity\Contacts;
 use Celtic34fr\ContactGestion\Entity\Responses;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Filesystem\Filesystem;
+use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Celtic34fr\ContactCore\Doctrine\ConnectionConfig;
 
 class ManageTntIndexes
 {
     private string $queryContacts;
     private string $queryResponses;
-    private string $indexesContacts;
-    private string $indexesResponses;
+    public string $indexesContacts;
+    public string $indexesResponses;
 
     public function __construct(private IndexGenerator $idxGenerator, private ExtensionConfig $extensionConfig,
                                 private ConnectionConfig $connectionConfig, private EntityManagerInterface $entityManager)
@@ -36,6 +37,10 @@ class ManageTntIndexes
 
         $this->indexesContacts = 'contacts';
         $this->indexesResponses = 'responses';
+    }
+
+    public function getTntConfig() {
+        return $this->connectionConfig->getConfig();
     }
 
     public function generateContactsIDX()
@@ -88,5 +93,74 @@ class ManageTntIndexes
 
     public function updateResponsesIDX(array $srcArray, string $operation) {
         $this->idxGenerator->updateByArray($this->indexesResponses, $srcArray, $operation);
+    }
+
+    public function searchContact(string $toSearch, int $maxResults = 20)
+    {
+        $tnt = new TNTSearch;
+        $configuration = $this->getTntConfig();
+        $tnt->loadConfig($configuration);
+        $results = [];
+
+        // recherche dans chaque index 
+        $tnt->selectIndex($this->indexesContacts);
+        $tntResult = $tnt->search($toSearch, $maxResults);
+        if ($tntResult) { // la recherche à produit des résultat
+            foreach ($tntResult as $idResult) {
+                $record = $this->entityManager->getRepository(Contacts::class)->find($idResult);
+                $results[$idResult] = $this->formatQR($record, 'contacts');
+            }
+        }
+    }
+
+    public function searchResponse(string $toSearch, int $maxResults = 20)
+    {
+        $tnt = new TNTSearch;
+        $configuration = $this->getTntConfig();
+        $tnt->loadConfig($configuration);
+        $results = [];
+
+        // recherche dans chaque index 
+        $tnt->selectIndex($this->indexesContacts);
+        $tntResult = $tnt->search($toSearch, $maxResults);
+        if ($tntResult) { // la recherche à produit des résultat
+            foreach ($tntResult as $idResult) {
+                $record = $this->entityManager->getRepository(Responses::class)->find($idResult);
+                $results[$idResult] = $this->formatQR($record, 'contacts');
+            }
+        }
+    }
+
+    public function search (string $toSearch, int $maxResults = 20)
+    {
+        $resultsC = $this->searchContact($toSearch, $maxResults) ?? [];
+        $resultsR = $this->searchResponse($toSearch, $maxResults) ?? [];
+        $results = array_unique(array_merge($resultsC, $resultsR));
+        return $results;
+    }
+
+
+    private function formatQR($object, string $entity) {
+        /* formatage des résultats de recherche pour obtebir une structure unique quelque soit l'objet à traiter */
+        switch($entity) {
+            case 'contacts':
+                /** @var Contacts $object */
+                $contact = $object;
+                $response = $object->getReponse();
+                break;
+            case 'responses':
+                /** @var Responses $object */
+                $response = $object;
+                $contact = $object->getContact();
+                break;
+        }
+        return [
+            'sujet' => $contact->getSujet(),
+            'demande' => $contact->getDemande(),
+            'createdAt' => $contact->getCreatedAt()->format('d/m/Y'),
+            'treatedAt' => $contact->getTreatedAt()->format('d/m/Y') ?? '',
+            'reponse' => $response->getReponse() ?? '',
+            'sendAt' => $response->getSendAt() ?? '',
+        ];
     }
 }
