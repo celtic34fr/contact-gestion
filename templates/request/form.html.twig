@@ -201,21 +201,5 @@
                 });
             {% endfor %}
         {% endif %}
-
-        function searchSubmit(event) {
-            e.preventDefault();
-
-            fetch('{{ path('searchInQR') }}', {
-                body: new FormData(e.target),
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(json => {
-                console.log(json);
-            });
-        }
-
-        let elt = document.querySelector('.search button#search_submit');
-        elt.addEventListener('click', searchSubmit, false);
     </script>
 {% endblock %}

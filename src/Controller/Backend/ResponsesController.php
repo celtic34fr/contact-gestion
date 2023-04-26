@@ -68,13 +68,6 @@ class ResponsesController extends AbstractController implements BackendZoneInter
         ]);
     }
 
-    #[Route('/searchInQR', name: 'searchInQR')]
-    public function searchInQR(Request $request): JsonResponse
-    {
-        dd($request->request);
-        return new JsonResponse();
-    }
-
     /**
      * @param array $reponses
      * @return array
