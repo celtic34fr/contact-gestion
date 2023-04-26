@@ -111,6 +111,7 @@ class ManageTntIndexes
                 $results[$idResult] = $this->formatQR($record, 'contacts');
             }
         }
+        return $results;
     }
 
     public function searchResponse(string $toSearch, int $maxResults = 20)
@@ -129,6 +130,7 @@ class ManageTntIndexes
                 $results[$idResult] = $this->formatQR($record, 'contacts');
             }
         }
+        return $results;
     }
 
     public function search (string $toSearch, int $maxResults = 20)
