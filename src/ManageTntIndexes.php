@@ -35,8 +35,8 @@ class ManageTntIndexes
         $sql = $dql->getQuery()->getDQL();
         $this->queryResponses = str_replace(Contacts::class, $table, $sql);
 
-        $this->indexesContacts = 'contacts';
-        $this->indexesResponses = 'responses';
+        $this->indexesContacts = 'contacts.index';
+        $this->indexesResponses = 'responses.index';
     }
 
     public function getTntConfig() {
@@ -121,7 +121,7 @@ class ManageTntIndexes
         $results = [];
 
         // recherche dans chaque index 
-        $tnt->selectIndex($this->indexesContacts);
+        $tnt->selectIndex($this->indexesResponses);
         $tntResult = $tnt->search($toSearch, $maxResults);
         if ($tntResult) { // la recherche à produit des résultat
             foreach ($tntResult as $idResult) {
