@@ -137,7 +137,7 @@ class ManageTntIndexes
     {
         $resultsC = $this->searchContact($toSearch, $maxResults) ?? [];
         $resultsR = $this->searchResponse($toSearch, $maxResults) ?? [];
-        $results = array_unique(array_merge($resultsC, $resultsR));
+        $results = $this->array_unique(array_merge($resultsC, $resultsR));
         return $results;
     }
 
@@ -164,5 +164,14 @@ class ManageTntIndexes
             'reponse' => $response ? $response->getReponse() : '',
             'sendAt' => $response ? $response->getSendAt()->format('d/m/Y') : '',
         ];
+    }
+
+    private function array_unique(array $array1, array $array2) {
+        foreach($array2 as $id2 => $data2) {
+            if (!array_key_exists($id2, $array1)) {
+                $array1[$id2] = $data2;
+            }
+        }
+        return $array1;
     }
 }
