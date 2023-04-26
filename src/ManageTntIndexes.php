@@ -158,7 +158,7 @@ class ManageTntIndexes
             'sujet' => $contact->getSujet(),
             'demande' => $contact->getDemande(),
             'createdAt' => $contact->getCreatedAt() ? $contact->getCreatedAt()->format('d/m/Y') : '',
-            'treatedAt' => $contact->getTreatedAt() ? $contact->getTreatedAt()->format('d/m/Y') ?? '',
+            'treatedAt' => $contact->getTreatedAt() ? $contact->getTreatedAt()->format('d/m/Y') : '',
             'reponse' => $response->getReponse() ?? '',
             'sendAt' => $response->getSendAt() ?? '',
         ];
