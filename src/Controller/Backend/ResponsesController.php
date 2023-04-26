@@ -11,7 +11,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Celtic34fr\ContactGestion\Entity\Categories;
 use Bolt\Controller\Backend\BackendZoneInterface;
 use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
-use Celtic34fr\ContactGestion\Entity\Contacts;
 use Celtic34fr\ContactGestion\Form\SearchFormType;
 use Celtic34fr\ContactGestion\FormEntity\SearchForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
