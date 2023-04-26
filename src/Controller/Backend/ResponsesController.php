@@ -2,7 +2,6 @@
 
 namespace Celtic34fr\ContactGestion\Controller\Backend;
 
-use TeamTNT\TNTSearch\TNTSearch;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
