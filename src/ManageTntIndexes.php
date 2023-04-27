@@ -119,7 +119,7 @@ class ManageTntIndexes
         if ($tntResult) { // la recherche à produit des résultat
             foreach ($tntResult['ids'] as $idResult) {
                 $record = $this->entityManager->getRepository(Contacts::class)->find($idResult);
-                $results[$idResult] = $this->formatQR($record, 'contacts', $tnt['docScores'][$idResult]);
+                $results[$idResult] = $this->formatQR($record, 'contacts', $tntResult['docScores'][$idResult]);
             }
         }
         return $results;
