@@ -17,7 +17,10 @@ class ManageTntIndexes
     private string $queryResponses;
     public string $indexesContacts;
     public string $indexesResponses;
-
+    public $fuzzy_prefix_length  = 2;
+    public $fuzzy_max_expansions = 50;
+    public $fuzzy_distance       = 2;
+    
     public function __construct(private IndexGenerator $idxGenerator, private ExtensionConfig $extensionConfig,
                                 private ConnectionConfig $connectionConfig, private EntityManagerInterface $entityManager)
     {
@@ -104,11 +107,19 @@ class ManageTntIndexes
 
         // recherche dans chaque index 
         $tnt->selectIndex($this->indexesContacts);
-        $tntResult = $tnt->search($toSearch, $maxResults);
+        $this->fuzzy_prefix_length = $this->extensionConfig->get('celtic34fr-contactcore/fuzzy/prefix_length');
+        $this->fuzzy_max_expansions = $this->extensionConfig->get('celtic34fr-contactcore/fuzzy/max_expansions');
+        $this->fuzzy_distance = $this->extensionConfig->get('celtic34fr-contactcore/fuzzy/distance');
+        $tnt->fuzziness = $this->extensionConfig->get('celtic34fr-contactcore/fuzzy/enabled');
+        if ($maxResults > 0) {
+            $tntResult = $tnt->search($toSearch, $maxResults);
+        } else { // limitation à 100 résultats par défaut
+            $tntResult = $tnt->search($toSearch);
+        }
         if ($tntResult) { // la recherche à produit des résultat
             foreach ($tntResult['ids'] as $idResult) {
                 $record = $this->entityManager->getRepository(Contacts::class)->find($idResult);
-                $results[$idResult] = $this->formatQR($record, 'contacts');
+                $results[$idResult] = $this->formatQR($record, 'contacts', $tnt['docScores'][$idResult]);
             }
         }
         return $results;
@@ -127,7 +138,7 @@ class ManageTntIndexes
         if ($tntResult) { // la recherche à produit des résultat
             foreach ($tntResult['ids'] as $idResult) {
                 $record = $this->entityManager->getRepository(Responses::class)->find($idResult);
-                $results[$idResult] = $this->formatQR($record, 'contacts');
+                $results[$idResult] = $this->formatQR($record, 'contacts', $tnt['docScores'][$idResult]);
             }
         }
         return $results;
@@ -142,7 +153,7 @@ class ManageTntIndexes
     }
 
 
-    private function formatQR($object, string $entity) {
+    private function formatQR($object, string $entity, $score) {
         /* formatage des résultats de recherche pour obtebir une structure unique quelque soit l'objet à traiter */
         switch($entity) {
             case 'contacts':
@@ -163,13 +174,17 @@ class ManageTntIndexes
             'treatedAt' => $contact->getTreatedAt() ? $contact->getTreatedAt()->format('d/m/Y') : '',
             'reponse' => $response ? $response->getReponse() : '',
             'sendAt' => $response ? $response->getSendAt()->format('d/m/Y') : '',
+            'score' => $score,
         ];
     }
 
-    private function array_unique(array $array) {
+    private function array_unique(array $array, int $maxResults = 20) {
         $rslt = [];
         foreach($array as $id => $data) {
             if (!array_key_exists($id, $rslt)) {
+                if ($maxResults && sizeof($rslt) === $maxResults) {
+                    break;
+                }
                 $rslt[$id] = $data;
             }
         }

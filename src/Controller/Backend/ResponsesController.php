@@ -47,12 +47,13 @@ class ResponsesController extends AbstractController implements BackendZoneInter
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($request->getMethod() === "POST") {
-                if ($form->get('submit')->isClicked()) {
-                    // recherche via le module TntSearch dans ManageTntIndexes
-                    $maxResults = 20;
-                    $results = $this->manageIdx->search($form->get('searchText')->getData(), $maxResults);
+                if (!$form->get('reset')->isClicked()) {
+                    // recherche via le module TntSearch dans ManageTntIndexes limité à 20 par défaut
+                    $results = $this->manageIdx->search($form->get('searchText')->getData());
+                    $results = $this->filterByCategories($results, $form->get('categories')->getData());
                 } else {
                     $searchForm->setSearchText("");
+                    $results = [];
                 }
             }
         }
@@ -66,5 +67,15 @@ class ResponsesController extends AbstractController implements BackendZoneInter
             'reset' => $reset,
             'results' => $results,
         ]);
+    }
+
+
+    private function filterByCategories(array $results, $categories): array
+    {
+        /** filtrage des résultats par catégories */
+
+        dd($categories);
+
+        return $results;
     }
 }

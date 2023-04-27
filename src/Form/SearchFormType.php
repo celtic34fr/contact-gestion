@@ -25,10 +25,10 @@ class SearchFormType extends AbstractType
                 'required' => false,
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Soumettre la recherche',
+                'label' => 'Exécuter la recherche',
             ])
             ->add('reset', SubmitType::class, [
-                'label' => 'Supprimer les Critères',
+                'label' => 'Supprimer les critères',
             ])
         ;
     }
