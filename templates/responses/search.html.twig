@@ -82,34 +82,44 @@
             </tr>
             </thead>
             <tbody class="col-12 row">
-            {% if reponses is not defined or reponses is empty %}
+            {% if results is not defined or results is empty %}
                 <tr class="col-12 row">
                     <td colspan="4" class="text-center">Pas de réponse en base</td>
                 </tr>
             {% else %}
-                {% for reponse in reponses %}
+                {% for result in results %}
                     <tr class="row col-12">
                         <td class="col-4 px-1">
-                            {% if reponse.sujet|length < 46 %}
-                                {{ reponse.sujet }}
+                            {% if result.sujet|length < 46 %}
+                                {{ result.sujet }}
                             {% else %}
-                                {{ reponse.sujet|slice(0, 42)~" ..." }}
+                                {{ result.sujet|slice(0, 42)~" ..." }}
                             {% endif %}
                         </td>
                         <td class="col-4 px-1">
-                            {% if reponse.reponse|length < 46 %}
-                                {{ reponse.reponse }}
+                            {% if result.reponse|length < 46 %}
+                                {{ result.reponse }}
                             {% else %}
-                                {{ reponse.reponse|slice(0, 42)~" ..." }}
+                                {{ result.reponse|slice(0, 42)~" ..." }}
                             {% endif %}
                         </td>
                         <td class="col-1 px-1">
-                            {{ reponse.created_at|date('d/m/Y') }}
+                            {{ result.createdAt|date('d/m/Y') }}
                         </td>
                         <td class="col-1 px-1">
-                            {{ reponse.closed_at|date('d/m/Y') }}
+                            {{ result.sendAt|date('d/m/Y') }}
                         </td>
-                        <td class="col-2 px-1"></td>
+                        <td class="col-2 px-1">
+                            {# actions possible sur le résultat trouvé #}
+                            {# -> voir toutes les informations route 'showQR' #}
+                            {{ forms.btn('show'~result.id, '<i class="fa fa-eye"></i>',
+                                {'class': 'px-1 col-12 button-success text-center',
+                                'title': 'Voir', 'type': 'button',
+                                'event': 'onClick', 'codeJS': 'redirect("'~canonical('showQR',
+                                {'id': result.id})~'");',
+                                })
+                            }}
+                        </td>
                     </tr>
                 {% endfor %}
             {% endif %}

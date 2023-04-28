@@ -18,11 +18,13 @@ class SearchFormType extends AbstractType
             ->add('searchText', TextType::class, [
                 'required' => false,
             ])
-            ->add('categories', ChoiceType::class, [
+            ->add('categories', EntityType::class, [
+                'class' => Categories::class,
                 'choice_label' => 'category',
                 'choice_value' => 'category',
                 'mapped' => false,
                 'required' => false,
+                'multiple' => true,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Exécuter la recherche',

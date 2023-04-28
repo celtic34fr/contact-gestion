@@ -168,12 +168,13 @@ class ManageTntIndexes
                 break;
         }
         return [
+            'id' => $contact->getId(),
             'sujet' => $contact->getSujet(),
             'demande' => $contact->getDemande(),
             'createdAt' => $contact->getCreatedAt() ? $contact->getCreatedAt()->format('d/m/Y') : '',
             'treatedAt' => $contact->getTreatedAt() ? $contact->getTreatedAt()->format('d/m/Y') : '',
             'reponse' => $response ? $response->getReponse() : '',
-            'sendAt' => $response ? $response->getSendAt()->format('d/m/Y') : '',
+            'sendAt' => $response && $response->getSendAt() ? $response->getSendAt()->format('d/m/Y') : '',
             'score' => $score,
         ];
     }

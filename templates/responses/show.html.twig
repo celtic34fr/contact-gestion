@@ -1,0 +1,24 @@
+{% extends "@contact-core/layout_backend.html.twig" %}
+
+{% block shoulder %}
+    {{ "Visualisation d'une question / réponse envoyée par un internaute" }}
+{% endblock shoulder %}
+
+{% block title %}
+    {{ macro.icon('eye') }}
+    Visualisation d'une question / réponse
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+{% endblock %}
+
+{% block main %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
