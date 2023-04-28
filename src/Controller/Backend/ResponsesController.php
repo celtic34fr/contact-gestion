@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Celtic34fr\ContactGestion\Entity\Responses;
-use Celtic34fr\ContactGestion\ManageTntIndexes;
+use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Symfony\Component\Routing\Annotation\Route;
 use Celtic34fr\ContactGestion\Entity\Categories;
 use Bolt\Controller\Backend\BackendZoneInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Celtic34fr\ContactGestion;
+namespace Celtic34fr\ContactGestion\Service;
 
 use TeamTNT\TNTSearch\TNTSearch;
 use Doctrine\ORM\EntityManagerInterface;

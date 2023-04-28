@@ -2,22 +2,22 @@
 
 namespace Celtic34fr\ContactGestion\Controller;
 
-use Celtic34fr\ContactCore\Entity\Clientele;
-use Celtic34fr\ContactCore\Entity\CliInfos;
-use Celtic34fr\ContactGestion\Entity\Contacts;
-use Celtic34fr\ContactCore\Enum\CustomerEnums;
-use Celtic34fr\ContactGestion\Form\ContactType;
-use Celtic34fr\ContactGestion\FormEntity\DemandesType;
-use Celtic34fr\ContactCore\Service\ExtensionConfig;
-use Celtic34fr\ContactGestion\Entity\NewsLetter;
-use Celtic34fr\ContactGestion\ManageTntIndexes;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
+use Doctrine\ORM\EntityManagerInterface;
+use Celtic34fr\ContactCore\Entity\CliInfos;
+use Celtic34fr\ContactCore\Entity\Clientele;
 use Symfony\Component\HttpFoundation\Request;
+use Celtic34fr\ContactCore\Enum\CustomerEnums;
+use Celtic34fr\ContactGestion\Entity\Contacts;
 use Symfony\Component\HttpFoundation\Response;
+use Celtic34fr\ContactGestion\Form\ContactType;
 use Symfony\Component\Routing\Annotation\Route;
+use Celtic34fr\ContactGestion\Entity\NewsLetter;
+use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Celtic34fr\ContactGestion\FormEntity\DemandesType;
+use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/contact')]
 class ContactController extends AbstractController

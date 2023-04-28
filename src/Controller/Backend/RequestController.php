@@ -17,7 +17,7 @@ use Celtic34fr\ContactGestion\Entity\Contacts;
 use Celtic34fr\ContactGestion\Form\SearchType;
 use Symfony\Component\HttpFoundation\Response;
 use Celtic34fr\ContactGestion\Entity\Responses;
-use Celtic34fr\ContactGestion\ManageTntIndexes;
+use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Symfony\Component\Routing\Annotation\Route;
 use Celtic34fr\ContactGestion\Entity\Categories;
 use Celtic34fr\ContactGestion\Form\ResponseType;
