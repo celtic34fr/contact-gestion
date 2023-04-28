@@ -98,7 +98,7 @@ class ManageTntIndexes
         $this->idxGenerator->updateByArray($this->indexesResponses, $srcArray, $operation);
     }
 
-    public function searchContact(string $toSearch, int $maxResults = 20)
+    public function searchContact(string $toSearch, int $maxResults = 0)
     {
         $tnt = new TNTSearch;
         $configuration = $this->getTntConfig();
@@ -125,7 +125,7 @@ class ManageTntIndexes
         return $results;
     }
 
-    public function searchResponse(string $toSearch, int $maxResults = 20)
+    public function searchResponse(string $toSearch, int $maxResults = 0)
     {
         $tnt = new TNTSearch;
         $configuration = $this->getTntConfig();
@@ -144,7 +144,7 @@ class ManageTntIndexes
         return $results;
     }
 
-    public function search (string $toSearch, int $maxResults = 20)
+    public function search (string $toSearch, int $maxResults = 0)
     {
         $resultsC = $this->searchContact($toSearch, $maxResults) ?? [];
         $resultsR = $this->searchResponse($toSearch, $maxResults) ?? [];
@@ -179,7 +179,7 @@ class ManageTntIndexes
         ];
     }
 
-    private function array_unique(array $array, int $maxResults = 20) {
+    private function array_unique(array $array, int $maxResults = 0) {
         $rslt = [];
         foreach($array as $id => $data) {
             if (!array_key_exists($id, $rslt)) {
