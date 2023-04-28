@@ -113,7 +113,7 @@
                             {# actions possible sur le résultat trouvé #}
                             {# -> voir toutes les informations route 'showQR' #}
                             {{ forms.btn('show'~result.id, '<i class="fa fa-eye"></i>',
-                                {'class': 'px-1 col-12 button-success text-center',
+                                {'class': 'px-1 col-12 btn btn-success text-center',
                                 'title': 'Voir', 'type': 'button',
                                 'event': 'onClick', 'codeJS': 'redirect("'~canonical('showQR',
                                 {'id': result.id})~'");',
