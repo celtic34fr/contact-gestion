@@ -25,6 +25,3 @@ services:
 
   Celtic34fr\ContactGestion\Widget\ContactsWidget:
     autowire: true
-
-  Celtic34fr\ContactGestion\Service\ManageTntIndexex:
-    autowire: true
