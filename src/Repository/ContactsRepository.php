@@ -3,11 +3,9 @@
 namespace Celtic34fr\ContactGestion\Repository;
 
 use Celtic34fr\ContactGestion\Entity\Contacts;
-use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
+use Celtic34fr\ContactGestion\Trait\DbPaginateTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Exception;
-use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @extends ServiceEntityRepository<Contacts>
@@ -42,28 +40,29 @@ class ContactsRepository extends ServiceEntityRepository
         }
     }
 
-    #[ArrayShape(['datas' => "\Doctrine\ORM\Tools\Pagination\Paginator", 'pages' => "\int|null", 'page' => "\int|mixed"])]
     public function findRequestAll(int $currentPage = 1, int $limit = 10): array
     {
-        $qb = $this->createQueryBuilder("bco")
+        $qb = $this->createQueryBuilder('bco')
             ->where('bco.closed_at IS NULL')
             ->orderBy('bco.created_at', 'DESC')
+            ->orderBy('bco.id', 'DESC')
             ->getQuery();
         return $this->paginateDoctrine($qb, $currentPage, $limit);
     }
 
     /**
-     * @param mixed $words
-     * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function findMatchText(mixed $words): mixed
     {
-        if (is_array($words)) $words = implode(" ", (array) $words);
-        if (!is_string($words))
-            throw new Exception("paramètre incompatible : type string & array, type actuel ".gettype($words));
+        if (is_array($words)) {
+            $words = implode(' ', (array) $words);
+        }
+        if (!is_string($words)) {
+            throw new \Exception('paramètre incompatible : type string & array, type actuel '.gettype($words));
+        }
         $query = $this->createQueryBuilder('cd');
-        if($words != null){
+        if (null != $words) {
             $query->andWhere('MATCH_AGAINST(cd.sujet, cd.demande) AGAINST (:mots boolean)>0')
                 ->setParameter('mots', $words);
         }

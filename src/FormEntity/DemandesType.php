@@ -14,7 +14,6 @@ class DemandesType
     private string $sujet;
     private string $demande;
 
-
     public function getId(): int
     {
         return $this->id;

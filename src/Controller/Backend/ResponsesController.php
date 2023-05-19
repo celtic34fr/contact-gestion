@@ -1,21 +1,20 @@
 <?php
 
-namespace Celtic34fr\ContactGestion\Controller\Backend;
+namespace App\Controller\Backend;
 
-use ArrayObject;
+use App\Entity\Categories;
+use App\Entity\Contacts;
+use App\Entity\Responses;
+use App\Form\SearchFormType;
+use App\FormEntity\SearchForm;
+use App\Service\ManageTntIndexes;
+use App\Trait\DbPaginateTrait;
+use Bolt\Controller\Backend\BackendZoneInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Celtic34fr\ContactGestion\Entity\Responses;
-use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Symfony\Component\Routing\Annotation\Route;
-use Celtic34fr\ContactGestion\Entity\Categories;
-use Bolt\Controller\Backend\BackendZoneInterface;
-use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
-use Celtic34fr\ContactGestion\Entity\Contacts;
-use Celtic34fr\ContactGestion\Form\SearchFormType;
-use Celtic34fr\ContactGestion\FormEntity\SearchForm;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('response')]
 class ResponsesController extends AbstractController implements BackendZoneInterface
@@ -26,19 +25,12 @@ class ResponsesController extends AbstractController implements BackendZoneInter
     {
     }
 
-    #[Route('/search', name: 'search_responses')]
+    #[Route('/searchIn', name: 'search_responses')]
     public function seachInResponses(Request $request): Response
     {
-        $dbCategories = [];
         $results = [];
         $cPage = 1;
         $limit = 10;
-        $categories = $this->entityManager->getRepository(Categories::class)->findAll();
-        if ($categories) {
-            foreach ($categories as $category) {
-                $dbCategories[] = ['value' => $category->getCategory(), 'label' => $category->getCategory()];
-            }
-        }
 
         $searchForm = new SearchForm();
         $reset = true;
@@ -47,40 +39,51 @@ class ResponsesController extends AbstractController implements BackendZoneInter
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($request->getMethod() === "POST") {
+            if ('POST' === $request->getMethod()) {
                 if (!$form->get('reset')->isClicked()) {
+                    // dump($form->get('searchText')->getData(), $form->get('categories')->getData());
+
                     // recherche via le module TntSearch dans ManageTntIndexes
                     $results = $this->manageIdx->search($form->get('searchText')->getData());
                     $results = $this->filterByCategories($results, $form->get('categories')->getData());
+
+                    // dump($results);
+                    // dd('fin');
+
+                    $searchForm->setSearchText($form->get('searchText')->getData());
+                    $searchForm->setCategories($form->get('categories')->getData());
                 } else {
-                    $searchForm->setSearchText("");
+                    $searchForm->setSearchText();
+                    $searchForm->setCategories();
                     $results = [];
                 }
             }
         }
 
         return $this->render('@contact-gestion/responses/search.html.twig', [
-            'dbCategories' => $dbCategories,
             'form' => $form->createView(),
+            'searchForm' => $searchForm,
             'reset' => $reset,
             'results' => $results,
         ]);
     }
 
-    #[Route('/show_qr/[id}', name: 'showQR')]
-    public function showQR(string $id, Request $request): Response
+    #[Route('/show_qr/{id}', name: 'showQR')]
+    public function showQR(Contacts $contact, Request $request): Response
     {
+        $qr = $this->formatQR($contact, 'contacts', 0);
         return $this->render('@contact-gestion/responses/show.html.twig', [
+            'qr' => $qr,
+            'demandeur' => $contact->getClient(),
         ]);
     }
-
 
     private function filterByCategories(array $results, $categories): array
     {
         $categoriesIds = [];
-        $filteredResults = [];
-    
-        /** filtrage des résultats par catégories */
+        $filteredResults = $results;
+
+        /* filtrage des résultats par catégories */
         if ($categories instanceof Categories) {
             // choix d'une seule catégorie
             $categoriesIds[] = $categories->getId();
@@ -92,7 +95,8 @@ class ResponsesController extends AbstractController implements BackendZoneInter
         }
 
         if ($categoriesIds) { // une ou des catégories ont été choisies
-            $categoriesIdsObj = new ArrayObject($categoriesIds); // sauvegarde en obj tableau de catégories
+            $filteredResults = [];
+            $categoriesIdsObj = new \ArrayObject($categoriesIds); // sauvegarde en obj tableau de catégories
             foreach ($results as $result) { // recherche des catégories liées aux réponses trouvées
                 /** @var Contacts $contact */
                 $contact = $this->entityManager->getRepository(Contacts::class)->find($result['id']);
@@ -121,10 +125,42 @@ class ResponsesController extends AbstractController implements BackendZoneInter
                     }
                 }
             }
-        } else { // pas de catégories choisies => retour des valeurs trouvées telles que
-            $filteredResults = $results;
         }
 
         return $filteredResults;
+    }
+
+    private function formatQR($object, string $entity, $score)
+    {
+        $contact = null;
+        $response = null;
+        /* formatage des résultats de recherche pour obtebir une structure unique quelque soit l'objet à traiter */
+        switch ($entity) {
+            case 'contacts':
+                $contact = $object;
+                $response = $object ? $object->getReponse() : null;
+                break;
+            case 'responses':
+                $response = $object;
+                $contact = $object ? $object->getContact() : null;
+                break;
+        }
+        $record = [];
+        if (!empty($contact)) {
+            return [
+                'id' => $contact->getId(),
+                'sujet' => $contact->getSujet(),
+                'demande' => $contact->getDemande(),
+                'createdAt' => $contact->getCreatedAt() ? $contact->getCreatedAt()->format('d/m/Y') : '',
+                'treatedAt' => $contact->getTreatedAt() ? $contact->getTreatedAt()->format('d/m/Y') : '',
+                'idResponses' => $response ? $response->getId() : '',
+                'reponse' => $response ? $response->getReponse() : '',
+                'sendAt' => $response && $response->getSendAt() ? $response->getSendAt()->format('d/m/Y') : '',
+                'closedAt' => $response && $response->getClosedAt() ? $response->getClosedAt()->format('d/m/Y') : '',
+                'score' => $score,
+            ];
+        }
+
+        return [];
     }
 }

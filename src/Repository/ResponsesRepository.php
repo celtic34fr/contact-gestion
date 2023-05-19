@@ -2,13 +2,10 @@
 
 namespace Celtic34fr\ContactGestion\Repository;
 
-use Celtic34fr\ContactGestion\Entity\Contacts;
 use Celtic34fr\ContactGestion\Entity\Responses;
-use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
+use Celtic34fr\ContactGestion\Trait\DbPaginateTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
-use Exception;
 
 /**
  * @extends ServiceEntityRepository<Responses>
@@ -44,28 +41,27 @@ class ResponsesRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $words
-     * @param array|null $categories
-     * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function findMatchText($words, ?array $categories = null): mixed
     {
-        if (is_array($words)) $words = implode(" ", (array) $words);
-        if (!is_string($words))
-            throw new Exception("paramètre incompatible : type string & array, type actuel ".gettype($words));
+        if (is_array($words)) {
+            $words = implode(' ', (array) $words);
+        }
+        if (!is_string($words)) {
+            throw new \Exception('paramètre incompatible : type string & array, type actuel '.gettype($words));
+        }
         $query = $this->createQueryBuilder('cr');
-        if($words != null){
+        if (null != $words) {
             $query->andWhere('MATCH_AGAINST(cr.reponse) AGAINST (:mots boolean)>0')
                 ->setParameter('mots', $words);
         }
-        if($categories != null){
+        if (null != $categories) {
             $query->leftJoin('cr.categories', 'c');
             $query->andWhere('c.id = :id')
                 ->setParameter('id', $categories);
         }
         return $query->getQuery()->getResult();
-
     }
 
     public function findQrPaginate(int $page = 1, $limit = 10): array
@@ -82,7 +78,7 @@ class ResponsesRepository extends ServiceEntityRepository
         if ($qb) {
             /** @var Responses $row */
             foreach ($qb as $row) {
-                $results[$row->getClosedAt()->format("Ymd")] = [
+                $results[$row->getClosedAt()->format('Ymd')] = [
                     'reponse' => $row->getReponse(),
                     'sujet' => $row->getContact()->getSujet(),
                     'created_at' => $row->getContact()->getCreatedAt(),

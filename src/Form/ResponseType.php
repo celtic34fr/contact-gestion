@@ -16,7 +16,7 @@ class ResponseType extends AbstractType
     {
         $builder
             ->add('reponse', TextType::class, [
-                'required' => false
+                'required' => false,
             ])
             ->add('categories', ChoiceType::class, [
                 'choice_label' => 'category',
@@ -24,18 +24,17 @@ class ResponseType extends AbstractType
                 'mapped' => false,
                 'required' => false,
             ])
-
             ->add('record', SubmitType::class, [
-                'label' => 'Enregistrer les modifications'
+                'label' => 'Enregistrer les modifications',
             ])
             ->add('send', SubmitType::class, [
-                'label' => 'Enregistrer et/ou Envoyer la réponse'
+                'label' => 'Enregistrer et/ou Envoyer la réponse',
             ])
             ->add('close', SubmitType::class, [
-                'label' => 'Clôturer la demande'
+                'label' => 'Clôturer la demande',
             ])
             ->add('cancel', SubmitType::class, [
-                'label' => 'Tout annuler'
+                'label' => 'Tout annuler',
             ])
         ;
     }

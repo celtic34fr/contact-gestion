@@ -46,13 +46,13 @@
                 {% set searchText = reset ? "" : form.searchText.vars.value %}
                 {{ fields.field(form.searchText, "Terme(s) recherché(s)", {
                     'class': 'col-12 mb-2 searchText', 'placeholder': 'Terme(s) recherché(s)',
-                    'il_class': {'label': 'col-4 px-2', 'input': 'col-8'}, 'value': searchText,
+                    'il_class': {'label': 'col-4 px-2', 'input': 'col-8'}, 'value': searchForm.searchText,
                 }) }}
                 {% set categories = reset ? {} : form.categories.vars.value %}
                 {{ fields.select(form.categories, "Catégories", {
                     'class': 'col-12 p-2 m-0 categories', 'placeholder': 'Choisissez ou saisissez une catégorie',
-                    'multiple': true, 'sl_class' : {'label': "col-4", 'select': 'col-8'}, 'choices': dbCategories,
-                    'default': categories,
+                    'multiple': true, 'sl_class' : {'label': "col-4", 'select': 'col-8'},
+                    'default': searchForm.categories,
                 }) }}
             </div>
             <div class="col-4 row m-0 mt-2 p-0">
@@ -82,12 +82,8 @@
             </tr>
             </thead>
             <tbody class="col-12 row">
-            {% if results is not defined or results is empty %}
-                <tr class="col-12 row">
-                    <td colspan="4" class="text-center">Pas de réponse en base</td>
-                </tr>
-            {% else %}
                 {% for result in results %}
+                    {% if result is not empty %}
                     <tr class="row col-12">
                         <td class="col-4 px-1">
                             {% if result.sujet|length < 46 %}
@@ -112,17 +108,22 @@
                         <td class="col-2 px-1">
                             {# actions possible sur le résultat trouvé #}
                             {# -> voir toutes les informations route 'showQR' #}
+                            {% set urlRedirect = path('showQR', {'id': result.id}) %}
                             {{ forms.btn('show'~result.id, '<i class="fa fa-eye"></i>',
-                                {'class': 'px-1 col-12 btn btn-success text-center',
+                                {'class': 'px-1 col-12 btn btn-info text-center',
                                 'title': 'Voir', 'type': 'button',
-                                'event': 'onClick', 'codeJS': 'redirect("'~canonical('showQR',
-                                {'id': result.id})~'");',
+                                'event': 'onClick', 
+                                'codeJS': 'redirect("'~urlRedirect~'");',
                                 })
                             }}
                         </td>
                     </tr>
+                    {% endif %}
+                {% else %}
+                    <tr class="col-12 row text-center">
+                        <td class="col-12">Aucune réponse en base</td>
+                    </tr>
                 {% endfor %}
-            {% endif %}
             </tbody>
         </table>
 {#
@@ -146,6 +147,10 @@
 
         function initTomSelect(objSelect, options = {}) {
             $tomSelectObj[objSelect.id] = new TomSelect(objSelect, options);
+        }
+
+        function redirect(url) {
+            window.location.href = url;
         }
 
         const categories = document.querySelector(".categories select");

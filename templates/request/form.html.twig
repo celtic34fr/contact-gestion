@@ -38,8 +38,16 @@
         .requete .label, .search .label {
             background-color: #dedede;
         }
+
+        @media (min-width: 576px) {
+            .modal-dialog {
+                margin: 1.75rem auto;
+                max-width: calc(100% - 3.5rem) !important;
+            }
+        }
     </style>
     <link rel="stylesheet" href="{{ asset('contact-assets/css/tom-select.default.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('contact-assets/css/contact-core.css') }}"/>
 {% endblock %}
 
 {% block main %}
@@ -89,16 +97,27 @@
                 <div class="col-12 row m-0 mt-5 p-0">
                     <div class="col-6 row  m-0 p-2">
                         {{ fields.submitbtn(formS.submit, 'Exécuter la recherche', {
-                            'class': 'col-12 btn btn-success text-white',
+                            'class': 'col-12 btn btn-success text-white formS search',
                         }) }}
                     </div>
                     <div class="col-6 row  m-0 p-2">
                         {{ fields.submitbtn(formS.reset, "Supprimer les critères", {
-                            'class': 'col-12 btn btn-primary text-white',
+                            'class': 'col-12 btn btn-primary text-white formS reset',
                         }) }}
                     </div>
                 </div>
             {{ form_end(formS, {render_rest: false}) }}
+            <div class="col-12 row search-results">
+                <div class="model hidden col-12 row">
+                    <input type="hidden" class="idx" value="[IDX]">
+                    <div class="col-10 title">[TITRE]</div>
+                    <div class="col-2 action">
+                        <button class="btn btn-info view">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         {{ form_start(form) }}
@@ -140,6 +159,44 @@
         </div>
         {{ form_end(form, {render_rest: false}) }}
     </div>
+
+    <div class="modal fade" id="responseModal" tabindex="-1" aria-labelledby="responseModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen modal-dialog-scrollable ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Demande de FULLNAME saisie le CREATEDAT</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row px-2">
+                            <div class="demand_label col-3 h3">Demande</div>
+                            <div class="demand_texte col-9 h5">DEMANDE</div>
+                        </div>
+                        <div class="row  my-2 p-2">
+                            <div class="demand_label col-2 h3">Traitée le</div>
+                            <div class="demand_texte col-2 h3">TREATEDAT</div>
+                            <div class="demand_label col-2 h3">Envoyée le</div>
+                            <div class="demand_texte col-2 h3">SENDAT</div>
+                            <div class="demand_label col-2 h3">Clôturée le</div>
+                            <div class="demand_texte col-2 h3">CLOSEDAT</div>
+                        </div>
+                        <div class="row px-2 pt-2">
+                            <div class="operateur_label col-3 h3">Réponse de</div>
+                            <div class="operateur_texte col-9 h3">RESPONDBY</div>
+                        </div>
+                        <div class="row mb-2 px-2 pb-2">
+                            <div class="respond_label col-3 h3"></div>
+                            <div class="respond_texte col-9 h5">RESPONSE</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-close" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block aside %}{{ parent() }}{% endblock %}
@@ -173,6 +230,9 @@
             });
         }
 
+        const myModal = document.querySelector("#responseModal");
+        const modal = new bootstrap.Modal(document.querySelector("#responseModal"));
+
         function docReady(fn) {
             // see if DOM is already available
             if (document.readyState === "complete" || document.readyState === "interactive") {
@@ -201,5 +261,79 @@
                 });
             {% endfor %}
         {% endif %}
+
+        function showQR(evt) {
+            let element = evt.target.parentElement.parentElement.parentElement;
+            if (element.classList.contains("search-results")) {
+                element = evt.target.parentElement.parentElement;
+            }
+            let idx = element.querySelector("input").value;
+            // appel AJAX pour obtenir la question / réponse dans sa globalité
+            let url = "{{ path('get-qr', {'id': 'ID'}) }}";
+            console.log(url);
+            url = url.replace('ID', idx);
+            console.log(url);
+            fetch(url, {method: "POST"})
+            .then(res => {
+                if (res.status != 200) { throw new Error("Bad Server Response"); }
+                return res.text();
+            })
+            .then(res => {
+                // remplacment des champs de la response dans le modal
+                let html = myModal.innerHTML;
+                let results = JSON.parse(res);
+                for (const key in results) {
+                    console.log(key, results[key]);
+                    html = html.replace(key.toUpperCase(), results[key]);
+                }
+                myModal.innerHTML = html;
+                modal.show();
+                let modalBackrop = document.querySelector(".modal-backdrop");
+                modalBackrop.innerHTML = myModal.innerHTML;
+                myModal.querySelector(".modal-dialog .modal-body").style.display = "none";
+                modalBackrop.style.opacity = "0.9";
+
+                let btnsClose = document.querySelectorAll(".modal-dialog button.btn-close");
+                btnsClose.forEach(btnClose => {
+                    modal.hide();
+                    myModal.querySelector(".modal-dialog .modal-body").style.removeProperty("display");
+                })
+            })
+        }
+
+        let formSbuttons = document.querySelectorAll('button.formS');
+        for (var idx = 0; idx < formSbuttons.length; idx++) {
+            formSbuttons[idx].addEventListener('click', function(event) {
+                event.preventDefault();
+                let formS = document.querySelector(".search form");
+                if (event.target.classList.contains('reset')) {
+                    // vidage des chanmps de recherches et résultats de recherche
+                    formS.querySelector("input").value = "";
+                    formS.querySelector(".search-results").innerHtml = "";
+                } else if (event.target.classList.contains('search')) {
+                    // exécution demande de recher Ajax
+                    let datas = new FormData(formS)
+                    fetch("{{ path('search_in_db') }}", {method: "POST", body: datas})
+                    .then(res => {
+                        if (res.status != 200) { throw new Error("Bad Server Response"); }
+                        return res.text();
+                    })
+                    .then(res => {
+                        // exploitation des résultats et affichage
+                        let results = JSON.parse(res);
+                        for (const key in results) {
+                            let line = document.querySelector(".search-results .model");
+                            let nLine = line.cloneNode(true);
+                            nLine.querySelector("input").value = key;
+                            nLine.querySelector(".title").innerHTML = results[key];
+                            nLine.classList.remove("hidden");
+                            nLine.querySelector("button").addEventListener('click', showQR);
+                            line.parentElement.append(nLine);
+                        }
+                    })
+                    .catch(err => console.error(err));
+                }
+            })
+        }
     </script>
 {% endblock %}

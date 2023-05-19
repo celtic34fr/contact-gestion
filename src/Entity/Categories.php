@@ -6,7 +6,6 @@ use Celtic34fr\ContactGestion\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: CategoriesRepository::class)]
 #[ORM\Table('categories')]
@@ -23,11 +22,10 @@ class Categories
     #[ORM\ManyToMany(targetEntity: Responses::class, mappedBy: 'categories')]
     private Collection $responses;
 
-    #[Pure] public function __construct()
+    public function __construct()
     {
         $this->responses = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {

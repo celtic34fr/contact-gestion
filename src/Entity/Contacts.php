@@ -2,13 +2,9 @@
 
 namespace Celtic34fr\ContactGestion\Entity;
 
-use DateTimeImmutable;
-use JetBrains\PhpStorm\Pure;
+use Celtic34fr\ContactGestion\Repository\ContactsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Celtic34fr\ContactCore\Entity\CliInfos;
-use Celtic34fr\ContactGestion\Entity\Responses;
-use Celtic34fr\ContactGestion\Repository\ContactsRepository;
 
 #[ORM\Entity(repositoryClass: ContactsRepository::class)]
 class Contacts
@@ -19,10 +15,10 @@ class Contacts
     private ?int $id = null;
 
     #[ORM\Column]
-    private DateTimeImmutable $created_at;
+    private \DateTimeImmutable $created_at;
 
     #[ORM\Column(nullable: true)]
-    private ?DateTimeImmutable $treated_at = null;
+    private ?\DateTimeImmutable $treated_at = null;
 
     #[ORM\Column(length: 255)]
     private ?string $sujet = null;
@@ -37,18 +33,18 @@ class Contacts
     private ?Responses $reponse = null;
 
     #[ORM\Column(nullable: true)]
-    private ?DateTimeImmutable $send_at = null;
+    private ?\DateTimeImmutable $send_at = null;
 
     #[ORM\OneToOne(targetEntity: CliInfos::class)]
     #[ORM\JoinColumn(name: 'client_id', referencedColumnName: 'id', nullable: false)]
     private ?CliInfos $client = null;
 
     #[ORM\Column(nullable: true)]
-    private ?DateTimeImmutable $closed_at = null;
+    private ?\DateTimeImmutable $closed_at = null;
 
     public function __construct()
     {
-        $this->created_at = new DateTimeImmutable('now');
+        $this->created_at = new \DateTimeImmutable('now');
     }
 
     public function getId(): ?int
@@ -56,23 +52,23 @@ class Contacts
         return $this->id;
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
         return $this;
     }
 
-    public function getTreatedAt(): ?DateTimeImmutable
+    public function getTreatedAt(): ?\DateTimeImmutable
     {
         return $this->treated_at;
     }
 
-    public function setTreatedAt(?DateTimeImmutable $treated_at): self
+    public function setTreatedAt(?\DateTimeImmutable $treated_at): self
     {
         $this->treated_at = $treated_at;
         return $this;
@@ -142,15 +138,14 @@ class Contacts
         return $this;
     }
 
-    public function getSendAt(): ?DateTimeImmutable
+    public function getSendAt(): ?\DateTimeImmutable
     {
         return $this->send_at;
     }
 
-    public function setSendAt(?DateTimeImmutable $send_at): self
+    public function setSendAt(?\DateTimeImmutable $send_at): self
     {
         $this->send_at = $send_at;
-
         return $this;
     }
 
@@ -162,62 +157,60 @@ class Contacts
     public function setClient(CliInfos $client): self
     {
         $this->client = $client;
-
         return $this;
     }
 
     /**
-     * customs methods to retrieve demand vue
+     * customs methods to retrieve demand vue.
      */
-
-
-    #[Pure] public function getNom(): string
+    public function getNom(): string
     {
         return $this->client->getNom();
     }
 
-    #[Pure] public function getPrenom(): ?string
+    public function getPrenom(): ?string
     {
         return $this->client->getPrenom();
     }
 
-    #[Pure] public function isEmptyPrenom(): bool
+    public function isEmptyPrenom(): bool
     {
         return empty($this->client->getPrenom());
     }
 
-    #[Pure] public function getFullname(): string
+    public function getFullname(): string
     {
-        return $this->client->getNom() . (empty($this->client->getPrenom()) ? '' : ' '.$this->client->getPrenom());
+        return $this->client->getNom().(empty($this->client->getPrenom()) ? '' : ' '.$this->client->getPrenom());
     }
 
-    #[Pure] public function getTelephone(): ?string
+    public function getTelephone(): ?string
     {
         return $this->client->getTelephone();
     }
 
-    #[Pure] public function isEmptyTelephone(): bool
+    public function isEmptyTelephone(): bool
     {
         return empty($this->client->getTelephone());
     }
 
-    #[Pure] public function getCourriel(): ?string
+    public function getCourriel(): ?string
     {
         return $this->client->getClient()->getCourriel();
     }
 
-    public function getClosedAt(): ?DateTimeImmutable
+    public function getClosedAt(): ?\DateTimeImmutable
     {
         return $this->closed_at;
     }
 
-    public function setClosedAt(?DateTimeImmutable $closed_at): self
+    public function setClosedAt(?\DateTimeImmutable $closed_at): self
     {
         $this->closed_at = $closed_at;
         return $this;
     }
 
-    public function toTntArray() {
+    public function toTntArray()
+    {
         return [
             'id' => $this->id,
             'sujet' => $this->sujet,

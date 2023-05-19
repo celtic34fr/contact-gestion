@@ -2,9 +2,9 @@
 
 namespace Celtic34fr\ContactGestion\Repository;
 
-use Doctrine\Persistence\ManagerRegistry;
 use Celtic34fr\ContactGestion\Entity\NewsLetter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<NewsLetter>
@@ -20,7 +20,6 @@ class NewsLetterRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, NewsLetter::class);
     }
-
 
     public function save(NewsLetter $entity, bool $flush = false): void
     {
