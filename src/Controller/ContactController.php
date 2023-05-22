@@ -2,14 +2,14 @@
 
 namespace Celtic34fr\ContactGestion\Controller;
 
-use Celtic34fr\ContactGestion\Entity\Clientele;
-use Celtic34fr\ContactGestion\Entity\CliInfos;
+use Celtic34fr\ContactCore\Entity\Clientele;
+use Celtic34fr\ContactCore\Entity\CliInfos;
 use Celtic34fr\ContactGestion\Entity\Contacts;
 use Celtic34fr\ContactGestion\Entity\NewsLetter;
-use Celtic34fr\ContactGestion\Enum\CustomerEnums;
+use Celtic34fr\ContactCore\Enum\CustomerEnums;
 use Celtic34fr\ContactGestion\Form\ContactType;
 use Celtic34fr\ContactGestion\FormEntity\DemandesType;
-use Celtic34fr\ContactGestion\Service\ExtensionConfig;
+use Celtic34fr\ContactCore\Service\ExtensionConfig;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

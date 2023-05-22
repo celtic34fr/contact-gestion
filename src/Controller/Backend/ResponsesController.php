@@ -8,7 +8,7 @@ use Celtic34fr\ContactGestion\Entity\Responses;
 use Celtic34fr\ContactGestion\Form\SearchFormType;
 use Celtic34fr\ContactGestion\FormEntity\SearchForm;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
-use Celtic34fr\ContactGestion\Trait\DbPaginateTrait;
+use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
 use Bolt\Controller\Backend\BackendZoneInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
