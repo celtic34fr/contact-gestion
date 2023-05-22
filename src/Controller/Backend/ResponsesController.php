@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Controller\Backend;
+namespace Celtic34fr\ContactGestion\Controller\Backend;
 
-use App\Entity\Categories;
-use App\Entity\Contacts;
-use App\Entity\Responses;
-use App\Form\SearchFormType;
-use App\FormEntity\SearchForm;
-use App\Service\ManageTntIndexes;
-use App\Trait\DbPaginateTrait;
+use Celtic34fr\ContactGestion\Entity\Categories;
+use Celtic34fr\ContactGestion\Entity\Contacts;
+use Celtic34fr\ContactGestion\Entity\Responses;
+use Celtic34fr\ContactGestion\Form\SearchFormType;
+use Celtic34fr\ContactGestion\FormEntity\SearchForm;
+use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
+use Celtic34fr\ContactGestion\Trait\DbPaginateTrait;
 use Bolt\Controller\Backend\BackendZoneInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

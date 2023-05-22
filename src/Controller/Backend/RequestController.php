@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Controller\Backend;
+namespace Celtic34fr\ContactGestion\Controller\Backend;
 
 use Bolt\Entity\User;
 use Twig\Environment;
-use App\Entity\Contacts;
-use App\Entity\Responses;
-use App\Entity\Categories;
-use App\Form\ResponseType;
-use App\Service\Utilities;
-use App\Service\SendMailer;
+use Celtic34fr\ContactGestion\Entity\Contacts;
+use Celtic34fr\ContactGestion\Entity\Responses;
+use Celtic34fr\ContactGestion\Entity\Categories;
+use Celtic34fr\ContactGestion\Form\ResponseType;
+use Celtic34fr\ContactGestion\Service\Utilities;
+use Celtic34fr\ContactGestion\Service\SendMailer;
 use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
-use App\Form\SearchFormType;
+use Celtic34fr\ContactGestion\Form\SearchFormType;
 use Twig\Error\RuntimeError;
-use App\Service\ExtensionConfig;
-use App\Service\ManageTntIndexes;
+use Celtic34fr\ContactGestion\Service\ExtensionConfig;
+use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

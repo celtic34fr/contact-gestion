@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Controller;
+namespace Celtic34fr\ContactGestion\Controller;
 
-use App\Entity\Clientele;
-use App\Entity\CliInfos;
-use App\Entity\Contacts;
-use App\Entity\NewsLetter;
-use App\Enum\CustomerEnums;
-use App\Form\ContactType;
-use App\FormEntity\DemandesType;
-use App\Service\ExtensionConfig;
-use App\Service\ManageTntIndexes;
+use Celtic34fr\ContactGestion\Entity\Clientele;
+use Celtic34fr\ContactGestion\Entity\CliInfos;
+use Celtic34fr\ContactGestion\Entity\Contacts;
+use Celtic34fr\ContactGestion\Entity\NewsLetter;
+use Celtic34fr\ContactGestion\Enum\CustomerEnums;
+use Celtic34fr\ContactGestion\Form\ContactType;
+use Celtic34fr\ContactGestion\FormEntity\DemandesType;
+use Celtic34fr\ContactGestion\Service\ExtensionConfig;
+use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
