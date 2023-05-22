@@ -53,7 +53,7 @@
 {% block main %}
     <div id="page" class="row">
         {# entête de traitement de la requete #}
-        <div class="col-6 row m-0 mb-4 requete">
+        <div class="col-8 row m-0 mb-4 requete">
             <div class="col-12 cadre row m-0 p-0">
                 <div class="col-3 m-0 label">
                     Sujet de la demande :
@@ -83,7 +83,12 @@
                 </div>
             </div>
         </div>
-        <div class="col-6 row m-0 mb-4 search">
+        <div class="col-4 row m-0 mb-4 search">
+            {% if okRdv %}
+                <h1>Contact-RDV
+                </h1>
+            {% endif %}
+
             <h3>Recherche dans les demandes et réponses</h3>
             {{ form_start(formS) }}
             {{ form_row(formS._token) }}
@@ -124,7 +129,7 @@
         {{ form_row(form._token) }}
         <div class="col-12 row m-0 mt-2 p-0">
             {{ fields.textarea(form.reponse, "Réponse", {
-                'class': 'col-12 p-2 m-0', 'placeholder': 'Réponse à la requête', 'rows': 5, 'cols': 72,
+                'class': 'col-12 p-2 m-0', 'placeholder': 'Réponse à la requête', 'rows': 5, 'cols': 84,
                 'tl_class': {'label': 'col-2 p-0 m-0 pl-3', 'textarea': 'col-10 p-0 m-0 pl-3'},
                 'value': form.reponse.vars.data
             }) }}
@@ -160,7 +165,7 @@
         {{ form_end(form, {render_rest: false}) }}
     </div>
 
-    <div class="modal fade" id="responseModal" tabindex="-1" aria-labelledby="responseModal" aria-hidden="true">
+    <div id="modal-model" class="hidden">
         <div class="modal-dialog modal-dialog-centered modal-fullscreen modal-dialog-scrollable ">
             <div class="modal-content">
                 <div class="modal-header">
@@ -197,6 +202,8 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="responseModal" tabindex="-1" aria-labelledby="responseModal" aria-hidden="true">
+    </div>
 {% endblock %}
 
 {% block aside %}{{ parent() }}{% endblock %}
@@ -230,8 +237,8 @@
             });
         }
 
+        const modalModel = document.querySelector("#modal-model");
         const myModal = document.querySelector("#responseModal");
-        const modal = new bootstrap.Modal(document.querySelector("#responseModal"));
 
         function docReady(fn) {
             // see if DOM is already available
@@ -280,24 +287,18 @@
             })
             .then(res => {
                 // remplacment des champs de la response dans le modal
-                let html = myModal.innerHTML;
+                let html = modalModel.innerHTML;
                 let results = JSON.parse(res);
                 for (const key in results) {
                     console.log(key, results[key]);
                     html = html.replace(key.toUpperCase(), results[key]);
                 }
                 myModal.innerHTML = html;
+                let modal = new bootstrap.Modal(myModal);
                 modal.show();
                 let modalBackrop = document.querySelector(".modal-backdrop");
                 modalBackrop.innerHTML = myModal.innerHTML;
-                myModal.querySelector(".modal-dialog .modal-body").style.display = "none";
-                modalBackrop.style.opacity = "0.9";
-
-                let btnsClose = document.querySelectorAll(".modal-dialog button.btn-close");
-                btnsClose.forEach(btnClose => {
-                    modal.hide();
-                    myModal.querySelector(".modal-dialog .modal-body").style.removeProperty("display");
-                })
+                modalBackrop.classList = myModal.classList;
             })
         }
 

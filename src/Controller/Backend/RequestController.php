@@ -27,7 +27,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('request')]
 class RequestController extends AbstractController
 {
-    public function __construct(private EntityManagerInterface $entityManager, private Environment $twigEnvironment)
+    public function __construct(private EntityManagerInterface $entityManager, private Environment $twigEnvironment,
+    private ExtensionConfig $extConfig)
     {
         $this->entityManager = $entityManager;
         $this->twigEnvironment = $twigEnvironment;
@@ -197,6 +198,7 @@ class RequestController extends AbstractController
             'form' => $form->createView(),
             'errors' => $err_msg,
             'formS' => $formS->createView(),
+            'okRdv' => $this->extConfig->isExtnsionInstall("contactrdv"),
         ]);
     }
 
@@ -351,5 +353,20 @@ class RequestController extends AbstractController
             $list[$idx] = $result['sujet'];
         }
         return $list;
+    }
+
+    public function isExtnsionInstall(string $extName): bool
+    {
+        foreach ($this->extConfig->getInstalled() as $extInstalled) {
+            dump($extInstalled);
+            $name = substr($extInstalled, strpos($extInstalled, '-') + 1);
+            $name = substr($name, 0, (strpos($name, '.') ? strpos($name, '.') : strlen($name)));
+            dump($name);
+            if ($name === $extName) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
