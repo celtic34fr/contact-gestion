@@ -4,10 +4,10 @@ namespace Celtic34fr\ContactGestion\Service;
 
 use TeamTNT\TNTSearch\TNTSearch;
 use Doctrine\ORM\EntityManagerInterface;
-use Celtic34fr\ContactCore\IndexGenerator;
 use Symfony\Component\Filesystem\Filesystem;
 use Celtic34fr\ContactGestion\Entity\Contacts;
 use Celtic34fr\ContactGestion\Entity\Responses;
+use Celtic34fr\ContactCore\Service\IndexGenerator;
 use Celtic34fr\ContactCore\Doctrine\ConnectionConfig;
 
 class ManageTntIndexes
