@@ -2,10 +2,10 @@
 
 namespace Celtic34fr\ContactGestion\Repository;
 
-use Celtic34fr\ContactGestion\Entity\Contacts;
-use Celtic34fr\ContactGestion\Trait\DbPaginateTrait;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Celtic34fr\ContactGestion\Entity\Contacts;
+use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Contacts>
