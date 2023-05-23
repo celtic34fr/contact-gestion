@@ -8,6 +8,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Celtic34fr\ContactGestion\Entity\Contacts;
 use Celtic34fr\ContactGestion\Entity\Responses;
 use Celtic34fr\ContactCore\Service\IndexGenerator;
+use Celtic34fr\ContactCore\Service\ExtensionConfig;
 use Celtic34fr\ContactCore\Doctrine\ConnectionConfig;
 
 class ManageTntIndexes
@@ -21,12 +22,11 @@ class ManageTntIndexes
     public $fuzzy_distance = 2;
 
     public function __construct(private IndexGenerator $idxGenerator, private ExtensionConfig $extensionConfig,
-        private ConnectionConfig $connectionConfig, private EntityManagerInterface $entityManager)
+        private ConnectionConfig $connectionConfig, private EntityManagerInterface $entityManager) 
     {
         $table = $this->entityManager->getClassMetadata(Contacts::class)->getTableName();
         $dql = $this->entityManager->createQueryBuilder()
-                ->select(['idx.id', 'idx.sujet', 'idx.demande'])
-                ->from(Contacts::class, 'idx');
+                ->select(['idx.id', 'idx.sujet', 'idx.demande'])->from(Contacts::class, 'idx');
         $sql = $dql->getQuery()->getDQL();
         $this->queryContacts = str_replace(Contacts::class, $table, $sql);
 
