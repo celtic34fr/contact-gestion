@@ -2,9 +2,10 @@
 
 namespace Celtic34fr\ContactGestion\Entity;
 
-use Celtic34fr\ContactGestion\Repository\ContactsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Celtic34fr\ContactCore\Entity\CliInfos;
+use Celtic34fr\ContactGestion\Repository\ContactsRepository;
 
 #[ORM\Entity(repositoryClass: ContactsRepository::class)]
 class Contacts

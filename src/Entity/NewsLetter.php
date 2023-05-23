@@ -2,8 +2,9 @@
 
 namespace Celtic34fr\ContactGestion\Entity;
 
-use Celtic34fr\ContactGestion\Repository\NewsLetterRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Celtic34fr\ContactCore\Entity\Clientele;
+use Celtic34fr\ContactGestion\Repository\NewsLetterRepository;
 
 #[ORM\Entity(repositoryClass: NewsLetterRepository::class)]
 class NewsLetter
