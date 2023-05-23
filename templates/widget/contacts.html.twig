@@ -2,21 +2,21 @@
 {% set background_title = 'background: #344830; color: white;' %}
 
 {% set contacts = contact_infos() %}
-<div class="col-12 row">
-    <div class="col-12 row">
-        <div class="col-8">Demandes à traiter</div>
-        <div class="col-4">{{ contacts.a_traiter }}
+<div class="col-12 row mx-0 px-0">
+    <div class="col-12 row mx-0 px-0">
+        <div class="col-8 mx-0 px-0">Demandes à traiter</div>
+        <div class="col-4 mx-0 text-right">{{ contacts.a_traiter }}
     </div>
-    <div class="col-12 row">
-        <div class="col-8">Demandes sur 2 dernières semaines</div>
-        <div class="col-4">{{ contacts.last2weeks }}
+    <div class="col-12 row mx-0 px-0">
+        <div class="col-8 mx-0 px-0">Demandes sur 2 dernières semaines</div>
+        <div class="col-4 mx-0 text-right">{{ contacts.last2weeks }}
     </div>
-    <div class="col-12 row">
-        <div class="col-8">Demandes alnnt arriver hors délais</div>
-        <div class="col-4">{{ contacts.goToEnd }}
+    <div class="col-12 row mx-0 px-0">
+        <div class="col-8 mx-0 px-0">Demandes alnnt arriver hors délais</div>
+        <div class="col-4 mx-0 text-right">{{ contacts.goToEnd }}
     </div>
-    <div class="col-12 row">
-        <div class="col-8">Demandes hors délais</div>
-        <div class="col-4">{{ contacts.outOfTime }}
+    <div class="col-12 row mx-0 px-0">
+        <div class="col-8mx-0 px-0">Demandes hors délais</div>
+        <div class="col-4 mx-0 text-right">{{ contacts.outOfTime }}
     </div>
 </div>
