@@ -1,12 +1,22 @@
-{% set background = 'background: #C8E8C2;' %}
-{% set background_title = 'background: #344830; color: white;' %}
-
+{% set background_message = background_message ??'#C8E8C2' %}
+{% set background_title = background_title ?? '#344830' %}
+{% set color_title = color_title ?? 'white' %}
 {% set contacts = contact_infos() %}
-<div class="col-12 row mx-0 px-0">
-    <div class="col-12 row mx-0 px-0">
-        <div class="col-12 mx-0 px-0 h3">Etat des demandes</div>
-    </div>
-    <hr>
+
+<style>
+    .card-title {
+        background: {{ background_title }};
+        color: {{ color_title }};
+    }
+    .card-message {
+        background: {{ background_message }}
+    }
+</style>
+<div class="card-header card-title">
+    <i class="far fa-users"></i> &nbsp;
+    <div class="col-12 mx-0 px-0 h3">Etat des demandes</div>
+</div>
+<div class="card-body card-message">
     <div class="col-12 row mx-0 px-0">
         <div class="col-8 mx-0 px-0">Demandes à traiter</div>
         <div class="col-4 mx-0 text-right">{{ contacts.a_traiter }}
