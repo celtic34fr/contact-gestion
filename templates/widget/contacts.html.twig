@@ -1,0 +1,22 @@
+{% set background = 'background: #C8E8C2;' %}
+{% set background_title = 'background: #344830; color: white;' %}
+
+{% set cotacts = contact_infos() %}
+<div class="col-12 row">
+    <div class="col-12 row">
+        <div class="col-8">Demandes à traiter</div>
+        <div class="col-4">{{ contacts.a_traiter }}
+    </div>
+    <div class="col-12 row">
+        <div class="col-8">Demandes sur 2 dernières semaines</div>
+        <div class="col-4">{{ contacts.last2weeks }}
+    </div>
+    <div class="col-12 row">
+        <div class="col-8">Demandes alnnt arriver hors délais</div>
+        <div class="col-4">{{ contacts.goToEnd }}
+    </div>
+    <div class="col-12 row">
+        <div class="col-8">Demandes hors délais</div>
+        <div class="col-4">{{ contacts.outOfTime }}
+    </div>
+</div>
