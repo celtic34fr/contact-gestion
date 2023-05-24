@@ -11,6 +11,7 @@ use Bolt\Widget\Injector\AdditionalTarget;
 use Bolt\Widget\Injector\RequestZone;
 use Bolt\Widget\StopwatchAwareInterface;
 
+/** classe de paramétrage, gestion et affichage induit du Widget ContactWidget */
 class ContactWidget extends BaseWidget implements TwigAwareInterface, CacheAwareInterface, StopwatchAwareInterface
 {
     use CacheTrait;

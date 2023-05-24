@@ -5,12 +5,14 @@ namespace Celtic34fr\ContactGestion\Twig\Runtime;
 use Celtic34fr\ContactGestion\Service\ContactDbInfos;
 use Twig\Extension\RuntimeExtensionInterface;
 
+/** classe d'extension TWIG spécifique à l'extension Bolt CMS */
 class LocalExtensionRuntime implements RuntimeExtensionInterface
 {
     public function __construct(private ContactDbInfos $contactDbInfos)
     {
     }
 
+    /** mpéthode de récupération des informations pour le Widget ContactWidget */
     public function TF_contact_infos()
     {
         $a_traiter = $this->contactDbInfos->countRequestAll();

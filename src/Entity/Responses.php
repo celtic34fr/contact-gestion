@@ -19,23 +19,23 @@ class Responses
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $reponse = null;
+    private ?string $reponse = null;                // texte de la réponse proprement dite
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $send_at = null;
+    private ?\DateTimeImmutable $send_at = null;    // date d'envoi de la réponse
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $closed_at = null;
+    private ?\DateTimeImmutable $closed_at = null;  // date de clôture de la demande
 
     #[ORM\OneToOne(inversedBy: 'reponse', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Contacts $contact = null;
+    private ?Contacts $contact = null;              // lien vers la demande de contact
 
     #[ORM\ManyToMany(targetEntity: Categories::class, inversedBy: 'responses')]
-    private Collection $categories;
+    private Collection $categories;                 // ensemble des catégories qualifiant la réponse si lieu
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private User $operateur;
+    private User $operateur;                        // opérateur ayant saisi la réponse
 
     /**
      * constructeur de l'objet entité Responses.

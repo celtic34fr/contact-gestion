@@ -40,30 +40,7 @@ class ResponsesRepository extends ServiceEntityRepository
         }
     }
 
-    /**
-     * @throws \Exception
-     */
-    public function findMatchText($words, ?array $categories = null): mixed
-    {
-        if (is_array($words)) {
-            $words = implode(' ', (array) $words);
-        }
-        if (!is_string($words)) {
-            throw new \Exception('paramètre incompatible : type string & array, type actuel '.gettype($words));
-        }
-        $query = $this->createQueryBuilder('cr');
-        if (null != $words) {
-            $query->andWhere('MATCH_AGAINST(cr.reponse) AGAINST (:mots boolean)>0')
-                ->setParameter('mots', $words);
-        }
-        if (null != $categories) {
-            $query->leftJoin('cr.categories', 'c');
-            $query->andWhere('c.id = :id')
-                ->setParameter('id', $categories);
-        }
-        return $query->getQuery()->getResult();
-    }
-
+    /** méthode de l'ensemble des demandes de contact (questions) et/ou des réponses avec pagination */
     public function findQrPaginate(int $page = 1, $limit = 10): array
     {
         $results = [];

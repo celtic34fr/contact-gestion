@@ -2,6 +2,7 @@
 
 namespace Celtic34fr\ContactGestion\FormEntity;
 
+/** classe support d'exploitation des données saisie dans Form\ContactType */
 class DemandesType
 {
     private int $id;

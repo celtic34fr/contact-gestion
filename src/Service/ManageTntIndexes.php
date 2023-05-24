@@ -11,6 +11,7 @@ use Celtic34fr\ContactCore\Service\IndexGenerator;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
 use Celtic34fr\ContactCore\Doctrine\ConnectionConfig;
 
+/** classe de gestion des index générés par l'outil TNTSearch */
 class ManageTntIndexes
 {
     private string $queryContacts;
@@ -41,27 +42,32 @@ class ManageTntIndexes
         $this->indexesResponses = 'responses';
     }
 
+    /** récupération de la configuation pour TNTSearch */
     public function getTntConfig()
     {
         return $this->connectionConfig->getConfig();
     }
 
+    /** génération de l'index de recherche sur la table Contacts avec TNTSearch */
     public function generateContactsIDX()
     {
         $this->idxGenerator->generate($this->queryContacts, $this->indexesContacts);
     }
 
+    /** génération de l'index de recherche sur la table Responses avec TNTSearch */
     public function generateResponsesIDX()
     {
         $this->idxGenerator->generate($this->queryResponses, $this->indexesResponses);
     }
 
+    /** génération des index de recherche avec TNTSearch */
     public function generate()
     {
         $this->generateContactsIDX();
         $this->generateResponsesIDX();
     }
 
+    /** mise à jour de l'index de recherche sur la table Contacts avec TNTSearch */
     public function refreshContactsIDX()
     {
         $config = $this->connectionConfig->getConfig();
@@ -73,6 +79,7 @@ class ManageTntIndexes
         $this->generateContactsIDX();
     }
 
+    /** mise à jour de l'index de recherche sur la table Responses avec TNTSearch */
     public function refreshResponsesIDX()
     {
         $config = $this->connectionConfig->getConfig();
@@ -84,22 +91,26 @@ class ManageTntIndexes
         $this->generateResponsesIDX();
     }
 
+    /** mise à jour des index de recherche avec TNTSearch */
     public function refresh()
     {
         $this->refreshContactsIDX();
         $this->refreshResponsesIDX();
     }
 
+    /** mise à jour de l'index de recherche sur la table Contacts avec TNTSearch avec tableu d'information */
     public function updateContactsIDX(array $srcArray, string $operation)
     {
         $this->idxGenerator->updateByArray($this->indexesContacts, $srcArray, $operation);
     }
 
+    /** mise à jour de l'index de recherche sur la table Responses avec TNTSearch avec tableu d'information */
     public function updateResponsesIDX(array $srcArray, string $operation)
     {
         $this->idxGenerator->updateByArray($this->indexesResponses, $srcArray, $operation);
     }
 
+    /** méthode de recherche dans l'index de recherche sur la table Contacts avec TNTSearch */
     public function searchContact(string $toSearch, int $maxResults = 0)
     {
         $tnt = new TNTSearch();
@@ -141,6 +152,7 @@ class ManageTntIndexes
         return $results;
     }
 
+    /** méthode de recherche dans l'index de recherche sur la table Responses avec TNTSearch */
     public function searchResponse(string $toSearch, int $maxResults = 0)
     {
         $tnt = new TNTSearch();
@@ -178,6 +190,7 @@ class ManageTntIndexes
         return $results;
     }
 
+    /** méthode de recherche dans les index de recherche avec TNTSearch */
     public function search(string $toSearch, int $maxResults = 0)
     {
         $resultsC = $this->searchContact($toSearch, $maxResults) ?? [];
@@ -185,6 +198,8 @@ class ManageTntIndexes
         $results = array_replace_recursive($resultsC, $resultsR);
         return $results;
     }
+
+    /** méthodes privées */
 
     private function formatQR($object, string $entity, float $score)
     {

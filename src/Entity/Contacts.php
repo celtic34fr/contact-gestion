@@ -16,32 +16,32 @@ class Contacts
     private ?int $id = null;
 
     #[ORM\Column]
-    private \DateTimeImmutable $created_at;
+    private \DateTimeImmutable $created_at;         //date de création
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $treated_at = null;
+    private ?\DateTimeImmutable $treated_at = null; // date de traitement
 
     #[ORM\Column(length: 255)]
-    private ?string $sujet = null;
+    private ?string $sujet = null;                  // sujet de la demande de contact
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $demande = null;
+    private ?string $demande = null;                // texte de la demande de contact
 
     #[ORM\Column]
-    private ?bool $contact_me = null;
+    private ?bool $contact_me = null;               // top pour demande de contact téléphonique (true) ou non (false)
 
     #[ORM\OneToOne(mappedBy: 'contact', cascade: ['persist', 'remove'])]
-    private ?Responses $reponse = null;
+    private ?Responses $reponse = null;             // lien vers la réponse saisie si existe
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $send_at = null;
+    private ?\DateTimeImmutable $send_at = null;    // date d'envoi de la réponse si lieu
 
     #[ORM\OneToOne(targetEntity: CliInfos::class)]
     #[ORM\JoinColumn(name: 'client_id', referencedColumnName: 'id', nullable: false)]
-    private ?CliInfos $client = null;
+    private ?CliInfos $client = null;               // lien vers l'interanute (informations non fixes)
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $closed_at = null;
+    private ?\DateTimeImmutable $closed_at = null;  // date de clôture de la demande
 
     public function __construct()
     {

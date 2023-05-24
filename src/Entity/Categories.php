@@ -17,10 +17,10 @@ class Categories
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private string $category;
+    private string $category;       // libellé de la catégorie
 
     #[ORM\ManyToMany(targetEntity: Responses::class, mappedBy: 'categories')]
-    private Collection $responses;
+    private Collection $responses;  // ensemble des réponses qualifiées par cette catégorie
 
     public function __construct()
     {

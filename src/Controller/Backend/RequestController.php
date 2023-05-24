@@ -4,26 +4,27 @@ namespace Celtic34fr\ContactGestion\Controller\Backend;
 
 use Bolt\Entity\User;
 use Twig\Environment;
-use Celtic34fr\ContactGestion\Entity\Contacts;
-use Celtic34fr\ContactGestion\Entity\Responses;
-use Celtic34fr\ContactGestion\Entity\Categories;
-use Celtic34fr\ContactGestion\Form\ResponseType;
-use Celtic34fr\ContactCore\Service\Utilities;
-use Celtic34fr\ContactGestion\Service\SendMailer;
 use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
-use Celtic34fr\ContactGestion\Form\SearchFormType;
 use Twig\Error\RuntimeError;
+use Doctrine\ORM\EntityManagerInterface;
+use Celtic34fr\ContactCore\Service\Utilities;
+use Symfony\Component\HttpFoundation\Request;
+use Celtic34fr\ContactCore\Service\SendMailer;
+use Celtic34fr\ContactGestion\Entity\Contacts;
+use Symfony\Component\HttpFoundation\Response;
+use Celtic34fr\ContactGestion\Entity\Responses;
+use Symfony\Component\Routing\Annotation\Route;
+use Celtic34fr\ContactGestion\Entity\Categories;
+use Celtic34fr\ContactGestion\Form\ResponseType;
+use Celtic34fr\ContactGestion\Form\SearchFormType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/** classe de gestion en BackOffice des demande de contact des internautes */
 #[Route('request')]
 class RequestController extends AbstractController
 {
@@ -34,6 +35,7 @@ class RequestController extends AbstractController
         $this->twigEnvironment = $twigEnvironment;
     }
 
+    /** liste des demande de contacts à traiter ou en cours de traitement */
     #[Route('/list/{page}', name: 'request_list')]
     /**
      * interface pour afficher les requêtes adressées par les internautes.
@@ -66,6 +68,7 @@ class RequestController extends AbstractController
     }
 
     /**
+     * formulaire de saisie de réponse à une demande de contact
      * @throws \Exception
      */
     #[Route('/answer/{id}', name: 'request_answer')]
@@ -203,6 +206,7 @@ class RequestController extends AbstractController
     }
 
     /**
+     * m"thode d'envoi direct de réponse (par courriel) à une demande de contact (si réponse saisie)
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -247,6 +251,7 @@ class RequestController extends AbstractController
     }
 
     /**
+     * méthode de clôture d'une demande de contact sans envoi de réponse
      * @throws \Exception
      */
     #[Route('/close/{id}', name: 'request_close')]
@@ -282,6 +287,7 @@ class RequestController extends AbstractController
         return $this->redirectToRoute('request_list');
     }
 
+    /** gestion formulaire de recherche dans les demandes et/ou les réponses enregistrées d'informations - AJAX */
     #[Route('/searchInDB', name: 'search_in_db', methods: ['POST'])]
     public function searchInDB(Request $request, ManageTntIndexes $manageIdx)
     {
@@ -304,6 +310,7 @@ class RequestController extends AbstractController
         return $response;
     }
 
+    /** méthode de récupération d'un ensemble demande (question) et réponse enregistrées en base - AJAX */
     #[Route('/getQR/{id}', name: 'get-qr', methods: ['POST'])]
     public function getQR(Contacts $contact)
     {
@@ -325,6 +332,8 @@ class RequestController extends AbstractController
         $response->setData($result);
         return $response;
     }
+
+    /** méthodes privées */
 
     private function isEmptyReponse(string $id): array
     {
@@ -358,15 +367,12 @@ class RequestController extends AbstractController
     public function isExtnsionInstall(string $extName): bool
     {
         foreach ($this->extConfig->getInstalled() as $extInstalled) {
-            dump($extInstalled);
             $name = substr($extInstalled, strpos($extInstalled, '-') + 1);
             $name = substr($name, 0, (strpos($name, '.') ? strpos($name, '.') : strlen($name)));
-            dump($name);
             if ($name === $extName) {
                 return true;
             }
         }
-
         return false;
     }
 }

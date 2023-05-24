@@ -1,22 +1,22 @@
 # Reference extension configuration file
 
 coordonnees:
-  tel: '+33-7-82-65-90-35 (07-82-65-90-35)'
-  courriel: 'deveze.services@gmail.com'
+  tel: 'your phone number'
+  courriel: 'tour.email@provider.com'
   visu: true
 
 adresse:
-  adresse: '9, rue des Spahis'
-  complement: ''
-  code-post: '34500'
-  ville: 'Béziers, Occitanie, France'
+  adresse: 'address'
+  complement: 'more informations'
+  code-post: 'french zip code'
+  ville: 'town'
 
 OSM:
   container: 'carte'
   width: '100%'
   height: '400px'
-  lat: 43.341265
-  long: 3.252433
+  lat: your latitude'
+  long: 'your longitude'
   zoom: 17
   zoomMax: 20
   zoomMin: 1

@@ -6,6 +6,7 @@ use Celtic34fr\ContactGestion\Twig\Runtime\LocalExtensionRuntime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+/** classe d'extension TWIG spécifique à l'extension Bolt CMS */
 class LocalExtension extends AbstractExtension
 {
 

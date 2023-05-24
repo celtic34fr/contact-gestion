@@ -6,6 +6,7 @@ use Bolt\Menu\ExtensionBackendMenuInterface;
 use Knp\Menu\MenuItem;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/** classe d'ajout des menu spécifiques pour le projet */
 class AdminMenu implements ExtensionBackendMenuInterface
 {
     public function __construct(private UrlGeneratorInterface $urlGenerator)

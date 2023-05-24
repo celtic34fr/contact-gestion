@@ -4,6 +4,7 @@ namespace Celtic34fr\ContactGestion\FormEntity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
+/** classe support d'exploitation des données saisie dans Form\SearchFormType */
 class SearchForm
 {
     protected ?string $searchText = null;

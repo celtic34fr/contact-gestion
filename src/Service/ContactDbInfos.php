@@ -2,13 +2,13 @@
 
 namespace Celtic34fr\ContactGestion\Service;
 
-use Celtic34fr\ContactCore\Entity\Courriels;
-use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
-use Celtic34fr\ContactGestion\Entity\Contacts;
-use Celtic34fr\ContactGestion\Repository\ContactsRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Celtic34fr\ContactGestion\Entity\Contacts;
+use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
+use Celtic34fr\ContactGestion\Repository\ContactsRepository;
 
+/** service de gestion est restitution des informations pour le Widget ContactWidget */
 class ContactDbInfos
 {
     use DbPaginateTrait;
@@ -20,9 +20,9 @@ class ContactDbInfos
     {
         $this->entityManager = $entityManager;
         $this->contactsRepository = $this->entityManager->getRepository(Contacts::class);
-        $this->courrielsRepository = $this->entityManager->getRepository(Courriels::class);
     }
 
+    /** méthode de recherche des demandes de contact non clôturées */
     public function findRequestAll(int $currentPage = 1, int $limit = 10): array
     {
         $qb = $this->contactsRepository
@@ -33,12 +33,14 @@ class ContactDbInfos
         return $this->paginateDoctrine($qb, $currentPage, $limit);
     }
 
+    /** méthode décompte des demandes de contact non clôturées */
     public function countRequestAll(): int
     {
         return sizeof($this->findRequestAll(0, 0)['datas']) ?? 0;
     }
 
-    public function findLast2WeeksDemands(int $currentPage = 1, int $limit = 10): array
+   /** méthode de recherche des demandes de contact sur les 2 dernières semaines */
+   public function findLast2WeeksDemands(int $currentPage = 1, int $limit = 10): array
     {
         $date = (new DateTimeImmutable('now'))->modify("-2 weeks");
         $qb = $this->contactsRepository
@@ -50,12 +52,17 @@ class ContactDbInfos
         return $this->paginateDoctrine($qb, $currentPage, $limit);
     }
 
-    public function countLast2WeeksDemands(): int
+   /** méthode décompte des demandes de contact sur les 2 dernières semaines */
+   public function countLast2WeeksDemands(): int
     {
         return sizeof($this->findLast2WeeksDemands(0, 0)['datas']) ?? 0;
     }
 
-    public function findDemandGoToEnd(int $currentPage = 1, int $limit = 10): array
+   /** 
+    * méthode de recherche des demandes de contact non clôturées arrivant au terme des 2 semaines 
+    * de délais de prise en compte
+    */
+   public function findDemandGoToEnd(int $currentPage = 1, int $limit = 10): array
     {
         $dateDeb = (new DateTimeImmutable('now'))->modify("-2 weeks");
         $dateFin = $dateDeb->modify('+1 day');
@@ -70,11 +77,19 @@ class ContactDbInfos
         return $this->paginateDoctrine($qb, $currentPage, $limit);
     }
 
+   /** 
+    * méthode décompte des demandes de contact non clôturées arrivant au terme des 2 semaines 
+    * de délais de prise en compte
+    */
     public function countDemandGoToEnd(): int
     {
         return sizeof($this->findDemandGoToEnd(0, 0)['datas']) ?? 0;
     }
 
+   /** 
+    * méthode de recherche des demandes de contact non clôturées ayant dépassées le terme des 2 semaines 
+    * de délais de prise en compte
+    */
     public function findDemandOutOfTime(int $currentPage = 1, int $limit = 10): array
     {
         $date = (new DateTimeImmutable('now'))->modify("-2 weeks");
@@ -88,6 +103,10 @@ class ContactDbInfos
         return $this->paginateDoctrine($qb, $currentPage, $limit);
     }
 
+   /** 
+    * méthode décompte des demandes de contact non clôturées ayant dépassées le terme des 2 semaines 
+    * de délais de prise en compte
+    */
     public function countDemandOutOfTime(): int
     {
         return sizeof($this->findDemandOutOfTime(0, 0)['datas']) ?? 0;

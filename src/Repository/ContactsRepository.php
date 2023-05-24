@@ -40,6 +40,7 @@ class ContactsRepository extends ServiceEntityRepository
         }
     }
 
+    /** méthode de recherche de l'ensemble des demandes de contact avec pagination */
     public function findRequestAll(int $currentPage = 1, int $limit = 10): array
     {
         $qb = $this->createQueryBuilder('bco')
@@ -48,25 +49,6 @@ class ContactsRepository extends ServiceEntityRepository
             ->orderBy('bco.id', 'DESC')
             ->getQuery();
         return $this->paginateDoctrine($qb, $currentPage, $limit);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function findMatchText(mixed $words): mixed
-    {
-        if (is_array($words)) {
-            $words = implode(' ', (array) $words);
-        }
-        if (!is_string($words)) {
-            throw new \Exception('paramètre incompatible : type string & array, type actuel '.gettype($words));
-        }
-        $query = $this->createQueryBuilder('cd');
-        if (null != $words) {
-            $query->andWhere('MATCH_AGAINST(cd.sujet, cd.demande) AGAINST (:mots boolean)>0')
-                ->setParameter('mots', $words);
-        }
-        return $query->getQuery()->getResult();
     }
 
 //    /**

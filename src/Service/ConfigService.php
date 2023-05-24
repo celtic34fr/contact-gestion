@@ -4,7 +4,7 @@ namespace Celtic34fr\ContactGestion\Service;
 
 use Bolt\Extension\BaseExtension;
 use Bolt\Extension\ExtensionRegistry;
-use Celtic34fr\CrmContact\Extension;
+use Celtic34fr\ContactGestion\Extension;
 
 class ConfigService
 {
@@ -55,11 +55,5 @@ class ConfigService
     {
         $this->config = $this->getConfigArray();
         return $this->config['mailer'];
-    }
-
-    public function getNotificationController()
-    {
-        $this->config = $this->getConfigArray();
-        return $this->config['controller']['notify'] ?? '';
     }
 }

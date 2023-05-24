@@ -15,14 +15,14 @@ class NewsLetter
     private ?int $id = null;
 
     #[ORM\Column]
-    private \DateTime $created_at;
+    private \DateTime $created_at;          // date de création
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTime $ended_at = null;
+    private ?\DateTime $ended_at = null;    // date de fin ou clôture d'envoi de la lettre d'informations
 
     #[ORM\OneToOne(targetEntity: Clientele::class)]
     #[ORM\JoinColumn(name: 'client_id', referencedColumnName: 'id')]
-    private Clientele $client;
+    private Clientele $client;              // lien vers l'internaute (informations fixes)
 
     public function __construct()
     {

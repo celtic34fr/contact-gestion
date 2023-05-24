@@ -25,6 +25,7 @@ class ResponsesController extends AbstractController implements BackendZoneInter
     {
     }
 
+    /** formulaire de recherche d'informations dans le desmandes (questions) et/ou réponses enregistées en base */
     #[Route('/searchIn', name: 'search_responses')]
     public function seachInResponses(Request $request): Response
     {
@@ -68,6 +69,7 @@ class ResponsesController extends AbstractController implements BackendZoneInter
         ]);
     }
 
+    /** visualisation d'un ensemble demande (question) et/ou réponse  */
     #[Route('/show_qr/{id}', name: 'showQR')]
     public function showQR(Contacts $contact, Request $request): Response
     {
@@ -77,6 +79,8 @@ class ResponsesController extends AbstractController implements BackendZoneInter
             'demandeur' => $contact->getClient(),
         ]);
     }
+
+    /** méthodes privées */
 
     private function filterByCategories(array $results, $categories): array
     {
