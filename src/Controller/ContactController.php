@@ -102,7 +102,7 @@ class ContactController extends AbstractController
 
     private function create_request(DemandesType $contact): bool
     {
-        $rc = null;
+        $rc = true;
         try {
             $clientele = $this->entityManager->getRepository(Clientele::class)->findOneBy(['courriel' => $contact->getAdrCourriel()]);
             if (!$clientele) {
@@ -146,8 +146,6 @@ class ContactController extends AbstractController
             $this->entityManager->flush();
 
             $this->manageIdx->updateContactsIDX($demande->toTntArray(), 'i');
-
-            $rc = true;
         } catch (\Exception $exception) {
             echo $exception->getMessage();
             $rc = false;
