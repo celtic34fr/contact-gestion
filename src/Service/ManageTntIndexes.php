@@ -40,6 +40,15 @@ class ManageTntIndexes
 
         $this->indexesContacts = 'contacts';
         $this->indexesResponses = 'responses';
+
+        /** contrôle existance répoertoire stoage des index TNTSearch et création au besoin */
+        $filesystem = new Filesystem();
+        $config = $this->getTntConfig();
+        if (!$filesystem->exists($config['storage'])) {
+            $filesystem->mkdir($config['storage']);
+            $filesystem->chgrp($config['storage'], 'www-data', true);
+            $filesystem->chmod($config['storage'], 0777);
+        }
     }
 
     /** récupération de la configuation pour TNTSearch */
