@@ -92,10 +92,11 @@ class ContactDbInfos
     */
     public function findDemandOutOfTime(int $currentPage = 1, int $limit = 10): array
     {
-        $date = (new DateTimeImmutable('now'))->modify("-2 weeks");
+        $today = new DateTimeImmutable('now'); 
+        $date = $today->modify("-2 weeks");
         $qb = $this->contactsRepository
             ->createQueryBuilder("dem")
-            ->where('dem.created_at >= :date')
+            ->where('dem.created_at <= :date')
             ->andWhere('dem.closed_at IS NULL')
             ->orderBy('dem.created_at', 'DESC')
             ->setParameter('date', $date->format('Y-m-d'))
