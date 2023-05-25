@@ -19,11 +19,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('response')]
 class ResponsesController extends AbstractController implements BackendZoneInterface
 {
-    use DbPaginateTrait;
-
     public function __construct(private EntityManagerInterface $entityManager, private ManageTntIndexes $manageIdx)
     {
     }
+
+    use DbPaginateTrait;
 
     /** formulaire de recherche d'informations dans le desmandes (questions) et/ou réponses enregistées en base */
     #[Route('/searchIn', name: 'search_responses')]
@@ -42,15 +42,9 @@ class ResponsesController extends AbstractController implements BackendZoneInter
         if ($form->isSubmitted() && $form->isValid()) {
             if ('POST' === $request->getMethod()) {
                 if (!$form->get('reset')->isClicked()) {
-                    // dump($form->get('searchText')->getData(), $form->get('categories')->getData());
-
                     // recherche via le module TntSearch dans ManageTntIndexes
                     $results = $this->manageIdx->search($form->get('searchText')->getData());
                     $results = $this->filterByCategories($results, $form->get('categories')->getData());
-
-                    // dump($results);
-                    // dd('fin');
-
                     $searchForm->setSearchText($form->get('searchText')->getData());
                     $searchForm->setCategories($form->get('categories')->getData());
                 } else {
