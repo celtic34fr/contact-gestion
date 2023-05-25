@@ -48,6 +48,8 @@ class ManageTntIndexes
             $filesystem->mkdir($config['storage']);
             $filesystem->chgrp($config['storage'], 'www-data', true);
             $filesystem->chmod($config['storage'], 0777);
+            /** gération des index TNTSearch */
+            $this->generate();
         }
     }
 
