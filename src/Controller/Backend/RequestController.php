@@ -8,7 +8,6 @@ use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
 use Twig\Error\RuntimeError;
 use Doctrine\ORM\EntityManagerInterface;
-use Celtic34fr\ContactCore\Service\Utilities;
 use Symfony\Component\HttpFoundation\Request;
 use Celtic34fr\ContactCore\Service\SendMailer;
 use Celtic34fr\ContactGestion\Entity\Contacts;
@@ -20,6 +19,7 @@ use Celtic34fr\ContactGestion\Form\ResponseType;
 use Celtic34fr\ContactGestion\Form\SearchFormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Celtic34fr\ContactCore\Trait\Utilities;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,11 +28,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('request')]
 class RequestController extends AbstractController
 {
+    use Utilities;
+
+    private $schemaManager;
+
     public function __construct(private EntityManagerInterface $entityManager, private Environment $twigEnvironment,
     private ExtensionConfig $extConfig)
     {
         $this->entityManager = $entityManager;
         $this->twigEnvironment = $twigEnvironment;
+        $this->schemaManager = $entityManager->getConnection()->getSchemaManager();
     }
 
     /** liste des demande de contacts à traiter ou en cours de traitement */
@@ -42,14 +47,14 @@ class RequestController extends AbstractController
      *
      * @throws \Exception
      */
-    public function index(Utilities $utility, $page = 1): Response
+    public function index($page = 1): Response
     {
         $currentPage = (int) $page;
         $requests = [];
         $dbPrefix = $this->getParameter('bolt.table_prefix');
         // dd($currentPage);
 
-        if (true == $utility->existsTable($dbPrefix.'contacts')) {
+        if (true == $this->existsTable($dbPrefix.'contacts')) {
             $requests = $this->entityManager->getRepository(Contacts::class)->findRequestAll($currentPage);
             /*
              * avoir une case à cocher pour montrer les demandes déjà traitées
@@ -72,7 +77,7 @@ class RequestController extends AbstractController
      * @throws \Exception
      */
     #[Route('/answer/{id}', name: 'request_answer')]
-    public function answer(string $id, Request $request, Utilities $utility, ExtensionConfig $extConfig, ManageTntIndexes $manageIdx): HttpResponse
+    public function answer(string $id, Request $request, ExtensionConfig $extConfig, ManageTntIndexes $manageIdx): HttpResponse
     {
         $id = (int) $id;
         $requete = $this->entityManager->getRepository(Contacts::class)->find($id);
@@ -82,7 +87,7 @@ class RequestController extends AbstractController
         $dbPrefix = $this->getParameter('bolt.table_prefix');
         $operation = 'u';
 
-        if (true == $utility->existsTable($dbPrefix.'contacts')) {
+        if (true == $this->existsTable($dbPrefix.'contacts')) {
             /** @var User $operateur */
             $operateur = $this->getUser();
             if (!$response) {
@@ -213,12 +218,12 @@ class RequestController extends AbstractController
      * @throws \Exception
      */
     #[Route('/send/{id}', name: 'send_answer')]
-    public function send(string $id, Utilities $utility): HttpResponse
+    public function send(string $id): HttpResponse
     {
         $sendMail = new SendMailer();
         $dbPrefix = $this->getParameter('bolt.table_prefix');
 
-        if ($utility->existsTable($dbPrefix.'demandes')) {
+        if ($this->existsTable($dbPrefix.'demandes')) {
             $flashMessage = $this->isEmptyReponse($id);
             if ($flashMessage) {
                 $this->addFlash($flashMessage['type'], $flashMessage['corps']);
@@ -255,11 +260,11 @@ class RequestController extends AbstractController
      * @throws \Exception
      */
     #[Route('/close/{id}', name: 'request_close')]
-    public function close(string $id, Utilities $utility): HttpResponse
+    public function close(string $id): HttpResponse
     {
         $dbPrefix = $this->getParameter('bolt.table_prefix');
 
-        if ($utility->existsTable($dbPrefix.'demandes')) {
+        if ($this->existsTable($dbPrefix.'demandes')) {
             $flashMessage = $this->isEmptyReponse($id);
             if ($flashMessage) {
                 $this->addFlash($flashMessage['type'], $flashMessage['corps']);
