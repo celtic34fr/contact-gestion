@@ -4,7 +4,6 @@ namespace Celtic34fr\ContactGestion\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Celtic34fr\ContactGestion\FormEntity\DemandesType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 class ContactType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {::class
+    {
         $builder
             ->add('id', HiddenType::class, [
             ])
@@ -30,7 +29,7 @@ class ContactType extends AbstractType
             ->add('adrCourriel', TextType::class, [
                 'required' => true,
             ])
-            ->add('telephone', PhoneNumberType::class, [
+            ->add('telephone', TextType::class, [
                 'required' => false,
             ])
             ->add('contactMe', CheckboxType::class, [

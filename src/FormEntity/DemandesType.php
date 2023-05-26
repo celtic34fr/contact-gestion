@@ -2,8 +2,6 @@
 
 namespace Celtic34fr\ContactGestion\FormEntity;
 
-use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
-
 /** classe support d'exploitation des données saisie dans Form\ContactType */
 class DemandesType
 {
@@ -11,7 +9,6 @@ class DemandesType
     private string $nom;
     private string $prenom;
     private string $adr_courriel;
-    #[AssertPhoneNumber(type: [AssertPhoneNumber::MOBILE, AssertPhoneNumber::FIXED_LINE, AssertPhoneNumber::VOIP])]
     private string $telephone;
     private bool $contact_me;
     private bool $newsletter;
