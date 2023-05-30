@@ -25,9 +25,11 @@ class SymfonyAdvanceExtensionRuntime implements RuntimeExtensionInterface
 
         $formChildren = $form->children;
         foreach ($formChildren as $formFieldName => $formChild) {
-            $formFieldErrors = (string) $formChild->vars["errors"];
-            if ($formFieldErrors) {
-                $formErrors[$formFieldName] = $formFieldErrors;
+            if (array_key_exists('errors', $formChild->vars)) {
+                $formFieldErrors = (string) $formChild->vars["errors"];
+                if ($formFieldErrors) {
+                    $formErrors[$formFieldName] = $formFieldErrors;
+                }
             }
         }
         return $formErrors;
