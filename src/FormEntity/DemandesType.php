@@ -2,20 +2,41 @@
 
 namespace Celtic34fr\ContactGestion\FormEntity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
 
 /** classe support d'exploitation des données saisie dans Form\ContactType */
 class DemandesType
 {
     private int $id;
+
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
     private string $nom;
+
+    #[Assert\Type('string')]
     private string $prenom;
+
+    #[Assert\NotBlank]
+    #[Assert\Email(checkMX: true,  message: "Aucun serveur mail n'a été trouvé pour ce domaine")]
+    #[Assert\Email(strict: true, message: "Le format de l'email est incorrect")]
     private string $adr_courriel;
+
     #[AssertPhoneNumber(defaultRegion: 'FR')]
     private string $telephone;
+
+    #[Assert\Type('bool')]
     private bool $contact_me;
+
+    #[Assert\Type('bool')]
     private bool $newsletter;
+
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
     private string $sujet;
+
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
     private string $demande;
 
     public function getId(): int

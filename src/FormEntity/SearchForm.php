@@ -3,11 +3,15 @@
 namespace Celtic34fr\ContactGestion\FormEntity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /** classe support d'exploitation des données saisie dans Form\SearchFormType */
 class SearchForm
 {
+    #[Assert\Type('string')]
     protected ?string $searchText = null;
+
+    #[Assert\Type('array')]
     protected ?ArrayCollection $categories = null;
 
     /**
