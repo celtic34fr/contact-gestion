@@ -107,11 +107,13 @@
                         <h2 class="col-12 text-xl">Faite votre demande ici</h2>
                         {{ form_start(form, {'class': 'col-12 mx-0 px-0 row'}) }}
                             {{ form_row(form._token) }}
-                            {% set errors = form.vars.errors.form.getErrors(true) %}
+                            {% set errors = formErrors(form) %}
                             {% if errors|length %}
                                 <ul class="errors-form col12 row px-0 mx-0">
-                                    {% for error in errors %}
-                                        <li class="error-line col-12 text-xs">{{ error.message }}</li>
+                                    {% for champ, erreur in errors %}
+                                        <li class="error-line col-12 text-xs">
+                                            champ <strong>{{ champ }}</strong> : {{ erreur }}
+                                        </li>
                                     {% endfor %}
                                 </ul>
                             {% endif %}

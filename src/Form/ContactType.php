@@ -2,8 +2,10 @@
 
 namespace Celtic34fr\ContactGestion\Form;
 
+use libphonenumber\PhoneNumberFormat;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Celtic34fr\ContactGestion\FormEntity\DemandesType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -29,8 +31,10 @@ class ContactType extends AbstractType
             ->add('adrCourriel', TextType::class, [
                 'required' => true,
             ])
-            ->add('telephone', TextType::class, [
+            ->add('telephone', PhoneNumberType::class, [
                 'required' => false,
+                'default_region' => 'FR',
+                'format' => PhoneNumberFormat::NATIONAL
             ])
             ->add('contactMe', CheckboxType::class, [
                 'required' => false,
