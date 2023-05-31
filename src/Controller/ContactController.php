@@ -10,6 +10,7 @@ use Celtic34fr\ContactCore\Enum\CustomerEnums;
 use Celtic34fr\ContactGestion\Form\ContactType;
 use Celtic34fr\ContactGestion\FormEntity\DemandesType;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Celtic34fr\ContactCore\Trait\Utilities;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,6 +32,8 @@ class ContactController extends AbstractController
         private ExtensionConfig $extConfig, private ManageTntIndexes $manageIdx)
     {
     }
+
+    use Utilities;
 
     #[Route('/', name: 'contact')]
     public function __invoke(Request $request): Response
@@ -104,23 +107,34 @@ class ContactController extends AbstractController
     {
         $rc = true;
         try {
-            $clientele = $this->entityManager->getRepository(Clientele::class)->findOneBy(['courriel' => $contact->getAdrCourriel()]);
+            /** vérifi existance adresse courrielle */
+            $clientele = $this->entityManager->getRepository(Clientele::class)->findOneBy(['courriel' => strtolower($contact->getAdrCourriel())]);
             if (!$clientele) {
+                /** création d'un nouveau prospect comme absent de la base */
                 $prospect = CustomerEnums::Prospect->_toString();
                 $clientele = new Clientele();
                 $clientele->setCourriel($contact->getAdrCourriel());
                 $clientele->setType($prospect);
             }
 
-            $cliInfos = new CliInfos();
-            $cliInfos->setNom($contact->getNom());
-            if (!$contact->isEmptyPrenom()) {
-                $cliInfos->setPrenom($contact->getPrenom());
+            /** recherche si détail prospect déjà présent */
+            $cliInfos = $this->entityManager->getRepository(CliInfos::class)->findOneBy([
+                'nom' => strtoupper($contact->getNom()),
+                'prenom' => $contact->isEmptyPrenom() ? null : $this->ucfirstPrenom($contact->getPrenom()),
+                'telephone' => $contact->isEmptyTelephone() ? null : $contact->getTelephone(),
+            ]);
+            if (!$cliInfos) {
+                /** création d'un nouveau detail prospect comme absent de la base */
+                $cliInfos = new CliInfos();
+                $cliInfos->setNom(strtoupper($contact->getNom()));
+                if (!$contact->isEmptyPrenom()) {
+                    $cliInfos->setPrenom($this->ucfirstPrenom($contact->getPrenom()));
+                }
+                if (!$contact->isEmptyTelephone()) {
+                    $cliInfos->setTelephone($contact->getTelephone());
+                }
+                $cliInfos->setClient($clientele);
             }
-            if (!$contact->isEmptyTelephone()) {
-                $cliInfos->setTelephone($contact->getTelephone());
-            }
-            $cliInfos->setClient($clientele);
 
             $demande = new Contacts();
             $demande->setSujet($contact->getSujet());
