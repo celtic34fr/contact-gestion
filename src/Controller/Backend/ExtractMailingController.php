@@ -6,10 +6,12 @@ use Celtic34fr\ContactGestion\Form\MailingExtractType;
 use Celtic34fr\ContactGestion\FormEntity\MailingExtract;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('extract_mailing')]
 class ExtractMailingController extends AbstractController
 {
+    #[Route('/', name: 'extract_mailing')]
     public function indexAction(): Response
     {
         $mailingExtract = new MailingExtract();
