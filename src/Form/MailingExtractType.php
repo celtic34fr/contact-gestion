@@ -2,10 +2,11 @@
 
 namespace Celtic34fr\ContactGestion\Form;
 
-use Celtic34fr\ContactGestion\FormEntity\MailingExtract;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Celtic34fr\ContactGestion\FormEntity\MailingExtract;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class MailingExtractType extends AbstractType
 {
