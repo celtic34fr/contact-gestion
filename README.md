@@ -1,4 +1,4 @@
-# Celtic34fr Contact Managment Extension v0.0.1-dev
+# Bolt CMS 5 Celtic34fr Contact Managment Extension v0.0.1-dev
 
 Author: Gilbert ARMENGAUD
 

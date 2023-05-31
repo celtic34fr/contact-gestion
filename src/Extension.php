@@ -16,7 +16,7 @@ class Extension extends BaseExtension
      */
     public function getName(): string
     {
-        return 'Celtic34fr Contact Formular and Managment Extension';
+        return 'Bolt Celtic34fr Contact Formular and Managment Extension';
     }
 
     /**
