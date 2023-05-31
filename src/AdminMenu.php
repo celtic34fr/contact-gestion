@@ -72,6 +72,14 @@ class AdminMenu implements ExtensionBackendMenuInterface
             ]
         ]);
 
+        $menu->addChild('Extraction liste Mailing Newsletter', [
+            'uri' => $this->urlGenerator->generate('extract_mailing'),
+           'extras' => [
+                'group' => 'Contact',
+                'name' => 'Extraction liste Mailing Newsletter',
+            ]
+        ]);
+
         if ($saveName) {
             $childrenUpdated = $menu->getChildren();
             $find = false;

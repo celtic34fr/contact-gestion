@@ -28,8 +28,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('request')]
 class RequestController extends AbstractController
 {
-    use Utilities;
-
     private $schemaManager;
 
     public function __construct(private EntityManagerInterface $entityManager, private Environment $twigEnvironment,
@@ -39,6 +37,8 @@ class RequestController extends AbstractController
         $this->twigEnvironment = $twigEnvironment;
         $this->schemaManager = $entityManager->getConnection()->getSchemaManager();
     }
+
+    use Utilities;
 
     /** liste des demande de contacts à traiter ou en cours de traitement */
     #[Route('/list/{page}', name: 'request_list')]
