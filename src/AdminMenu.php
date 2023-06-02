@@ -25,7 +25,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
 
         list($menuBefore, $menuContacts, $menuAfter) = $this->extractsMenus($menu);
 
-        dd('before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
+        //dd('before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
 
         $demandeDeContact = [
             'Demandes de contact' => [
@@ -81,7 +81,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
         ];
         $menuContacts = $this->addMenu($utilitaires, $menuContacts);
 
-        dd($menuBefore, $menuContacts, $menuAfter);
+        dd('before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
 
         if (!$menu->getChild("Gestion des Contacts")) {
             $menu->addChild('Gestion des Contacts', [
