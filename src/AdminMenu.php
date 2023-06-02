@@ -25,8 +25,6 @@ class AdminMenu implements ExtensionBackendMenuInterface
 
         list($menuBefore, $menuContacts, $menuAfter) = $this->extractsMenus($menu);
 
-        dd($menuBefore, $menuContacts, $menuAfter);
-
         $demandeDeContact = [
             'Demandes de contact' => [
                 'type' => 'menu',
@@ -65,6 +63,8 @@ class AdminMenu implements ExtensionBackendMenuInterface
             ]
         ];
         $menuContacts = $this->addMenu($demandeDeContact, $menuContacts);
+
+        dd($menuContacts);
 
         $utilitaires = [
             'Extraction liste Mailing Newsletter' => [
