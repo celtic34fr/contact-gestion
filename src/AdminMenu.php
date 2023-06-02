@@ -25,7 +25,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
 
         list($menuBefore, $menuContacts, $menuAfter) = $this->extractsMenus($menu);
 
-        dump($menu, 'before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
+        //dump($menu, 'before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
 
         $demandeDeContact = [
             'Demandes de contact' => [
@@ -94,6 +94,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
         $idx = 0;
 
         foreach ($children as $name => $child) {
+            dump($name, $child);
             if ((!$child->getExtra('group') || $child->getExtra('group') != 'Contact') && !$contact) {
                 $menuBefore->addChild($name, [
                     'uri' => $child->getUri(),
