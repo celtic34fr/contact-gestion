@@ -16,17 +16,12 @@ class AdminMenu implements ExtensionBackendMenuInterface
 
     public function addItems(MenuItem $menu): void
     {
-        /*
-            1/ décomposition de $menu en $menuBefor, $menuContacts et $menu after
-            2/ ajout des menu de gestion des demandes
-            3/ ajout au menuContacts.utilistaire de l'accès au module d'extraction pour mailing newsletter
-            4/ recontruction de $menu avec $menuBefore, $menuContacts et $menuAfter
-        */
-
+        /* 1/ décomposition de $menu en $menuBefor, $menuContacts et $menu after */
         list($menuBefore, $menuContacts, $menuAfter) = $this->extractsMenus($menu);
 
         dump($menu, 'before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
 
+        /* 2/ ajout des menu de gestion des demandes */
         $demandeDeContact = [
             'Demandes de contact' => [
                 'type' => 'menu',
@@ -66,6 +61,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
         ];
         $menuContacts = $this->addMenu($demandeDeContact, $menuContacts);
 
+        /* 3/ ajout au menuContacts.utilistaire de l'accès au module d'extraction pour mailing newsletter */
         $utilitaires = [
             'Extraction liste Mailing Newsletter' => [
                 'type' => 'smenu',
@@ -80,6 +76,9 @@ class AdminMenu implements ExtensionBackendMenuInterface
             ]
         ];
         $menuContacts = $this->addMenu($utilitaires, $menuContacts);
+
+        /* 4/ recontruction de $menu avec $menuBefore, $menuContacts et $menuAfter */
+        $menu = $this->rebuildMenu($menu, $menuBefore, $menuContacts, $menuAfter);
 
         dd('before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
     }
@@ -97,13 +96,13 @@ class AdminMenu implements ExtensionBackendMenuInterface
             if ((!$child->getExtra('group') || $child->getExtra('group') != 'Contact') && !$contact) {
                 $menuBefore->addChild($name, [
                     'uri' => $child->getUri(),
-                    'extra' => $child->getExtras(),
+                    'extras' => $child->getExtras(),
                 ]);
                 if ($child->getChildren()) {
                     foreach ($child->getChildren() as $childName => $childChild) {
                         $menuBefore[$name]->addChild($childName, [
                             'uri' => $childChild->getUri(),
-                            'extra' => $childChild->getExtras(),
+                            'extras' => $childChild->getExtras(),
                         ]);
                     }
                 }
@@ -112,13 +111,13 @@ class AdminMenu implements ExtensionBackendMenuInterface
                 $contact = true;
                 $menuContacts->addChild($name, [
                     'uri' => $child->getUri(),
-                    'extra' => $child->getExtras(),
+                    'extras' => $child->getExtras(),
                 ]);
                 if ($child->getChildren()) {
                     foreach ($child->getChildren() as $childName => $childChild) {
                         $menuContacts[$name]->addChild($childName, [
                             'uri' => $childChild->getUri(),
-                            'extra' => $childChild->getExtras(),
+                            'extras' => $childChild->getExtras(),
                         ]);
                     }
                 }
@@ -126,13 +125,13 @@ class AdminMenu implements ExtensionBackendMenuInterface
             } else {
                 $menuAfter->addChild($name, [
                     'uri' => $child->getUri(),
-                    'extra' => $child->getExtras(),
+                    'extras' => $child->getExtras(),
                 ]);
                 if ($child->getChildren()) {
                     foreach ($child->getChildren() as $childName => $childChild) {
                         $menuAfter[$name]->addChild($childName, [
                             'uri' => $childChild->getUri(),
-                            'extra' => $childChild->getExtras(),
+                            'extras' => $childChild->getExtras(),
                         ]);
                     }
                 }
@@ -176,6 +175,55 @@ class AdminMenu implements ExtensionBackendMenuInterface
         foreach ($children as $name => $child) {
             $menu->removeChild($name);
         }
+        return $menu;
+    }
+
+    private function rebuildMenu(MenuItem $menu, MenuItem $menuBefore, MenuItem $menuContacts, MenuItem $menuAfter): MenuItem
+    {
+        $menu = $this->emptyMenuItem($menu);
+        foreach ($menuBefore->getChildren() as $name => $child) {
+            $menu->addChild($name, [
+                'uri' => $child->getUri(),
+                'extras' => $child->getExtras(),
+            ]);
+            if ($child->getChildren()) {
+                foreach ($child->getChildren() as $childName => $childChild) {
+                    $menu[$name]->addChild($childName, [
+                        'uri' => $childChild->getUri(),
+                        'extras' => $childChild->getExtras(),
+                    ]);
+                }
+            }
+        }
+        foreach ($menuContacts->getChildren() as $name => $child) {
+            $menu->addChild($name, [
+                'uri' => $child->getUri(),
+                'extras' => $child->getExtras(),
+            ]);
+            if ($child->getChildren()) {
+                foreach ($child->getChildren() as $childName => $childChild) {
+                    $menu[$name]->addChild($childName, [
+                        'uri' => $childChild->getUri(),
+                        'extras' => $childChild->getExtras(),
+                    ]);
+                }
+            }
+        }
+        foreach ($menuAfter->getChildren() as $name => $child) {
+            $menu->addChild($name, [
+                'uri' => $child->getUri(),
+                'extras' => $child->getExtras(),
+            ]);
+            if ($child->getChildren()) {
+                foreach ($child->getChildren() as $childName => $childChild) {
+                    $menu[$name]->addChild($childName, [
+                        'uri' => $childChild->getUri(),
+                        'extras' => $childChild->getExtras(),
+                    ]);
+                }
+            }
+        }
+
         return $menu;
     }
 }
