@@ -50,7 +50,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
             'uri' => $this->urlGenerator->generate('bolt_menupage', [
                 'slug' => 'demande_contact',
             ]),
-           'extras' => [
+            'extras' => [
                 'group' => 'Contact',
                 'name' => 'Demandes de contact',
                 'slug' => 'demande_contact',
@@ -74,7 +74,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
 
         $menu->addChild('Extraction liste Mailing Newsletter', [
             'uri' => $this->urlGenerator->generate('extract_mailing'),
-           'extras' => [
+            'extras' => [
                 'group' => 'Contact',
                 'name' => 'Extraction liste Mailing Newsletter',
             ]
