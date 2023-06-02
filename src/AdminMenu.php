@@ -17,14 +17,69 @@ class AdminMenu implements ExtensionBackendMenuInterface
     {
         /*
             1/ décomposition de $menu en $menuBefor, $menuContacts et $menu after
-            2/ jaout des menu de gestion des demandes
+            2/ ajout des menu de gestion des demandes
             3/ ajout au menuContacts.utilistaire de l'accès au module d'extraction pour mailing newsletter
             4/ recontruction de $menu avec $menuBefore, $menuContacts et $menuAfter
         */
 
         list($menuBefore, $menuContacts, $menuAfter) = $this->extractsMenus($menu);
 
-        dd($menuBefore, $menuContacts, $menuAfter);
+        dd($menuBefore, $menuContacts, $menuAfter)
+
+        $demandeDeContact = [
+            'Demandes de contact' => [
+                'type' => 'menu',
+                'item' => [
+                    'uri' => $this->urlGenerator->generate('bolt_menupage', [
+                        'slug' => 'demande_contact',
+                    ]),
+                    'extras' => [
+                        'group' => 'Contact',
+                        'name' => 'Demandes de contact',
+                        'slug' => 'demande_contact',
+                    ]
+                ]
+            ],
+            'La liste à traiter' => [
+                'type' => 'smenu',
+                'parent' => 'Demandes de contact',
+                'item' => [
+                    'uri' => $this->urlGenerator->generate('request_list'),
+                    'extras' => [
+                        'icon' => 'fa-clipboard-question',
+                        'group' => 'Contact',
+                    ]
+                ]
+            ],
+            'Recherche dans les réponses' => [
+                'type' => 'smenu',
+                'parent' => 'Demandes de contact',
+                'item' => [
+                    'uri' => $this->urlGenerator->generate('search_responses'),
+                    'extras' => [
+                        'icon' => 'fa-envelope-circle-check',
+                        'group' => 'Contact',
+                    ]
+                ]
+            ]
+        ];
+        $menuContacts = $this->addMenu($demandeDeContact, $menuContacts);
+
+        $utilitaires = [
+            'Extraction liste Mailing Newsletter' => [
+                'type' => 'smenu',
+                'parent' => 'Utilitaires',
+                'item' => [
+                    'uri' => $this->urlGenerator->generate('extract_mailing'),
+                    'extras' => [
+                        'group' => 'Contact',
+                        'name' => 'Extraction liste Mailing Newsletter',
+                    ]
+                ]
+            ]
+        ];
+        $menuContacts = $this->addMenu($utilitaires, $menuContacts);
+
 
         if (!$menu->getChild("Gestion des Contacts")) {
             $menu->addChild('Gestion des Contacts', [
@@ -35,6 +90,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
                 ]
             ]);
         }
+
 
         $children = $menu->getChildren();
         $childrenUpdated = [];
@@ -108,9 +164,9 @@ class AdminMenu implements ExtensionBackendMenuInterface
 
     private function extractsMenus(MenuItem $menu): array
     {
-        $menuBefore = null;
-        $menuContacts = null;
-        $menuAfter = null;
+        $menuBefore = new MenuItem();
+        $menuContacts = new MenuItem();
+        $menuAfter = new MenuItem();
         $children = $menu->getChildren();
         $contact = false;
         $idx = 0;
@@ -130,5 +186,16 @@ class AdminMenu implements ExtensionBackendMenuInterface
         }
 
         return [$menuBefore, $menuContacts, $menuAfter];
+    }
+
+    private function addMenu(array $menusToAdd, array $menu): array
+    {
+        foreach ($menusToAdd as $name => $datas)  {
+            if (!array_key_exists($name, $menu)) {
+
+            }
+        }
+
+        return $menu;
     }
 }
