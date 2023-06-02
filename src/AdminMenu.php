@@ -66,8 +66,6 @@ class AdminMenu implements ExtensionBackendMenuInterface
         ];
         $menuContacts = $this->addMenu($demandeDeContact, $menuContacts);
 
-        dd('before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
-
         $utilitaires = [
             'Extraction liste Mailing Newsletter' => [
                 'type' => 'smenu',
@@ -209,6 +207,8 @@ class AdminMenu implements ExtensionBackendMenuInterface
                     $menu->addChild($name, $datas['item']);
                     break;
                 case ($datas['type'] === "smenu"):
+                    var_dump($name, $menu->getChildren());
+                    /*
                     $menuParent = $datas['parent'];
                     if (empty($menuParent)) {
                         throw new Exception("SouMenu $name sans menu parent");
@@ -219,6 +219,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
                         $menu->addChild($menuParent, $menusToAdd[$menuParent]['item']);
                     }
                     $menu[$menuParent]->addChild($name, $datas['item']);
+                    */
                     break;
             }
         }
