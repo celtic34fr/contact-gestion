@@ -164,23 +164,32 @@ class AdminMenu implements ExtensionBackendMenuInterface
 
     private function extractsMenus(MenuItem $menu): array
     {
-        $menuBefore = [];
-        $menuContacts = [];
-        $menuAfter = [];
+        $menuBefore = $this->emptyMenuItem(clone $menu);
+        $menuContacts = $this->emptyMenuItem(clone $menu);
+        $menuAfter = $this->emptyMenuItem(clone $menu);
         $children = $menu->getChildren();
         $contact = false;
         $idx = 0;
 
         foreach ($children as $name => $child) {
             if ((!$child->getExtra('group') || $child->getExtra('group') != 'Contact') && !$contact) {
-                $menuBefore[$name] = $child;
+                $menuBefore->addChild($name, [
+                    'uri' => $child->getUri(),
+                    'extra' => $child->getExtras()
+                ]);
                 $idx += 1;
             } elseif (!$contact || $child->getExtra('group') == 'Contact') {
                 $contact = true;
-                $menuContacts[$name] = $child;
+                $menuContacts->addChild($name, [
+                    'uri' => $child->getUri(),
+                    'extra' => $child->getExtras()
+                ]);
                 $idx += 1;
             } else {
-                $menuAfter[$name] = $child;
+                $menuAfter->addChild($name, [
+                    'uri' => $child->getUri(),
+                    'extra' => $child->getExtras()
+                ]);
                 break;
             }
         }
@@ -196,6 +205,15 @@ class AdminMenu implements ExtensionBackendMenuInterface
             }
         }
 
+        return $menu;
+    }
+
+    private function emptyMenuItem(MenuItem $menu): MenuItem
+    {
+        $children = $menu->getChildren();
+        foreach ($children as $name => $child) {
+            $menu->removeChild($name);
+        }
         return $menu;
     }
 }
