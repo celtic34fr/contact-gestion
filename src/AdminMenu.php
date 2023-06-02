@@ -15,6 +15,17 @@ class AdminMenu implements ExtensionBackendMenuInterface
 
     public function addItems(MenuItem $menu): void
     {
+        /*
+            1/ décomposition de $menu en $menuBefor, $menuContacts et $menu after
+            2/ jaout des menu de gestion des demandes
+            3/ ajout au menuContacts.utilistaire de l'accès au module d'extraction pour mailing newsletter
+            4/ recontruction de $menu avec $menuBefore, $menuContacts et $menuAfter
+        */
+
+        list($menuBefore, $menuContacts, $menuAfter) = $this->extractsMenus($menu);
+
+        dd($menuBefore, $menuContacts, $menuAfter);
+
         if (!$menu->getChild("Gestion des Contacts")) {
             $menu->addChild('Gestion des Contacts', [
                 'extras' => [
@@ -93,5 +104,31 @@ class AdminMenu implements ExtensionBackendMenuInterface
         }
 
         dd($menu);
+    }
+
+    private function extractsMenus(MenuItem $menu): array
+    {
+        $menuBefore = null;
+        $menuContacts = null;
+        $menuAfter = null;
+        $children = $menu->getChildren();
+        $contact = false;
+        $idx = 0;
+
+        foreach ($children as $name => $child) {
+            if ((!$child->getExtra('group') || $child->getExtra('group') != 'Contact') && !$contact) {
+                $menuBefore[$name] = $child;
+                $idx += 1;
+            } elseif (!$contact) {
+                $contact = true;
+                $menuContacts[$name] = $child;
+                $idx += 1;
+            } else {
+                $menuAfter[$name] = $child;
+                break;
+            }
+        }
+
+        return [$menuBefore, $menuContacts, $menuAfter];
     }
 }
