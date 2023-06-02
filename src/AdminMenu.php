@@ -104,7 +104,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
                         $menuBefore[$name]->addChild($childName, [
                             'uri' => $childChild->getUri(),
                             'extra' => $childChild->getExtras(),
-                        ])
+                        ]);
                     }
                 }
                 $idx += 1;
@@ -119,7 +119,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
                         $menuContacts[$name]->addChild($childName, [
                             'uri' => $childChild->getUri(),
                             'extra' => $childChild->getExtras(),
-                        ])
+                        ]);
                     }
                 }
                 $idx += 1;
@@ -133,7 +133,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
                         $menuAfter[$name]->addChild($childName, [
                             'uri' => $childChild->getUri(),
                             'extra' => $childChild->getExtras(),
-                        ])
+                        ]);
                     }
                 }
                 break;
