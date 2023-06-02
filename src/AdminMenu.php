@@ -196,7 +196,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
             }
         }
 
-        return [$menu, $menuBefore, $menuContacts, $menuAfter];
+        return [$menuBefore, $menuContacts, $menuAfter];
     }
 
     private function addMenu(array $menusToAdd, MenuItem $menu): MenuItem
