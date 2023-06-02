@@ -190,9 +190,9 @@ class AdminMenu implements ExtensionBackendMenuInterface
 
     private function addMenu(array $menusToAdd, array $menu): array
     {
-        foreach ($menusToAdd as $name => $datas)  {
+        foreach ($menusToAdd as $name => $datas) {
             if (!array_key_exists($name, $menu)) {
-
+                $menu[$name] = $datas['item'];
             }
         }
 
