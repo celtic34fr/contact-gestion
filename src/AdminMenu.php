@@ -25,7 +25,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
 
         list($menuBefore, $menuContacts, $menuAfter) = $this->extractsMenus($menu);
 
-        //dd('before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
+        var_dump('before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
 
         $demandeDeContact = [
             'Demandes de contact' => [
@@ -82,86 +82,6 @@ class AdminMenu implements ExtensionBackendMenuInterface
         $menuContacts = $this->addMenu($utilitaires, $menuContacts);
 
         dd('before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
-
-        if (!$menu->getChild("Gestion des Contacts")) {
-            $menu->addChild('Gestion des Contacts', [
-                'extras' => [
-                    'name' => 'Gestion des Contacts',
-                    'type' => 'separator',
-                    'group' => 'Contact',
-                ]
-            ]);
-        }
-
-
-        $children = $menu->getChildren();
-        $childrenUpdated = [];
-        $contact = false;
-        $saveName = "";
-        $idx = 0;
-
-        foreach ($children as $name => $child) {
-            if ((!$child->getExtra('group') || $child->getExtra('group') != 'Contact') && !$contact) {
-                $childrenUpdated[$name] = $child;
-                $idx += 1;
-            } elseif (!$contact) {
-                $contact = true;
-                $childrenUpdated[$name] = $child;
-                $idx += 1;
-            } else {
-                $saveName = $name;
-                break;
-            }
-        }
-        $menu->setChildren($childrenUpdated);
-
-        $menu->addChild('Demandes de contact', [
-            'uri' => $this->urlGenerator->generate('bolt_menupage', [
-                'slug' => 'demande_contact',
-            ]),
-            'extras' => [
-                'group' => 'Contact',
-                'name' => 'Demandes de contact',
-                'slug' => 'demande_contact',
-            ]
-        ]);
-
-        $menu['Demandes de contact']->addChild('La liste à traiter', [
-            'uri' => $this->urlGenerator->generate('request_list'),
-            'extras' => [
-                'icon' => 'fa-clipboard-question',
-                'group' => 'Contact',
-            ]
-        ]);
-        $menu['Demandes de contact']->addChild('Recherche dans les réponses', [
-            'uri' => $this->urlGenerator->generate('search_responses'),
-            'extras' => [
-                'icon' => 'fa-envelope-circle-check',
-                'group' => 'Contact',
-            ]
-        ]);
-
-        $menu->addChild('Extraction liste Mailing Newsletter', [
-            'uri' => $this->urlGenerator->generate('extract_mailing'),
-            'extras' => [
-                'group' => 'Contact',
-                'name' => 'Extraction liste Mailing Newsletter',
-            ]
-        ]);
-
-        if ($saveName) {
-            $childrenUpdated = $menu->getChildren();
-            $find = false;
-            foreach ($children as $name => $child) {
-                if ($name === $saveName || $find) {
-                    $childrenUpdated[$name] = $child;
-                    $find = true;
-                }
-            }
-            $menu->setChildren($childrenUpdated);
-        }
-
-        dd($menu);
     }
 
     private function extractsMenus(MenuItem $menu): array
@@ -212,8 +132,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
                         throw new Exception("SouMenu $name sans menu parent");
                     } else if (!empty($menuParent) && (!array_key_exists($menuParent, $menu->getChildren()))) {
                         if (!array_key_exists($menuParent, $menusToAdd)) {
-                            dd($name, $menuParent, $menu->getChildren());
-                            //throw new Exception("SousMenu $name dont le menu parent $menuParent est introuvable");
+                            throw new Exception("SousMenu $name dont le menu parent $menuParent est introuvable");
                         } else {
                             $menu->addChild($menuParent, $menusToAdd[$menuParent]['item']);
                         }
