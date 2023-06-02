@@ -212,7 +212,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
                         throw new Exception("SouMenu $name sans menu parent");
                     } else if (!empty($menuParent) && (!array_key_exists($name, $menu->getChildren()))) {
                         if (!array_key_exists($menuParent, $menusToAdd)) {
-                            var_dump($name, $menuParent, $menu->getChildren());
+                            dd($name, $menuParent, $menu->getChildren());
                             //throw new Exception("SousMenu $name dont le menu parent $menuParent est introuvable");
                         } else {
                             $menu->addChild($menuParent, $menusToAdd[$menuParent]['item']);
