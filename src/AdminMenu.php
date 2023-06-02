@@ -164,9 +164,9 @@ class AdminMenu implements ExtensionBackendMenuInterface
 
     private function extractsMenus(MenuItem $menu): array
     {
-        $menuBefore = new MenuItem();
-        $menuContacts = new MenuItem();
-        $menuAfter = new MenuItem();
+        $menuBefore = [];
+        $menuContacts = [];
+        $menuAfter = [];
         $children = $menu->getChildren();
         $contact = false;
         $idx = 0;
@@ -185,7 +185,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
             }
         }
 
-        return [$menuBefore, $menuContacts, $menuAfter];
+        return [$menu, $menuBefore, $menuContacts, $menuAfter];
     }
 
     private function addMenu(array $menusToAdd, array $menu): array
