@@ -3,6 +3,7 @@
 namespace Celtic34fr\ContactGestion;
 
 use Bolt\Menu\ExtensionBackendMenuInterface;
+use Exception;
 use Knp\Menu\MenuItem;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -23,8 +24,6 @@ class AdminMenu implements ExtensionBackendMenuInterface
         */
 
         list($menuBefore, $menuContacts, $menuAfter) = $this->extractsMenus($menu);
-
-        dd($menuBefore, $menuContacts, $menuAfter);
 
         $demandeDeContact = [
             'Demandes de contact' => [
@@ -80,6 +79,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
         ];
         $menuContacts = $this->addMenu($utilitaires, $menuContacts);
 
+        dd($menuBefore, $menuContacts, $menuAfter);
 
         if (!$menu->getChild("Gestion des Contacts")) {
             $menu->addChild('Gestion des Contacts', [
@@ -197,14 +197,27 @@ class AdminMenu implements ExtensionBackendMenuInterface
         return [$menu, $menuBefore, $menuContacts, $menuAfter];
     }
 
-    private function addMenu(array $menusToAdd, array $menu): array
+    private function addMenu(array $menusToAdd, MenuItem $menu): MenuItem
     {
         foreach ($menusToAdd as $name => $datas) {
-            if (!array_key_exists($name, $menu)) {
-                $menu[$name] = $datas['item'];
+            switch (true) {
+                case (!array_key_exists($name, $menu->getChildren()) && $datas['type'] === "menu"):
+                    $menu->addChild($name, $datas['item']);
+                    break;
+                case ($datas['type'] === "smenu"):
+                    $menuParent = $datas['parent'];
+                    if (empty($menuParent)) {
+                        throw new Exception("SouMenu $name sans menu parent");
+                    } else if (!empty($menuParent) && (!array_key_exists($name, $menu->getChildren()))) {
+                        if (!array_key_exists($menuParent, $menusToAdd)) {
+                            throw new Exception("SousMenu $name dont le menu parent $menuParent est introuvable");
+                        }
+                        $menu->addChild($menuParent, $menusToAdd[$menuParent]['item']);
+                    }
+                    $menu[$menuParent]->addChild($name, $datas['item']);
+                    break;
             }
         }
-
         return $menu;
     }
 
