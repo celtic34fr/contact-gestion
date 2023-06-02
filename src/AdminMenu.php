@@ -98,23 +98,44 @@ class AdminMenu implements ExtensionBackendMenuInterface
                 $menuBefore->addChild($name, [
                     'uri' => $child->getUri(),
                     'extra' => $child->getExtras(),
-                    'children' => $child->getChildren(),
                 ]);
+                if ($child->getChildren()) {
+                    foreach ($child->getChildren() as $childName => $childChild) {
+                        $menuBefore[$name]->addChild($childName, [
+                            'uri' => $childChild->getUri(),
+                            'extra' => $childChild->getExtras(),
+                        ])
+                    }
+                }
                 $idx += 1;
             } elseif (!$contact || $child->getExtra('group') == 'Contact') {
                 $contact = true;
                 $menuContacts->addChild($name, [
                     'uri' => $child->getUri(),
                     'extra' => $child->getExtras(),
-                    'children' => $child->getChildren(),
                 ]);
+                if ($child->getChildren()) {
+                    foreach ($child->getChildren() as $childName => $childChild) {
+                        $menuContacts[$name]->addChild($childName, [
+                            'uri' => $childChild->getUri(),
+                            'extra' => $childChild->getExtras(),
+                        ])
+                    }
+                }
                 $idx += 1;
             } else {
                 $menuAfter->addChild($name, [
                     'uri' => $child->getUri(),
                     'extra' => $child->getExtras(),
-                    'children' => $child->getChildren(),
                 ]);
+                if ($child->getChildren()) {
+                    foreach ($child->getChildren() as $childName => $childChild) {
+                        $menuAfter[$name]->addChild($childName, [
+                            'uri' => $childChild->getUri(),
+                            'extra' => $childChild->getExtras(),
+                        ])
+                    }
+                }
                 break;
             }
         }
