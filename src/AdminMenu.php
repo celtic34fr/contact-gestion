@@ -19,8 +19,6 @@ class AdminMenu implements ExtensionBackendMenuInterface
         /* 1/ décomposition de $menu en $menuBefor, $menuContacts et $menu after */
         list($menuBefore, $menuContacts, $menuAfter) = $this->extractsMenus($menu);
 
-        dump($menu, 'before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
-
         /* 2/ ajout des menu de gestion des demandes */
         $demandeDeContact = [
             'Demandes de contact' => [
@@ -79,8 +77,6 @@ class AdminMenu implements ExtensionBackendMenuInterface
 
         /* 4/ recontruction de $menu avec $menuBefore, $menuContacts et $menuAfter */
         $menu = $this->rebuildMenu($menu, $menuBefore, $menuContacts, $menuAfter);
-
-        dd($menu, 'before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
     }
 
     private function extractsMenus(MenuItem $menu): array
