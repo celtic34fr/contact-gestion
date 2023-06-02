@@ -80,7 +80,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
         /* 4/ recontruction de $menu avec $menuBefore, $menuContacts et $menuAfter */
         $menu = $this->rebuildMenu($menu, $menuBefore, $menuContacts, $menuAfter);
 
-        dd('before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
+        dd($menu, 'before', $menuBefore, 'contacts', $menuContacts, 'after', $menuAfter);
     }
 
     private function extractsMenus(MenuItem $menu): array
