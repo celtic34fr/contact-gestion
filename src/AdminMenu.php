@@ -119,7 +119,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
             if ((!$child->getExtra('group') || $child->getExtra('group') != 'Contact') && !$contact) {
                 $menuBefore[$name] = $child;
                 $idx += 1;
-            } elseif (!$contact) {
+            } elseif (!$contact || $child->getExtra('group') == 'Contact') {
                 $contact = true;
                 $menuContacts[$name] = $child;
                 $idx += 1;
