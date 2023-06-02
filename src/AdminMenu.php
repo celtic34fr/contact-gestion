@@ -15,6 +15,8 @@ class AdminMenu implements ExtensionBackendMenuInterface
 
     public function addItems(MenuItem $menu): void
     {
+        dd($menu);
+
         if (!$menu->getChild("Gestion des Contacts")) {
             $menu->addChild('Gestion des Contacts', [
                 'extras' => [
