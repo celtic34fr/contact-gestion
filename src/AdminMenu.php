@@ -24,7 +24,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
 
         list($menuBefore, $menuContacts, $menuAfter) = $this->extractsMenus($menu);
 
-        dd($menuBefore, $menuContacts, $menuAfter)
+        dd($menuBefore, $menuContacts, $menuAfter);
 
         $demandeDeContact = [
             'Demandes de contact' => [
