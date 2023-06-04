@@ -79,6 +79,6 @@ class AdminMenu implements ExtensionBackendMenuInterface
         $menuContacts = $this->addMenu($utilitaires, $menuContacts);
 
         /* 4/ recontruction de $menu avec $menuBefore, $menuContacts et $menuAfter */
-        $menu = $this->rebuildMenu($menu, $menuBefore, $menuContacts, $menuAfter);
+        $menu = $this->rebuildMenu($menu->getName(), $menuBefore, $menuContacts, $menuAfter);
     }
 }
