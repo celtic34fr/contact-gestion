@@ -27,17 +27,20 @@
 {% block main %}
 	<div id="regorg" class="col12 row mx-0 px-0">
 		<h1 class="col-12 mx-0 px-0 text-center">Réorgaznisation de structure fichier extraction CSV</h1>
-		<div id="origin" class="col-6 row list-group mx-0 px-0">
+		<div class="col-6 row">
 			<h2 class="col-12 mx-0 px-0">Liste des champs possibles</h2>
-			{% for dataSource in datasSource %}
-				<div class="list-group-item col-12 row mx-0 px-0 py-1">
-					<span class="w50p btn btn-info mx-0 px-0">{{ dataSource[1] }}</span>
-					<input type="text" class="w50p mx-0 px-0" name="{{ dataSource[0] }}" value="{{ dataSource[0] }}">
-				</div>
-			{% endfor %}
+			<div id="origin" class="col-12 row list-group mx-0 px-0">
+				{% for dataSource in datasSource %}
+					<div class="list-group-item col-12 row mx-0 px-0 py-1">
+						<span class="w50p btn btn-info mx-0 px-0">{{ dataSource[1] }}</span>
+						<input type="text" class="w50p mx-0 px-0" name="{{ dataSource[0] }}" value="{{ dataSource[0] }}">
+					</div>
+				{% endfor %}
+			</div>
 		</div>
-		<div id="cible" class="col-6 row list-group mx-0 px-0">
+		<div class="col-6 row">
 			<h2 class="col-12 mx-0 px-0 text-center">Champ(s) choisi(s)</h2>
+			<div id="cible" class="col-12 row list-group mx-0 px-0"></div>
 		</div>
 	</div>
 
