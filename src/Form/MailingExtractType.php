@@ -13,19 +13,13 @@ class MailingExtractType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('fields', ChoiceType::class, [
-                'required' => true,
-                'multiple' => true,
-                'label' => "Champs à inclure dans l'extraction",
-                'choices' => [
-                    'Nom' => 'nom',
-                    'Prénom' => 'prenom',
-                    'Nom complet' => 'fullname',
-                    'Adresse Courielle' => 'courriel',
-                    'Téléphone' => 'telephone',
-                ]
+            ->add('list', HiddenType::class, [
+                'required' => false,
             ])
-        ;
+            ->add('fileName', TextType::class, [
+                'label' => 'Nom du fichier à créer',
+                "required" => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

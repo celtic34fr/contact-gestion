@@ -4,33 +4,29 @@ namespace Celtic34fr\ContactGestion\FormEntity;
 
 class MailingExtract
 {
-    private ?array $fields;
+    protected string $list;
 
-    public function getFields(): ?array
+    protected string $fileName;
+
+    public function getList(): string
     {
-        return $this->fields;
+        return $this->list;
     }
 
-    public function addField(string $field)
+    public function setList(string $list): self
     {
-        if (in_array($field, $this->fields)) {
-            return false;
-        }
-
-        $this->fields[$field] = $field;
+        $this->list = $list;
         return $this;
     }
 
-    public function removeField(string $field) {
-        if (!in_array($field, $this->fields)) {
-            return false;
-        }
-        unset($this->fields[$field]);
-        return $this;
+    public function getFileName(): string
+    {
+        return $this->fileName;
     }
 
-    public function setFields(array $fields) {
-        $this->fields = $fields;
+    public function setFileName(string $fileName): self
+    {
+        $this->fileName = $fileName;
         return $this;
     }
 }

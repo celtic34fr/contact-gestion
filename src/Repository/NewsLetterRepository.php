@@ -3,6 +3,7 @@
 namespace Celtic34fr\ContactGestion\Repository;
 
 use Celtic34fr\ContactGestion\Entity\NewsLetter;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,28 +38,59 @@ class NewsLetterRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return CRMDemandes[] Returns an array of NewsLetter objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findMailingInfos()
+    {
+        $mailingInfos = [];
+        $today = (new DateTime('now'))->format('Y-m-d') . ' 00:00:00';
 
-//    public function findOneBySomeField($value): ?NewsLetter
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $qb = $this->createQueryBuilder('n')
+            ->where('.created_at IS NOT NULL')
+            ->andWhere('n.created_at <= :today')
+            ->andWhere('n.ended_at IS NULL')
+            ->getQuery()
+            ->getResult();
+
+        if ($qb) {
+            /** @var NewsLetter $item */
+            foreach ($qb as $item) {
+                $occurs = [];
+                $client = $item->getClient();
+                $occurs['courriel'] = $client->getCourriel();
+                $cliInfos = $client->getCliInfos()->first();
+                $occurs['nom'] = $cliInfos->getNom();
+                $occurs['prenom'] = $cliInfos->getPrenom();
+                $oxxurs['telephone'] = $cliInfos->getTelephone();
+                $occurs['fullname'] = $cliInfos->getFullname();
+                $mailingInfos[] = $occurs;
+            }
+
+            return $mailingInfos;
+        }
+        return false;
+    }
+
+    //    /**
+    //     * @return CRMDemandes[] Returns an array of NewsLetter objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('c')
+    //            ->andWhere('c.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('c.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?NewsLetter
+    //    {
+    //        return $this->createQueryBuilder('c')
+    //            ->andWhere('c.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

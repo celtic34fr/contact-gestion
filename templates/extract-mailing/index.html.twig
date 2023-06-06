@@ -1,21 +1,65 @@
 {% extends '@contact-core/layout_backend.html.twig' %}
 
 {% block shoulder %}
-    {{ "Extraction liste Mailing Newsletter" }}
+	{{ "Extraction liste Mailing Newsletter" }}
 {% endblock shoulder %}
 
 {% block title %}
-    <i class="fas mr-2 link--icon fa-clipboard-question"></i>
-    Extraction liste Mailing Newsletter
+	<i class="fas mr-2 link--icon fa-clipboard-question"></i>
+	Extraction liste Mailing Newsletter
 {% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
+	{{ parent() }}
+
+	<style>
+		.w50p {
+			width: 49% !important;
+		}
+
+		.hidden {
+			display: none !important;
+		}
+	</style>
 {% endblock %}
 
 {% block main %}
+	<div id="regorg" class="col12 row mx-0 px-0">
+		<h1 class="col-12 mx-0 px-0 text-center">Réorgaznisation de structure fichier extraction CSV</h1>
+		<div id="origin" class="col-6 row list-group mx-0 px-0">
+			<h2 class="col-12 mx-0 px-0">Liste des champs possibles</h2>
+			{% for dataSource in datasSource %}
+				<div class="list-group-item col-12 row mx-0 px-0">
+					<span class="w50p btn btn-info mx-0 px-0">{{ dataSource[1] }}</span>
+					<input type="text" class="w50p mx-0 px-0" name="{{ dataSource[0] }}" value="{{ dataSource[0] }}">
+				</div>
+			{% endfor %}
+		</div>
+		<div id="cible" class="col-6 row list-group mx-0 px-0">
+			<h2 class="col-12 mx-0 px-0 text-center">Champ(s) choisi(s)</h2>
+		</div>
+	</div>
+
+	{{ form_start(form) }}
+	{{ form_row(form._token) }}
+
+	{{ fields.field(form.list, "", {
+		'class' : 'list col-12'
+	}) }}
+
+	{{ fields.field(form.fileName, "", {
+		'class': 'col-12', 'il_class': {'label': 'col-4', 'input': 'col-8'}
+	}) }}
+
+	<input type="submit" value="Créer le fichier CSV" class="btn btn-success col-6 offset-3">
+
+	{{ form_end(form, {render_rest: false}) }}
+
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
+	{{ parent() }}
+
+	<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+	<script src=" {{asset('contact-asset/js/main.js') }}"></script>
 {% endblock %}
