@@ -47,6 +47,7 @@ class NewsLetterRepository extends ServiceEntityRepository
             ->where('n.created_at IS NOT NULL')
             ->andWhere('n.created_at <= :today')
             ->andWhere('n.ended_at IS NULL')
+            ->setParameter('today', $today)
             ->getQuery()
             ->getResult();
 
