@@ -60,6 +60,8 @@ class ExtractMailingController extends AbstractController
     private function buildTransfertTab(array $list): array
     {
         $transfertTab = [];
+        dd($list);
+
         foreach ($list as $item) {
             $transfertTab[$item[0]] = $item[1];
         }
