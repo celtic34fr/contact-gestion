@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Celtic34fr\ContactGestion\Form\MailingExtractType;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Celtic34fr\ContactGestion\FormEntity\MailingExtract;
 use Celtic34fr\ContactGestion\Repository\NewsLetterRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,10 +42,10 @@ class ExtractMailingController extends AbstractController
                 $list = $form->get("list")->getData();
                 $list = $this->buildTransfertTab(json_decode($list));
                 $fileName = $form->get("fileName")->getData();
-                if (strpos($fileName, '.csv') === false) $fileName .= '.csv';
+                if (!str_contains($fileName, '.csv')) $fileName .= '.csv';
                 $mailingDatas = $repoNewsletter->findMailingInfos();
                 $$tmpFile = $this->generateMailingFile($list, $mailingDatas, $tmpFile);
-                $response = $this->file($tmpFileName, 'mailing-extract.csv');
+                $response = $this->file($tmpFileName, $fileName);
                 $response->headers->set('Content-type', 'application/csv');
                 fclose($tmpFile);
                 return $response;
@@ -72,8 +73,9 @@ class ExtractMailingController extends AbstractController
         $header = [];
         foreach ($listFields as $field => $csvField) {
             $header[] = $csvField;
-            fputcsv($file, $header, ";");
         }
+        fputcsv($file, $header, ";");
+
         // génération du contenu du fichier CSV
         foreach ($mailingDatas as $maingData) {
             $item = [];
