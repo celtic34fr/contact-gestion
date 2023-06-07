@@ -61,8 +61,7 @@ class ExtractMailingController extends AbstractController
     {
         $transfertTab = [];
         foreach ($list as $item) {
-            dump($item, gettype($item));
-            // $transfertTab[$item[0]] = $item[1];
+            $transfertTab[$item->index] = $item->value;
         }
         dd('fin');
         return $transfertTab;

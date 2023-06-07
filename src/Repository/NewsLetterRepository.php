@@ -44,7 +44,7 @@ class NewsLetterRepository extends ServiceEntityRepository
         $today = (new DateTime('now'))->format('Y-m-d') . ' 00:00:00';
 
         $qb = $this->createQueryBuilder('n')
-            ->where('.created_at IS NOT NULL')
+            ->where('n.created_at IS NOT NULL')
             ->andWhere('n.created_at <= :today')
             ->andWhere('n.ended_at IS NULL')
             ->getQuery()
