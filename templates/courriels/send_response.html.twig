@@ -1,29 +1,34 @@
 {% extends '@contact-core/layout.mail.twig' %}
 
 {% block entete %}
-    <h1 style="text-align: center">{{ config.get('general/sitename') }}</h1>
-    <h3 style="text-align: center">{{ config.get('general/payoff') }}</h3>
-    <img src="theme/ds-theme/img/logo.svg" alt="Logo">
+	<h1 style="text-align: center">{{ config.get('general/sitename') }}</h1>
+	<h3 style="text-align: center">{{ config.get('general/payoff') }}</h3>
+	<img src="theme/ds-theme/img/logo.svg" alt="Logo">
 {% endblock %}
 
 {% block corps %}
-    <p>
-        Cher(e) {{ client.getFullName() }},
-    </p>
-    <div>
-        Vous avez déposé le {{ demande.getCreatedAt()|date("d/m/Y")}} le demande suivante:
-    </div>
-    <p>{{ demande.getDemande() }}</p>
-    <p></p>
-    <p>Suite à nos recherches, nous pouvons vous répondre :</p>
-    <p>{{ demande.getReponse().getReponse() }}</p>
-    <p></p>
+	<p>
+		Cher(e)
+		{{ client.getFullName() }},
+	</p>
+	<div>
+		Vous avez déposé le
+		{{ demande.getCreatedAt()|date("d/m/Y")}}
+		le demande suivante:
+	</div>
+	<p>{{ demande.getDemande() }}</p>
+	<p></p>
+	<p>Suite à nos recherches, nous pouvons vous répondre :</p>
+	<p>{{ demande.getReponse().getReponse() }}</p>
+	<p></p>
 {% endblock %}
 
 {% block piedpage %}
-    <img src="theme/ds-theme/img/logo.svg" alt="Logo">
-    <p>
-        {{ config.get('general/sitename') }} vous remercie de pour votre confiance, espérant avoir répondu au mieux
-        à votre demande. Toute l'équipe de {{ config.get('general/sitename') }} reste à votre disposition.
-    </p>
-{% endblock %}
+<img src="theme/ds-theme/img/logo.svg" alt="Logo">
+<p>
+	{{ config.get('general/sitename') }}
+	vous remercie de pour votre confiance, espérant avoir répondu au mieux
+	        à votre demande. Toute l'équipe de
+	{{ config.get('general/sitename') }}
+	reste à votre disposition.
+</p>
