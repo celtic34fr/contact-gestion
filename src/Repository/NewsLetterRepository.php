@@ -60,7 +60,7 @@ class NewsLetterRepository extends ServiceEntityRepository
                 $cliInfos = $client->getCliInfos()->first();
                 $occurs['nom'] = $cliInfos->getNom();
                 $occurs['prenom'] = $cliInfos->getPrenom() ?? "";
-                $oxxurs['telephone'] = $cliInfos->getTelephone() ?? "";
+                $occurs['telephone'] = $cliInfos->getTelephone() ?? "";
                 $occurs['fullname'] = $cliInfos->getFullname();
                 $mailingInfos[] = $occurs;
             }
