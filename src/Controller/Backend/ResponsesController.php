@@ -2,14 +2,14 @@
 
 namespace Celtic34fr\ContactGestion\Controller\Backend;
 
+use Bolt\Controller\Backend\BackendZoneInterface;
+use Celtic34fr\ContactCore\Traits\DbPaginateTrait;
 use Celtic34fr\ContactGestion\Entity\Categories;
 use Celtic34fr\ContactGestion\Entity\Contacts;
 use Celtic34fr\ContactGestion\Entity\Responses;
 use Celtic34fr\ContactGestion\Form\SearchFormType;
 use Celtic34fr\ContactGestion\FormEntity\SearchForm;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
-use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
-use Bolt\Controller\Backend\BackendZoneInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

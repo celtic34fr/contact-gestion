@@ -3,26 +3,26 @@
 namespace Celtic34fr\ContactGestion\Controller\Backend;
 
 use Bolt\Entity\User;
-use Twig\Environment;
-use Twig\Error\LoaderError;
-use Twig\Error\SyntaxError;
-use Twig\Error\RuntimeError;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Celtic34fr\ContactCore\Service\ExtensionConfig;
 use Celtic34fr\ContactCore\Service\SendMailer;
-use Celtic34fr\ContactGestion\Entity\Contacts;
-use Symfony\Component\HttpFoundation\Response;
-use Celtic34fr\ContactGestion\Entity\Responses;
-use Symfony\Component\Routing\Annotation\Route;
+use Celtic34fr\ContactCore\Traits\Utilities;
 use Celtic34fr\ContactGestion\Entity\Categories;
+use Celtic34fr\ContactGestion\Entity\Contacts;
+use Celtic34fr\ContactGestion\Entity\Responses;
 use Celtic34fr\ContactGestion\Form\ResponseType;
 use Celtic34fr\ContactGestion\Form\SearchFormType;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Celtic34fr\ContactCore\Service\ExtensionConfig;
-use Celtic34fr\ContactCore\Trait\Utilities;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
-use Symfony\Component\HttpFoundation\Response as HttpResponse;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
+use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /** classe de gestion en BackOffice des demande de contact des internautes */
 #[Route('request')]

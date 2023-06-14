@@ -2,10 +2,10 @@
 
 namespace Celtic34fr\ContactGestion;
 
+use Bolt\Menu\ExtensionBackendMenuInterface;
+use Celtic34fr\ContactCore\Traits\AdminMenuTrait;
 use Exception;
 use Knp\Menu\MenuItem;
-use Bolt\Menu\ExtensionBackendMenuInterface;
-use Celtic34fr\ContactCore\Trait\AdminMenuTrait;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /** classe d'ajout des menu spécifiques pour le projet */

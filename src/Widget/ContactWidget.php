@@ -3,13 +3,13 @@
 namespace Celtic34fr\ContactGestion\Widget;
 
 use Bolt\Widget\BaseWidget;
-use Bolt\Widget\CacheTrait;
-use Bolt\Widget\StopwatchTrait;
-use Bolt\Widget\TwigAwareInterface;
 use Bolt\Widget\CacheAwareInterface;
+use Bolt\Widget\CacheTrait;
 use Bolt\Widget\Injector\AdditionalTarget;
 use Bolt\Widget\Injector\RequestZone;
 use Bolt\Widget\StopwatchAwareInterface;
+use Bolt\Widget\StopwatchTrait;
+use Bolt\Widget\TwigAwareInterface;
 
 /** classe de paramétrage, gestion et affichage induit du Widget ContactWidget */
 class ContactWidget extends BaseWidget implements TwigAwareInterface, CacheAwareInterface, StopwatchAwareInterface

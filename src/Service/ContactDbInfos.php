@@ -2,11 +2,11 @@
 
 namespace Celtic34fr\ContactGestion\Service;
 
+use Celtic34fr\ContactCore\Traits\DbPaginateTrait;
+use Celtic34fr\ContactGestion\Entity\Contacts;
+use Celtic34fr\ContactGestion\Repository\ContactsRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
-use Celtic34fr\ContactGestion\Entity\Contacts;
-use Celtic34fr\ContactCore\Trait\DbPaginateTrait;
-use Celtic34fr\ContactGestion\Repository\ContactsRepository;
 
 /** service de gestion est restitution des informations pour le Widget ContactWidget */
 class ContactDbInfos
