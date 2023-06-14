@@ -1,5 +1,14 @@
 # Reference extension configuration file
 
+courriel_reponse: 'no-reply@example.com'
+
+entreprise:
+  designation: ''
+  siren: '123456789'
+  siret: '12345678901234'
+  courriel: 'your.email@provider.com'
+  telephone: 'your phone number'
+
 coordonnees:
   tel: 'your phone number'
   courriel: 'tour.email@provider.com'
