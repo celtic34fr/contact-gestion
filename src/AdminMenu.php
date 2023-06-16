@@ -34,6 +34,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
                         'group' => 'Contact',
                         'name' => 'Demandes de contact',
                         'slug' => 'demande_contact',
+                        'icon' => "fa-mail-bulk",
                     ]
                 ]
             ],
@@ -43,7 +44,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
                 'item' => [
                     'uri' => $this->urlGenerator->generate('request_list'),
                     'extras' => [
-                        'icon' => 'fa-clipboard-question',
+                        'icon' => 'fa-clipboard-list',
                         'group' => 'Contact',
                     ]
                 ]
@@ -54,7 +55,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
                 'item' => [
                     'uri' => $this->urlGenerator->generate('search_responses'),
                     'extras' => [
-                        'icon' => 'fa-envelope-circle-check',
+                        'icon' => 'fa-question-circle',
                         'group' => 'Contact',
                     ]
                 ]
