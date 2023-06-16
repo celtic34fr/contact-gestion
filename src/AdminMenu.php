@@ -21,6 +21,15 @@ class AdminMenu implements ExtensionBackendMenuInterface
     {
         /* 1/ décomposition de $menu en $menuBefor, $menuContacts et $menu after */
         list($menuBefore, $menuContacts, $menuAfter) = $this->extractsMenus($menu);
+        if (!$menuContacts->hasChild("Gestion des Contacts")) {
+            $menuContacts->addChild('Gestion des Contacts', [
+                'extras' => [
+                    'name' => 'Gestion des Contacts',
+                    'type' => 'separator',
+                    'group' => 'Contact',
+                ]
+            ]);
+        }
 
         /* 2/ ajout des menu de gestion des demandes */
         $demandeDeContact = [
@@ -64,9 +73,28 @@ class AdminMenu implements ExtensionBackendMenuInterface
         $menuContacts = $this->addMenu($demandeDeContact, $menuContacts);
 
         /** extraction menu 'Utilitaires' et mise en fin du bloc menu */
-        $utilitaires = $menuContacts['Utilitaires'];
-        unset($menuContacts['Utilitaires']);
-        $menuContacts->addChild($utilitaires);
+        if (!$menuContacts->hasChild("Utilitaires")) {
+            $utilitairesItems = [
+                "Utilitaires" => [
+                    'type' => 'menu',
+                    'item' => [
+                        'uri' => $this->urlGenerator->generate('bolt_menupage', [
+                            'slug' => 'utilitaires',
+                        ]),
+                        'extras' => [
+                            'group' => 'Contact',
+                            'name' => 'Utilitaires',
+                            'slug' => 'utilitaires',
+                            'icon' => 'fa-tools'
+                        ]
+                    ]
+                ]
+            ];
+        } else {
+            $utilitaires = $menuContacts['Utilitaires'];
+            unset($menuContacts['Utilitaires']);
+            $menuContacts->addChild($utilitaires);
+        }
 
         /* 3/ ajout au menuContacts.utilistaire de l'accès au module d'extraction pour mailing newsletter */
         $utilitaires = [
