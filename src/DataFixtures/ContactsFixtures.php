@@ -1,0 +1,72 @@
+<?php
+
+namespace App\DataFixtures\ContactGestion;
+
+use Loremizer\loremizer;
+use Doctrine\Persistence\ObjectManager;
+use Celtic34fr\ContactCore\Entity\CliInfos;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Celtic34fr\ContactCore\Entity\Clientele;
+use Celtic34fr\ContactGestion\Entity\Contacts;
+use App\DataFixtures\ContactCore\ClientelesFixtures;
+use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
+
+class ContactsFixtures extends Fixture implements FixtureGroupInterface
+{
+    public const CONTACT_REFERENCE = 'contact';
+
+    public function __construct(private ManageTntIndexes $manageTntIdx)
+    {
+    }
+
+    public function load(ObjectManager $manager)
+    {
+        /** Clientele $client */
+        $client = $manager->getRepository(Clientele::class)->findAll()[0];
+        $i = 0;
+
+        foreach ($client->getCliInfos() as $cliinfos) {
+            $this->createContact($i, $cliinfos, $manager);
+            $i++;
+        }
+        $this->manageTntIdx->generateContactsIDX();
+    }
+
+    public static function getGroups(): array
+    {
+        return ['contacts', 'categories', 'responses'];
+    }
+
+    public function getDependencies()
+    {
+        return [
+            ClientelesFixtures::class,
+        ];
+    }
+
+    private function createCliinfo(int $noCliinfo, Clientele $client, ObjectManager $manager): CliInfos
+    {
+        $cliinfos = new CliInfos();
+        $cliinfos->setNom('TEST ' . $noCliinfo);
+        $cliinfos->setPrenom('Ptest' . $noCliinfo);
+        $cliinfos->setTelephone('0467378812');
+        $cliinfos->setClient($client);
+        $client->addCliInfos($cliinfos);
+        $manager->persist($cliinfos);
+        $manager->flush();
+
+        return $cliinfos;
+    }
+
+    private function createContact(int $noContact, CliInfos $client, ObjectManager $manager): void
+    {
+        $contact = new Contacts();
+        $contact->setSujet($noContact . ' ' . loremizer::getTitle());
+        $contact->setDemande(loremizer::getParagraph(3));
+        $contact->setClient($client);
+        $contact->setContactMe((bool) mt_rand(0, 1));
+        $manager->persist($contact);
+        $manager->flush();
+    }
+}
