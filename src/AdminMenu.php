@@ -65,7 +65,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
         /** extraction menu 'Utilitaires' et mise en fin du bloc menu */
         $utilitaires = $menuContacts['Utilitaires'];
         unset($menuContacts['Utilitaires']);
-        $menuContacts['Utilitaires'] = $utilitaires;
+        $menuContacts->addChild($utilitaires);
 
         /* 3/ ajout au menuContacts.utilistaire de l'accès au module d'extraction pour mailing newsletter */
         $utilitaires = [
