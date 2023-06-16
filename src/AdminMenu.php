@@ -106,6 +106,7 @@ class AdminMenu implements ExtensionBackendMenuInterface
                     'extras' => [
                         'group' => 'Contact',
                         'name' => 'Extraction liste Mailing Newsletter',
+                        'icon' => 'fa-file-csv',
                     ]
                 ]
             ]
