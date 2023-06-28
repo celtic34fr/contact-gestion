@@ -15,7 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Response[]    findAll()
  * @method Response[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ResponsesRepository extends ServiceEntityRepository
+class ResponseRepository extends ServiceEntityRepository
 {
     use DbPaginateTrait;
 
