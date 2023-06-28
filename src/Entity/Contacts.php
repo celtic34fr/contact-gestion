@@ -9,7 +9,7 @@ use Celtic34fr\ContactCore\Entity\CliInfos;
 use Celtic34fr\ContactGestion\Repository\ContactRepository;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
-#[ORM\Table(nama:'contacts')]
+#[ORM\Table(name:'contacts')]
 class Contact
 {
     #[ORM\Id]
