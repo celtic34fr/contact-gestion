@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
 
 /** classe support d'exploitation des données saisie dans Form\ContactType */
-class DemandesType
+class DemandeType
 {
     private int $id;
 

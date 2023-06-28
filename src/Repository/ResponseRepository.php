@@ -3,17 +3,17 @@
 namespace Celtic34fr\ContactGestion\Repository;
 
 use Celtic34fr\ContactCore\Traits\DbPaginateTrait;
-use Celtic34fr\ContactGestion\Entity\Responses;
+use Celtic34fr\ContactGestion\Entity\Response;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Responses>
+ * @extends ServiceEntityRepository<Response>
  *
- * @method Responses|null find($id, $lockMode = null, $lockVersion = null)
- * @method Responses|null findOneBy(array $criteria, array $orderBy = null)
- * @method Responses[]    findAll()
- * @method Responses[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Response|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Response|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Response[]    findAll()
+ * @method Response[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ResponsesRepository extends ServiceEntityRepository
 {
@@ -21,10 +21,10 @@ class ResponsesRepository extends ServiceEntityRepository
 
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Responses::class);
+        parent::__construct($registry, Response::class);
     }
 
-    public function save(Responses $entity, bool $flush = false): void
+    public function save(Response $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
         if ($flush) {
@@ -32,7 +32,7 @@ class ResponsesRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Responses $entity, bool $flush = false): void
+    public function remove(Response $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
         if ($flush) {
@@ -53,7 +53,7 @@ class ResponsesRepository extends ServiceEntityRepository
         ;
 
         if ($qb) {
-            /** @var Responses $row */
+            /** @var Response $row */
             foreach ($qb as $row) {
                 $results[$row->getClosedAt()->format('Ymd')] = [
                     'reponse' => $row->getReponse(),
@@ -68,7 +68,7 @@ class ResponsesRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Responses[] Returns an array of Responses objects
+//     * @return Response[] Returns an array of Response objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -82,7 +82,7 @@ class ResponsesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Responses
+//    public function findOneBySomeField($value): ?Response
 //    {
 //        return $this->createQueryBuilder('r')
 //            ->andWhere('r.exampleField = :val')

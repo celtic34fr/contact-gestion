@@ -7,6 +7,7 @@ use Celtic34fr\ContactCore\Entity\Clientele;
 use Celtic34fr\ContactGestion\Repository\NewsLetterRepository;
 
 #[ORM\Entity(repositoryClass: NewsLetterRepository::class)]
+#[ORM\Table(name:'newsletters')]
 class NewsLetter
 {
     #[ORM\Id]

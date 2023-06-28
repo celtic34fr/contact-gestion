@@ -71,7 +71,7 @@ class NewsLetterRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return CRMDemandes[] Returns an array of NewsLetter objects
+    //     * @return NewsLetter[] Returns an array of NewsLetter objects
     //     */
     //    public function findByExampleField($value): array
     //    {

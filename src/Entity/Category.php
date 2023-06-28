@@ -2,14 +2,14 @@
 
 namespace Celtic34fr\ContactGestion\Entity;
 
-use Celtic34fr\ContactGestion\Repository\CategoriesRepository;
+use Celtic34fr\ContactGestion\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CategoriesRepository::class)]
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ORM\Table('categories')]
-class Categories
+class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

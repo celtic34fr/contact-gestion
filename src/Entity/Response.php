@@ -2,16 +2,18 @@
 
 namespace Celtic34fr\ContactGestion\Entity;
 
-use Celtic34fr\ContactGestion\Repository\ResponsesRepository;
 use Bolt\Entity\User;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Celtic34fr\ContactGestion\Repository\ResponsesRepository;
 
 #[ORM\Entity(repositoryClass: ResponsesRepository::class)]
+#[ORM\Table(nama:'responses')]
 #[ORM\Index(columns: ['reponse'], name: 'search_idx', flags: ['fulltext'])]
-class Responses
+class Response
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -29,9 +31,9 @@ class Responses
 
     #[ORM\OneToOne(inversedBy: 'reponse', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Contacts $contact = null;              // lien vers la demande de contact
+    private ?Contact $contact = null;              // lien vers la demande de contact
 
-    #[ORM\ManyToMany(targetEntity: Categories::class, inversedBy: 'responses')]
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'responses')]
     private Collection $categories;                 // ensemble des catégories qualifiant la réponse si lieu
 
     #[ORM\ManyToOne(targetEntity: User::class)]
@@ -61,48 +63,48 @@ class Responses
         return $this;
     }
 
-    public function getSendAt(): ?\DateTimeImmutable
+    public function getSendAt(): ?DateTimeImmutable
     {
         return $this->send_at;
     }
 
-    public function setSendAt(?\DateTimeImmutable $send_at): self
+    public function setSendAt(?DateTimeImmutable $send_at): self
     {
         $this->send_at = $send_at;
         return $this;
     }
 
-    public function getClosedAt(): ?\DateTimeImmutable
+    public function getClosedAt(): ?DateTimeImmutable
     {
         return $this->closed_at;
     }
 
-    public function setClosedAt(?\DateTimeImmutable $closed_at): self
+    public function setClosedAt(?DateTimeImmutable $closed_at): self
     {
         $this->closed_at = $closed_at;
         return $this;
     }
 
-    public function getContact(): ?Contacts
+    public function getContact(): ?Contact
     {
         return $this->contact;
     }
 
-    public function setContact(Contacts $contact): self
+    public function setContact(Contact $contact): self
     {
         $this->contact = $contact;
         return $this;
     }
 
     /**
-    * @return Collection<int, Categories>
+    * @return Collection<int, Category>
     */
     public function getCategories(): Collection
     {
         return $this->categories;
     }
 
-    public function addCategory(Categories $category): self
+    public function addCategory(Category $category): self
     {
         if (!$this->categories->contains($category)) {
             $this->categories->add($category);
@@ -110,7 +112,7 @@ class Responses
         return $this;
     }
 
-    public function removeCategory(Categories $category): self
+    public function removeCategory(Category $category): self
     {
         $this->categories->removeElement($category);
         return $this;

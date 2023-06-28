@@ -7,10 +7,10 @@ use Celtic34fr\ContactCore\Entity\CliInfos;
 use Celtic34fr\ContactCore\Enum\CustomerEnums;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
 use Celtic34fr\ContactCore\Traits\Utilities;
-use Celtic34fr\ContactGestion\Entity\Contacts;
+use Celtic34fr\ContactGestion\Entity\Contact;
 use Celtic34fr\ContactGestion\Entity\NewsLetter;
 use Celtic34fr\ContactGestion\Form\ContactType;
-use Celtic34fr\ContactGestion\FormEntity\DemandesType;
+use Celtic34fr\ContactGestion\FormEntity\DemandeType;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +38,7 @@ class ContactController extends AbstractController
     #[Route('/', name: 'contact')]
     public function __invoke(Request $request): Response
     {
-        $contact = new DemandesType();
+        $contact = new DemandeType();
         $no_error = true;
 
         $form = $this->createForm(ContactType::class, $contact);
@@ -103,7 +103,7 @@ class ContactController extends AbstractController
 
     /** méthode privée */
 
-    private function create_request(DemandesType $contact): bool
+    private function create_request(DemandeType $contact): bool
     {
         $rc = true;
         try {
@@ -136,7 +136,7 @@ class ContactController extends AbstractController
                 $cliInfos->setClient($clientele);
             }
 
-            $demande = new Contacts();
+            $demande = new Contact();
             $demande->setSujet($contact->getSujet());
             $demande->setDemande($contact->getDemande());
             $demande->setContactMe($contact->isContactMe());

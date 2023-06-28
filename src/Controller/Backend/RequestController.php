@@ -3,26 +3,26 @@
 namespace Celtic34fr\ContactGestion\Controller\Backend;
 
 use Bolt\Entity\User;
-use Celtic34fr\ContactCore\Service\ExtensionConfig;
-use Celtic34fr\ContactCore\Service\SendMailer;
+use Twig\Environment;
+use DateTimeImmutable;
+use Twig\Error\LoaderError;
+use Twig\Error\SyntaxError;
+use Twig\Error\RuntimeError;
+use Doctrine\ORM\EntityManagerInterface;
 use Celtic34fr\ContactCore\Traits\Utilities;
-use Celtic34fr\ContactGestion\Entity\Categories;
-use Celtic34fr\ContactGestion\Entity\Contacts;
-use Celtic34fr\ContactGestion\Entity\Responses;
+use Celtic34fr\ContactGestion\Entity\Contact;
+use Symfony\Component\HttpFoundation\Request;
+use Celtic34fr\ContactCore\Service\SendMailer;
+use Celtic34fr\ContactGestion\Entity\Category;
+use Celtic34fr\ContactGestion\Entity\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Celtic34fr\ContactGestion\Form\ResponseType;
 use Celtic34fr\ContactGestion\Form\SearchFormType;
-use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
-use Symfony\Component\Routing\Annotation\Route;
-use Twig\Environment;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /** classe de gestion en BackOffice des demande de contact des internautes */
 #[Route('request')]
@@ -47,7 +47,7 @@ class RequestController extends AbstractController
      *
      * @throws \Exception
      */
-    public function index($page = 1): Response
+    public function index($page = 1): HttpResponse
     {
         $currentPage = (int) $page;
         $requests = [];
@@ -55,14 +55,14 @@ class RequestController extends AbstractController
         // dd($currentPage);
 
         if (true == $this->existsTable($dbPrefix.'contacts')) {
-            $requests = $this->entityManager->getRepository(Contacts::class)->findRequestAll($currentPage);
+            $requests = $this->entityManager->getRepository(Contact::class)->findRequestAll($currentPage);
             /*
              * avoir une case à cocher pour montrer les demandes déjà traitées
              * module de recherche dans les requêtes : date (format français), nom de l'internaute, sujet
              *    en saisie totale comme partielle.
              */
         } else {
-            $this->addFlash('danger', "La table Demandes n'existe pas, veuillez en avertir l'administrateur");
+            $this->addFlash('danger', "La table Contacts n'existe pas, veuillez en avertir l'administrateur");
         }
 
         return $this->render('@contact-gestion/request/index.html.twig', [
@@ -80,7 +80,7 @@ class RequestController extends AbstractController
     public function answer(string $id, Request $request, ExtensionConfig $extConfig, ManageTntIndexes $manageIdx): HttpResponse
     {
         $id = (int) $id;
-        $requete = $this->entityManager->getRepository(Contacts::class)->find($id);
+        $requete = $this->entityManager->getRepository(Contact::class)->find($id);
         $response = $requete?->getReponse();
         $dbCategories = [];
         $err_msg = [];
@@ -91,20 +91,20 @@ class RequestController extends AbstractController
             /** @var User $operateur */
             $operateur = $this->getUser();
             if (!$response) {
-                $response = new Responses();
+                $response = new Response();
                 $response->setOperateur($operateur);
                 /* lien avec la requête de l'internaure */
                 $response->setContact($requete);
                 $operation = 'i';
             }
-            $categories = $this->entityManager->getRepository(Categories::class)->findAll();
+            $categories = $this->entityManager->getRepository(Category::class)->findAll();
             if ($categories) {
                 foreach ($categories as $category) {
                     $dbCategories[] = ['value' => $category->getCategory(), 'label' => $category->getCategory()];
                 }
             }
 
-            /** @var Responses $response */
+            /** @var Response $response */
             $form = $this->createForm(ResponseType::class, $response);
             $form->handleRequest($request);
 
@@ -122,7 +122,7 @@ class RequestController extends AbstractController
                         foreach ($_POST['reponse']['categories'] as $category) {
                             $record = $this->entityManager->getRepository(Categories::class)->findOneBy(['category' => $category]);
                             if (!$record) {
-                                $record = new Categories();
+                                $record = new Category();
                                 $record->setCategory($category);
                                 $this->entityManager->persist($record);
                             }
@@ -172,18 +172,18 @@ class RequestController extends AbstractController
                                     $requete->getClient(), '@contact-gestion/courriels/send_response.html.twig',
                                     $requete->getSujet(), $bodyContext
                                 );
-                                $requete->setSendAt(new \DateTimeImmutable('now'));
-                                $requete->setClosedAt(new \DateTimeImmutable('now'));
-                                $response->setSendAt(new \DateTimeImmutable('now'));
-                                $response->setClosedAt(new \DateTimeImmutable('now'));
+                                $requete->setSendAt(new DateTimeImmutable('now'));
+                                $requete->setClosedAt(new DateTimeImmutable('now'));
+                                $response->setSendAt(new DateTimeImmutable('now'));
+                                $response->setClosedAt(new DateTimeImmutable('now'));
                                 $this->entityManager->flush();
                                 $manageIdx->updateResponsesIDX($response->toTntArray(), $operation);
 
                                 return $this->redirectToRoute('request_list');
                                 break;
                             case $form->get('close')->isClicked():// traitement réponse + cloture
-                                $requete->setClosedAt(new \DateTimeImmutable('now'));
-                                $response->setClosedAt(new \DateTimeImmutable('now'));
+                                $requete->setClosedAt(new DateTimeImmutable('now'));
+                                $response->setClosedAt(new DateTimeImmutable('now'));
                                 $this->entityManager->flush();
 
                                 return $this->redirectToRoute('request_list');
@@ -237,8 +237,8 @@ class RequestController extends AbstractController
                     $demande->getClient(), '@contact-gestion/courriels/send_response.html.twig',
                     $demande->getSujet(), $bodyContext
                 );
-                $demande->setSendAt(new \DateTimeImmutable('now'));
-                $demande->setClosedAt(new \DateTimeImmutable('now'));
+                $demande->setSendAt(new DateTimeImmutable('now'));
+                $demande->setClosedAt(new DateTimeImmutable('now'));
                 $this->entityManager->flush();
                 if ($isOk) {
                     $this->addFlash('success', 'La réponse à la demandes a été envoyée et la demande cloturée');
@@ -264,7 +264,7 @@ class RequestController extends AbstractController
     {
         $dbPrefix = $this->getParameter('bolt.table_prefix');
 
-        if ($this->existsTable($dbPrefix.'demandes')) {
+        if ($this->existsTable($dbPrefix.'contacts')) {
             $flashMessage = $this->isEmptyReponse($id);
             if ($flashMessage) {
                 $this->addFlash($flashMessage['type'], $flashMessage['corps']);
@@ -284,7 +284,7 @@ class RequestController extends AbstractController
                 $this->addFlash($flashMessage['type'], $flashMessage['corps']);
             }
         } else {
-            $this->addFlash('danger', "La table Demandes n'existe pas, veuillez en avertir l'administrateur");
+            $this->addFlash('danger', "La table Contacts n'existe pas, veuillez en avertir l'administrateur");
 
             return $this->redirectToRoute('bolt_dashboard');
         }
@@ -317,7 +317,7 @@ class RequestController extends AbstractController
 
     /** méthode de récupération d'un ensemble demande (question) et réponse enregistrées en base - AJAX */
     #[Route('/getQR/{id}', name: 'get-qr', methods: ['POST'])]
-    public function getQR(Contacts $contact)
+    public function getQR(Contact $contact)
     {
         $response = $contact->getReponse();
 
@@ -342,7 +342,7 @@ class RequestController extends AbstractController
 
     private function isEmptyReponse(string $id): array
     {
-        $demande = $this->entityManager->getRepository(Contacts::class)->find($id);
+        $demande = $this->entityManager->getRepository(Contact::class)->find($id);
         if (empty($demande->getReponse())) {
             $titre = 'Une erreur est survenue';
             $type = 'danger';

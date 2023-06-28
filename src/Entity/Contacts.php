@@ -2,13 +2,15 @@
 
 namespace Celtic34fr\ContactGestion\Entity;
 
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Celtic34fr\ContactCore\Entity\CliInfos;
-use Celtic34fr\ContactGestion\Repository\ContactsRepository;
+use Celtic34fr\ContactGestion\Repository\ContactRepository;
 
-#[ORM\Entity(repositoryClass: ContactsRepository::class)]
-class Contacts
+#[ORM\Entity(repositoryClass: ContactRepository::class)]
+#[ORM\Table(nama:'contacts')]
+class Contact
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -45,7 +47,7 @@ class Contacts
 
     public function __construct()
     {
-        $this->created_at = new \DateTimeImmutable('now');
+        $this->created_at = new DateTimeImmutable('now');
     }
 
     public function getId(): ?int
@@ -53,23 +55,23 @@ class Contacts
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
         return $this;
     }
 
-    public function getTreatedAt(): ?\DateTimeImmutable
+    public function getTreatedAt(): ?DateTimeImmutable
     {
         return $this->treated_at;
     }
 
-    public function setTreatedAt(?\DateTimeImmutable $treated_at): self
+    public function setTreatedAt(?DateTimeImmutable $treated_at): self
     {
         $this->treated_at = $treated_at;
         return $this;
@@ -124,12 +126,12 @@ class Contacts
         return $this;
     }
 
-    public function getReponse(): ?Responses
+    public function getReponse(): ?Response
     {
         return $this->reponse;
     }
 
-    public function setReponse(Responses $reponse): self
+    public function setReponse(Response $reponse): self
     {
         // set the owning side of the relation if necessary
         if ($reponse->getContact() !== $this) {
@@ -139,12 +141,12 @@ class Contacts
         return $this;
     }
 
-    public function getSendAt(): ?\DateTimeImmutable
+    public function getSendAt(): ?DateTimeImmutable
     {
         return $this->send_at;
     }
 
-    public function setSendAt(?\DateTimeImmutable $send_at): self
+    public function setSendAt(?DateTimeImmutable $send_at): self
     {
         $this->send_at = $send_at;
         return $this;
@@ -199,12 +201,12 @@ class Contacts
         return $this->client->getClient()->getCourriel();
     }
 
-    public function getClosedAt(): ?\DateTimeImmutable
+    public function getClosedAt(): ?DateTimeImmutable
     {
         return $this->closed_at;
     }
 
-    public function setClosedAt(?\DateTimeImmutable $closed_at): self
+    public function setClosedAt(?DateTimeImmutable $closed_at): self
     {
         $this->closed_at = $closed_at;
         return $this;
