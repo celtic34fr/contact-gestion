@@ -19,7 +19,7 @@ class Category
     #[ORM\Column(length: 255)]
     private string $category;       // libellé de la catégorie
 
-    #[ORM\ManyToMany(targetEntity: Responses::class, mappedBy: 'categories')]
+    #[ORM\ManyToMany(targetEntity: Response::class, mappedBy: 'categories')]
     private Collection $responses;  // ensemble des réponses qualifiées par cette catégorie
 
     public function __construct()
@@ -44,14 +44,14 @@ class Category
     }
 
     /**
-     * @return Collection<int, Responses>
+     * @return Collection<int, Response>
      */
     public function getResponses(): Collection
     {
         return $this->responses;
     }
 
-    public function addResponse(Responses $response): self
+    public function addResponse(Response $response): self
     {
         if (!$this->responses->contains($response)) {
             $this->responses->add($response);
@@ -60,7 +60,7 @@ class Category
         return $this;
     }
 
-    public function removeResponse(Responses $response): self
+    public function removeResponse(Response $response): self
     {
         if ($this->responses->removeElement($response)) {
             $response->removeCategory($this);
