@@ -15,7 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Contact[]    findAll()
  * @method Contact[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ContactsRepository extends ServiceEntityRepository
+class ContactRepository extends ServiceEntityRepository
 {
     use DbPaginateTrait;
 

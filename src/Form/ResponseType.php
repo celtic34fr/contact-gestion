@@ -2,7 +2,7 @@
 
 namespace Celtic34fr\ContactGestion\Form;
 
-use Celtic34fr\ContactGestion\Entity\Responses;
+use Celtic34fr\ContactGestion\Entity\Response;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -43,7 +43,7 @@ class ResponseType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Responses::class,
+            'data_class' => Response::class,
         ]);
     }
 }

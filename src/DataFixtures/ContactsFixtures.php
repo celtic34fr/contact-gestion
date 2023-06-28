@@ -7,7 +7,7 @@ use Doctrine\Persistence\ObjectManager;
 use Celtic34fr\ContactCore\Entity\CliInfos;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Celtic34fr\ContactCore\Entity\Clientele;
-use Celtic34fr\ContactGestion\Entity\Contacts;
+use Celtic34fr\ContactGestion\Entity\Contact;
 use App\DataFixtures\ContactCore\ClientelesFixtures;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
@@ -61,7 +61,7 @@ class ContactsFixtures extends Fixture implements FixtureGroupInterface
 
     private function createContact(int $noContact, CliInfos $client, ObjectManager $manager): void
     {
-        $contact = new Contacts();
+        $contact = new Contact();
         $contact->setSujet($noContact . ' ' . loremizer::getTitle());
         $contact->setDemande(loremizer::getParagraph(3));
         $contact->setClient($client);

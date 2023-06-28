@@ -5,8 +5,8 @@ namespace Celtic34fr\ContactGestion\Service;
 use TeamTNT\TNTSearch\TNTSearch;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Celtic34fr\ContactGestion\Entity\Contacts;
-use Celtic34fr\ContactGestion\Entity\Responses;
+use Celtic34fr\ContactGestion\Entity\Contact;
+use Celtic34fr\ContactGestion\Entity\Response;
 use Celtic34fr\ContactCore\Service\IndexGenerator;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
 use Celtic34fr\ContactCore\Doctrine\ConnectionConfig;
@@ -25,18 +25,18 @@ class ManageTntIndexes
     public function __construct(private IndexGenerator $idxGenerator, private ExtensionConfig $extensionConfig,
         private ConnectionConfig $connectionConfig, private EntityManagerInterface $entityManager) 
     {
-        $table = $this->entityManager->getClassMetadata(Contacts::class)->getTableName();
+        $table = $this->entityManager->getClassMetadata(Contact::class)->getTableName();
         $dql = $this->entityManager->createQueryBuilder()
-                ->select(['idx.id', 'idx.sujet', 'idx.demande'])->from(Contacts::class, 'idx');
+                ->select(['idx.id', 'idx.sujet', 'idx.demande'])->from(Contact::class, 'idx');
         $sql = $dql->getQuery()->getDQL();
-        $this->queryContacts = str_replace(Contacts::class, $table, $sql);
+        $this->queryContacts = str_replace(Contact::class, $table, $sql);
 
-        $table = $this->entityManager->getClassMetadata(Responses::class)->getTableName();
+        $table = $this->entityManager->getClassMetadata(Response::class)->getTableName();
         $dql = $this->entityManager->createQueryBuilder()
                 ->select(['idx.id', 'idx.reponse'])
-                ->from(Contacts::class, 'idx');
+                ->from(Contact::class, 'idx');
         $sql = $dql->getQuery()->getDQL();
-        $this->queryResponses = str_replace(Contacts::class, $table, $sql);
+        $this->queryResponses = str_replace(Contact::class, $table, $sql);
 
         $this->indexesContacts = 'contacts';
         $this->indexesResponses = 'responses';
@@ -144,7 +144,7 @@ class ManageTntIndexes
         if (!empty($tntResult)) { // la recherche à produit des résultat
             if (sizeof($tntResult['ids'])) {
                 foreach ($tntResult['ids'] as $idResult) {
-                    $record = $this->entityManager->getRepository(Contacts::class)->find((int) $idResult);
+                    $record = $this->entityManager->getRepository(Contact::class)->find((int) $idResult);
                     $result = $this->formatQR($record, 'contacts', $tntResult['docScores'][$idResult]);
                     if (!empty($result)) {
                         $results[$result['id']] = $result;
@@ -154,7 +154,7 @@ class ManageTntIndexes
                 if ((int) $tntResult['hits'] === 1 && sizeof($tntResult['docScores']) === 1)
                 {
                     $idContact = (int) array_keys($tntResult['docScores'])[0];
-                    $record = $this->entityManager->getRepository(Contacts::class)->find($idContact);
+                    $record = $this->entityManager->getRepository(Contact::class)->find($idContact);
                     $result = $this->formatQR($record, 'contacts', $tntResult['docScores'][$idContact]);
                     $results[$result['id']] = $result;
                 }
@@ -182,7 +182,7 @@ class ManageTntIndexes
         if (!empty($tntResult)) { // la recherche à produit des résultat
             if (sizeof($tntResult['ids'])) {
                 foreach ($tntResult['ids'] as $idResult) {
-                    $record = $this->entityManager->getRepository(Responses::class)->find($idResult);
+                    $record = $this->entityManager->getRepository(Response::class)->find($idResult);
                     $result = $this->formatQR($record, 'responses', $tnt['docScores'][$idResult]);
                     if (!empty($result)) {
                         $results[$result['id']] = $result;
@@ -192,7 +192,7 @@ class ManageTntIndexes
                 if ((int) $tntResult['hits'] === 1 && sizeof($tntResult['docScores']) === 1)
                 {
                     $idResponse = (int) array_keys($tntResult['docScores'])[0];
-                    $record = $this->entityManager->getRepository(Responses::class)->find($idResponse);
+                    $record = $this->entityManager->getRepository(Response::class)->find($idResponse);
                     $result = $this->formatQR($record, 'responses', $tntResult['docScores'][$idResponse]);
                     $results[$result['id']] = $result;
                 }
@@ -228,8 +228,8 @@ class ManageTntIndexes
                 break;
         }
         $record = [];
-        /** @var Contacts $contact */
-        /** @var Responses $response */
+        /** @var Contact $contact */
+        /** @var Response $response */
         if (!empty($contact)) {
             return [
                 'id' => $contact->getId(),

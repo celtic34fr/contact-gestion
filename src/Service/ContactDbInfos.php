@@ -3,8 +3,7 @@
 namespace Celtic34fr\ContactGestion\Service;
 
 use Celtic34fr\ContactCore\Traits\DbPaginateTrait;
-use Celtic34fr\ContactGestion\Entity\Contacts;
-use Celtic34fr\ContactGestion\Repository\ContactsRepository;
+use Celtic34fr\ContactGestion\Repository\ContactRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -14,18 +13,17 @@ class ContactDbInfos
     use DbPaginateTrait;
 
     private EntityManagerInterface $entityManager;
-    private ContactsRepository $contactsRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager,
+    private ContactRepository $contactRepository)
     {
         $this->entityManager = $entityManager;
-        $this->contactsRepository = $this->entityManager->getRepository(Contacts::class);
     }
 
     /** méthode de recherche des demandes de contact non clôturées */
     public function findRequestAll(int $currentPage = 1, int $limit = 10): array
     {
-        $qb = $this->contactsRepository
+        $qb = $this->contactRepository
             ->createQueryBuilder("dem")
             ->where('dem.closed_at IS NULL')
             ->orderBy('dem.created_at', 'DESC')
@@ -43,7 +41,7 @@ class ContactDbInfos
    public function findLast2WeeksDemands(int $currentPage = 1, int $limit = 10): array
     {
         $date = (new DateTimeImmutable('now'))->modify("-2 weeks");
-        $qb = $this->contactsRepository
+        $qb = $this->contactRepository
             ->createQueryBuilder("dem")
             ->where('dem.created_at > :date')
             ->orderBy('dem.created_at', 'DESC')
@@ -66,7 +64,7 @@ class ContactDbInfos
     {
         $dateDeb = (new DateTimeImmutable('now'))->modify("-2 weeks");
         $dateFin = $dateDeb->modify('+1 day');
-        $qb = $this->contactsRepository
+        $qb = $this->contactRepository
             ->createQueryBuilder("dem")
             ->where('dem.created_at >= :dateDeb')
             ->andWhere('dem.created_at <= :dateFin')
@@ -94,7 +92,7 @@ class ContactDbInfos
     {
         $today = new DateTimeImmutable('now'); 
         $date = $today->modify("-2 weeks");
-        $qb = $this->contactsRepository
+        $qb = $this->contactRepository
             ->createQueryBuilder("dem")
             ->where('dem.created_at <= :date')
             ->andWhere('dem.closed_at IS NULL')

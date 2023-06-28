@@ -6,7 +6,7 @@ use libphonenumber\PhoneNumberFormat;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
-use Celtic34fr\ContactGestion\FormEntity\DemandesType;
+use Celtic34fr\ContactGestion\FormEntity\DemandeType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -59,7 +59,7 @@ class ContactType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => DemandesType::class,
+            'data_class' => DemandeType::class,
         ]);
     }
 }

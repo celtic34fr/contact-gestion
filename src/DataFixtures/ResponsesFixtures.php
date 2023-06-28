@@ -3,9 +3,9 @@
 namespace App\DataFixtures\ContactGestion;
 
 use Bolt\Entity\User;
-use Celtic34fr\ContactGestion\Entity\Contacts;
-use Celtic34fr\ContactGestion\Entity\Responses;
-use Celtic34fr\ContactGestion\Entity\Categories;
+use Celtic34fr\ContactGestion\Entity\Contact;
+use Celtic34fr\ContactGestion\Entity\Response;
+use Celtic34fr\ContactGestion\Entity\Category;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -49,11 +49,11 @@ class ResponsesFixtures extends Fixture implements FixtureGroupInterface, Depend
         return ['responses'];
     }
 
-    private function createResponses(User $operateur, Contacts $contact, ObjectManager $manager)
+    private function createResponses(User $operateur, Contact $contact, ObjectManager $manager)
     {
         var_dump($contact->getId());
 
-        $response = new Responses();
+        $response = new Response();
         $response->setReponse(loremizer::getParagraph(3));
         $response->setOperateur($operateur);
         $response->setContact($contact);
@@ -61,7 +61,7 @@ class ResponsesFixtures extends Fixture implements FixtureGroupInterface, Depend
         $maxCat = mt_rand(0, 5);
         /* ajout de 0 à 5 catégories */
         for ($j = 0; $j < $maxCat; ++$j) {
-            $category = $manager->getRepository(Categories::class)->findOneBy(['category' => 'catégorie ' . strval(mt_rand(0, 9))]);
+            $category = $manager->getRepository(Category::class)->findOneBy(['category' => 'catégory ' . strval(mt_rand(0, 9))]);
             $response->addCategory($category);
         }
 

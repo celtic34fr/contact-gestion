@@ -2,7 +2,7 @@
 
 namespace Celtic34fr\ContactGestion\Form;
 
-use Celtic34fr\ContactGestion\Entity\Categories;
+use Celtic34fr\ContactGestion\Entity\Category;
 use Celtic34fr\ContactGestion\FormEntity\SearchForm;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,7 +21,7 @@ class SearchFormType extends AbstractType
                 'required' => false,
             ])
             ->add('categories', EntityType::class, [
-                'class' => Categories::class,
+                'class' => Category::class,
                 'choice_label' => 'category',
                 'choice_value' => 'category',
                 'mapped' => false,

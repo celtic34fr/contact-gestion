@@ -371,7 +371,7 @@ class RequestController extends AbstractController
 
     public function isExtnsionInstall(string $extName): bool
     {
-        foreach ($this->extConfig->getInstalled() as $extInstalled) {
+        foreach ($this->extConfig->getInstalledExtensions() as $extInstalled) {
             $name = substr($extInstalled, strpos($extInstalled, '-') + 1);
             $name = substr($name, 0, (strpos($name, '.') ? strpos($name, '.') : strlen($name)));
             if ($name === $extName) {

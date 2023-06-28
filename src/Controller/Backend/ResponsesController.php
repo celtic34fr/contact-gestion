@@ -4,16 +4,16 @@ namespace Celtic34fr\ContactGestion\Controller\Backend;
 
 use Bolt\Controller\Backend\BackendZoneInterface;
 use Celtic34fr\ContactCore\Traits\DbPaginateTrait;
-use Celtic34fr\ContactGestion\Entity\Categories;
-use Celtic34fr\ContactGestion\Entity\Contacts;
-use Celtic34fr\ContactGestion\Entity\Responses;
+use Celtic34fr\ContactGestion\Entity\Category;
+use Celtic34fr\ContactGestion\Entity\Contact;
+use Celtic34fr\ContactGestion\Entity\Response;
 use Celtic34fr\ContactGestion\Form\SearchFormType;
 use Celtic34fr\ContactGestion\FormEntity\SearchForm;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('response')]
@@ -27,7 +27,7 @@ class ResponsesController extends AbstractController implements BackendZoneInter
 
     /** formulaire de recherche d'informations dans le desmandes (questions) et/ou réponses enregistées en base */
     #[Route('/searchIn', name: 'search_responses')]
-    public function seachInResponses(Request $request): Response
+    public function seachInResponses(Request $request): HttpResponse
     {
         $results = [];
         $cPage = 1;
@@ -65,7 +65,7 @@ class ResponsesController extends AbstractController implements BackendZoneInter
 
     /** visualisation d'un ensemble demande (question) et/ou réponse  */
     #[Route('/show_qr/{id}', name: 'showQR')]
-    public function showQR(Contacts $contact, Request $request): Response
+    public function showQR(Contact $contact, Request $request): HttpResponse
     {
         $qr = $this->formatQR($contact, 'contacts', 0);
         return $this->render('@contact-gestion/responses/show.html.twig', [
@@ -96,15 +96,15 @@ class ResponsesController extends AbstractController implements BackendZoneInter
             $filteredResults = [];
             $categoriesIdsObj = new \ArrayObject($categoriesIds); // sauvegarde en obj tableau de catégories
             foreach ($results as $result) { // recherche des catégories liées aux réponses trouvées
-                /** @var Contacts $contact */
-                $contact = $this->entityManager->getRepository(Contacts::class)->find($result['id']);
-                /** @var Responses $response */
+                /** @var Contact $contact */
+                $contact = $this->entityManager->getRepository(Contact::class)->find($result['id']);
+                /** @var Response $response */
                 $response = $contact->getReponse();
                 if ($response) {
                     $responseCats = $response->getCategories();
                     $responseCatsIds = [];
                     if ($responseCats) {
-                        /** @var Categories $responseCat */
+                        /** @var Category $responseCat */
                         foreach ($responseCats as $responseCat) {
                             $responseCatsIds[] = $responseCat->getId();
                         }

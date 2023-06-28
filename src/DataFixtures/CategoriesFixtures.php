@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures\ContactGestion;
 
-use Celtic34fr\ContactGestion\Entity\Categories;
+use Celtic34fr\ContactGestion\Entity\Category;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
@@ -13,7 +13,7 @@ class CategoriesFixtures extends Fixture implements FixtureGroupInterface, Depen
     public function load(ObjectManager $manager)
     {
         for ($i = 0; $i < 10; ++$i) {
-            $this->createCategorie($i, $manager);
+            $this->createCategory($i, $manager);
         }
     }
 
@@ -29,10 +29,10 @@ class CategoriesFixtures extends Fixture implements FixtureGroupInterface, Depen
         ];
     }
 
-    private function createCategorie(int $idx, ObjectManager $manager)
+    private function createCategory(int $idx, ObjectManager $manager)
     {
-        $category = new Categories();
-        $category->setCategory("catégorie $idx");
+        $category = new Category();
+        $category->setCategory("catégory $idx");
         $manager->persist($category);
         $manager->flush();
     }
