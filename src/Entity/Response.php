@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Celtic34fr\ContactGestion\Repository\ResponsesRepository;
 
 #[ORM\Entity(repositoryClass: ResponsesRepository::class)]
-#[ORM\Table(nama:'responses')]
+#[ORM\Table(name:'responses')]
 #[ORM\Index(columns: ['reponse'], name: 'search_idx', flags: ['fulltext'])]
 class Response
 {
