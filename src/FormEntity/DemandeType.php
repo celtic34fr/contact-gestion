@@ -15,7 +15,7 @@ class DemandeType
     private string $nom;
 
     #[Assert\Type('string')]
-    private string $prenom;
+    private ?string $prenom;
 
     #[Assert\NotBlank]
     #[Assert\Email(checkMX: true,  message: "Aucun serveur mail n'a été trouvé pour ce domaine")]
@@ -23,13 +23,13 @@ class DemandeType
     private string $adr_courriel;
 
     #[AssertPhoneNumber(defaultRegion: 'FR')]
-    private string $telephone;
+    private ?string $telephone;
 
     #[Assert\Type('bool')]
-    private bool $contact_me;
+    private bool $contact_me = false;
 
     #[Assert\Type('bool')]
-    private bool $newsletter;
+    private bool $newsletter = false;
 
     #[Assert\NotBlank]
     #[Assert\Type('string')]
@@ -61,7 +61,7 @@ class DemandeType
         return $this;
     }
 
-    public function getPrenom(): string
+    public function getPrenom(): ?string
     {
         return $this->prenom;
     }
@@ -77,7 +77,7 @@ class DemandeType
         return $this;
     }
 
-    public function getAdrCourriel(): ?string
+    public function getAdrCourriel(): string
     {
         return $this->adr_courriel;
     }
@@ -104,7 +104,7 @@ class DemandeType
         return $this;
     }
 
-    public function isContactMe(): ?bool
+    public function isContactMe(): bool
     {
         return $this->contact_me ?? false;
     }
@@ -115,7 +115,7 @@ class DemandeType
         return $this;
     }
 
-    public function isNewsLetter(): ?bool
+    public function isNewsLetter(): bool
     {
         return $this->newsletter ?? false;
     }
@@ -126,7 +126,7 @@ class DemandeType
         return $this;
     }
 
-    public function getSujet(): ?string
+    public function getSujet(): string
     {
         return $this->sujet;
     }
@@ -137,7 +137,7 @@ class DemandeType
         return $this;
     }
 
-    public function getDemande(): ?string
+    public function getDemande(): string
     {
         return $this->demande;
     }
