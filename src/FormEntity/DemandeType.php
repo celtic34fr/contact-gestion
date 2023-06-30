@@ -23,7 +23,7 @@ class DemandeType
     private string $adr_courriel;
 
     #[AssertPhoneNumber(defaultRegion: 'FR')]
-    private ?string $telephone;
+    private ?string $telephone = "";
 
     #[Assert\Type('bool')]
     private bool $contact_me = false;
