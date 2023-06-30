@@ -2,10 +2,14 @@
 
 namespace Celtic34fr\ContactGestion\FormEntity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class MailingExtract
 {
+    #[Type('string')]
     protected string $list;
 
+    #[Assert\Type('string')]
     protected string $fileName;
 
     public function getList(): string

@@ -2,6 +2,7 @@
 
 namespace Celtic34fr\ContactGestion\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Celtic34fr\ContactCore\Entity\Clientele;
 use Celtic34fr\ContactGestion\Repository\NewsLetterRepository;
@@ -15,11 +16,11 @@ class NewsLetter
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private \DateTime $created_at;          // date de création
+    #[ORM\Column(type: DateTimeImmutableType::class)]
+    private DateTime $created_at;          // date de création
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTime $ended_at = null;    // date de fin ou clôture d'envoi de la lettre d'informations
+    #[ORM\Column(type: DateTimeImmutableType::class, nullable: true)]
+    private ?DateTime $ended_at = null;    // date de fin ou clôture d'envoi de la lettre d'informations
 
     #[ORM\OneToOne(targetEntity: Clientele::class)]
     #[ORM\JoinColumn(name: 'client_id', referencedColumnName: 'id')]

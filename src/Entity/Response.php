@@ -4,7 +4,7 @@ namespace Celtic34fr\ContactGestion\Entity;
 
 use Bolt\Entity\User;
 use DateTimeImmutable;
-use Doctrine\DBAL\Types\Types;
+use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,14 +20,14 @@ class Response
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: TextType::class)]
     private ?string $reponse = null;                // texte de la réponse proprement dite
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $send_at = null;    // date d'envoi de la réponse
+    #[ORM\Column(type: DateTimeImmutableType::class, nullable: true)]
+    private ?DateTimeImmutable $send_at = null;    // date d'envoi de la réponse
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $closed_at = null;  // date de clôture de la demande
+    #[ORM\Column(type: DateTimeImmutableType::class, nullable: true)]
+    private ?DateTimeImmutable $closed_at = null;  // date de clôture de la demande
 
     #[ORM\OneToOne(inversedBy: 'reponse', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]

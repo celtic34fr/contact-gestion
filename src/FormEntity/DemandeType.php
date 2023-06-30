@@ -3,7 +3,6 @@
 namespace Celtic34fr\ContactGestion\FormEntity;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
 
 /** classe support d'exploitation des données saisie dans Form\ContactType */
 class DemandeType
@@ -22,7 +21,6 @@ class DemandeType
     #[Assert\Email(strict: true, message: "Le format de l'email est incorrect")]
     private string $adr_courriel;
 
-    #[AssertPhoneNumber(defaultRegion: 'FR')]
     private ?string $telephone = "";
 
     #[Assert\Type('bool')]
