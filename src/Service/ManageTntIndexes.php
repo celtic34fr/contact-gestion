@@ -112,13 +112,13 @@ class ManageTntIndexes
     /** mise à jour de l'index de recherche sur la table Contacts avec TNTSearch avec tableu d'information */
     public function updateContactsIDX(array $srcArray, string $operation)
     {
-        $this->idxGenerator->updateByArray($this->indexesContacts, $srcArray, $operation);
+        $this->idxGenerator->updateByArray($this->indexesContacts, $srcArray, $operation, $this->queryContacts);
     }
 
     /** mise à jour de l'index de recherche sur la table Responses avec TNTSearch avec tableu d'information */
     public function updateResponsesIDX(array $srcArray, string $operation)
     {
-        $this->idxGenerator->updateByArray($this->indexesResponses, $srcArray, $operation);
+        $this->idxGenerator->updateByArray($this->indexesResponses, $srcArray, $operation, $this->queryResponses);
     }
 
     /** méthode de recherche dans l'index de recherche sur la table Contacts avec TNTSearch */
