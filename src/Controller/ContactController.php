@@ -53,8 +53,7 @@ class ContactController extends AbstractController
                 $no_error = false;
             }
 
-            if ((array_key_exists('contactMe', $_POST['contact']) && $contact->isEmptyTelephone())
-                || (false !== $contact->isContactMe() && $contact->isEmptyTelephone())) {
+            if (false !== $contact->isContactMe() && $contact->isEmptyTelephone()) {
                 $msg = 'Vous demandez à être contacté, veuillez saisir votre numéro de téléphone';
                 $form->get('telephone')->addError(new FormError($msg));
                 $no_error = false;

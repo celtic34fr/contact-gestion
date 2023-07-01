@@ -14,7 +14,6 @@ class ContactForm
     private string $nom;
 
     #[Assert\Type(type: 'string')]
-    #[Assert\Blank]
     private ?string $prenom = null;
 
     #[Assert\NotBlank]
@@ -23,7 +22,6 @@ class ContactForm
     private string $adr_courriel;
 
     #[Assert\Type(type: 'string')]
-    #[Assert\Blank]
     private ?string $telephone = "";
 
     #[Assert\Type(type: 'bool')]
