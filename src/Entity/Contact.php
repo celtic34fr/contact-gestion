@@ -3,7 +3,6 @@
 namespace Celtic34fr\ContactGestion\Entity;
 
 use DateTimeImmutable;
-use Doctrine\DBAL\Types\BooleanType;
 use Doctrine\DBAL\Types\DateTimeImmutableType;
 use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\Mapping as ORM;
@@ -31,7 +30,7 @@ class Contact
     #[ORM\Column(type: TextType::class)]
     private ?string $demande = null;                // texte de la demande de contact
 
-    #[ORM\Column(type: BooleanType::class)]
+    #[ORM\Column('bool')]
     private ?bool $contact_me = null;               // top pour demande de contact téléphonique (true) ou non (false)
 
     #[ORM\OneToOne(mappedBy: 'contact', cascade: ['persist', 'remove'])]
