@@ -26,7 +26,7 @@
             {{ forms.btn('news_rdv', '<i class="fas fa-calendar-alt"></i>', {
                 'class': 'button btn-success text-center', 'title': 'Prendre un rendez-vous',
                 'event': 'onclick', 'codeJS': 'openInNewTab("'~
-                path('custevts-new-meeting', {"customer": requete.getClient().getId(), "demande": requete.id})
+                path('custevts-new-meeting', {"customer": requete.getClient().getId(), "contact": requete.id})
                                                             ~'");',
             }) }}
         {% endif %}
