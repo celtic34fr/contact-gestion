@@ -15,6 +15,11 @@
         <span style="color: red !important;" title="Contacter le client">
             <i class="fa fa-phone"></i> {{ requete.getClient().getTelephone() }}
         </span>
+
+        <pre>
+            {{ dump(isExtensionInstall('crmrdv'), isRouteDefined('custevts-new-meeting')) }}
+        </pre>
+
         {% if isExtensionInstall('crmrdv') and isRouteDefined('custevts-new-meeting') %}
             {{ forms.btn('news_rdv', '<i class="fas fa-calendar-alt"></i>', {
                 'class': 'button btn-success text-center', 'title': 'Prendre un rendez-vous',
