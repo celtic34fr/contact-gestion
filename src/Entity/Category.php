@@ -5,7 +5,7 @@ namespace Celtic34fr\ContactGestion\Entity;
 use Celtic34fr\ContactGestion\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\TextType;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -17,7 +17,7 @@ class Category
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: TextType::class, length: 255)]
+    #[ORM\Column(type: Types::TEXT, length: 255)]
     private string $category;       // libellé de la catégorie
 
     #[ORM\ManyToMany(targetEntity: Response::class, mappedBy: 'categories')]

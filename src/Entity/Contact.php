@@ -3,8 +3,7 @@
 namespace Celtic34fr\ContactGestion\Entity;
 
 use DateTimeImmutable;
-use Doctrine\DBAL\Types\DateTimeImmutableType;
-use Doctrine\DBAL\Types\TextType;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Celtic34fr\ContactCore\Entity\CliInfos;
 use Celtic34fr\ContactGestion\Repository\ContactRepository;
@@ -18,32 +17,32 @@ class Contact
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: DateTimeImmutableType::class)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $created_at;         //date de création
 
-    #[ORM\Column(type: DateTimeImmutableType::class, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $treated_at = null; // date de traitement
 
-    #[ORM\Column(type: TextType::class, length: 255)]
+    #[ORM\Column(type: Types::TEXT, length: 255)]
     private ?string $sujet = null;                  // sujet de la demande de contact
 
-    #[ORM\Column(type: TextType::class)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $demande = null;                // texte de la demande de contact
 
-    #[ORM\Column('bool')]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $contact_me = null;               // top pour demande de contact téléphonique (true) ou non (false)
 
     #[ORM\OneToOne(mappedBy: 'contact', cascade: ['persist', 'remove'])]
     private ?Response $reponse = null;             // lien vers la réponse saisie si existe
 
-    #[ORM\Column(type: DateTimeImmutableType::class, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $send_at = null;    // date d'envoi de la réponse si lieu
 
     #[ORM\OneToOne(targetEntity: CliInfos::class)]
     #[ORM\JoinColumn(name: 'client_id', referencedColumnName: 'id', nullable: false)]
     private ?CliInfos $client = null;               // lien vers l'interanute (informations non fixes)
 
-    #[ORM\Column(type: DateTimeImmutableType::class, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $closed_at = null;  // date de clôture de la demande
 
     public function __construct()
