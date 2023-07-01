@@ -5,7 +5,7 @@ namespace Celtic34fr\ContactGestion\FormEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /** classe support d'exploitation des données saisie dans Form\ContactType */
-class DemandeType
+class ContactForm
 {
     private int $id;
 
@@ -14,13 +14,14 @@ class DemandeType
     private string $nom;
 
     #[Assert\Type('string')]
-    private ?string $prenom;
+    private ?string $prenom = null;
 
     #[Assert\NotBlank]
     #[Assert\Email(checkMX: true,  message: "Aucun serveur mail n'a été trouvé pour ce domaine")]
     #[Assert\Email(strict: true, message: "Le format de l'email est incorrect")]
     private string $adr_courriel;
 
+    #[Assert\Type('string')]
     private ?string $telephone = "";
 
     #[Assert\Type('bool')]

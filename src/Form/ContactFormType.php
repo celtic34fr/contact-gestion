@@ -2,9 +2,9 @@
 
 namespace Celtic34fr\ContactGestion\Form;
 
+use Celtic34fr\ContactGestion\FormEntity\ContactForm;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Celtic34fr\ContactGestion\FormEntity\DemandeType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -31,14 +31,13 @@ class ContactType extends AbstractType
             ])
             ->add('telephone', TextType::class, [
                 'required' => false,
+                'empty_data' => '',
             ])
             ->add('contactMe', CheckboxType::class, [
                 'required' => false,
-                'value' => false,
             ])
             ->add('newsletter', CheckboxType::class, [
                 'required' => false,
-                'value' => false,
             ])
             ->add('sujet', TextType::class, [
                 'required' => true,
@@ -55,7 +54,7 @@ class ContactType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => DemandeType::class,
+            'data_class' => ContactForm::class,
         ]);
     }
 }

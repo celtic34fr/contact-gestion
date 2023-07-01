@@ -2,22 +2,22 @@
 
 namespace Celtic34fr\ContactGestion\Controller;
 
-use Celtic34fr\ContactCore\Entity\Clientele;
+use Symfony\Component\Form\FormError;
+use Doctrine\ORM\EntityManagerInterface;
 use Celtic34fr\ContactCore\Entity\CliInfos;
-use Celtic34fr\ContactCore\Enum\CustomerEnums;
-use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Celtic34fr\ContactCore\Entity\Clientele;
 use Celtic34fr\ContactCore\Traits\Utilities;
 use Celtic34fr\ContactGestion\Entity\Contact;
-use Celtic34fr\ContactGestion\Entity\NewsLetter;
-use Celtic34fr\ContactGestion\Form\ContactType;
-use Celtic34fr\ContactGestion\FormEntity\DemandeType;
-use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Celtic34fr\ContactCore\Enum\CustomerEnums;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Celtic34fr\ContactGestion\Entity\NewsLetter;
+use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Celtic34fr\ContactGestion\Form\ContactFormType;
+use Celtic34fr\ContactGestion\FormEntity\ContactForm;
+use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /** classe de mise en oeuvre et gestion du frontal de demande de contact */
 #[Route('/contact')]
@@ -38,10 +38,10 @@ class ContactController extends AbstractController
     #[Route('/', name: 'contact')]
     public function __invoke(Request $request): Response
     {
-        $contact = new DemandeType();
+        $contact = new ContactForm();
         $no_error = true;
 
-        $form = $this->createForm(ContactType::class, $contact);
+        $form = $this->createForm(ContactFormType::class, $contact);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if (array_key_exists('contact_demande', $_POST)) {
@@ -103,7 +103,7 @@ class ContactController extends AbstractController
 
     /** méthode privée */
 
-    private function create_request(DemandeType $contact): bool
+    private function create_request(ContactForm $contact): bool
     {
         $rc = true;
         try {
