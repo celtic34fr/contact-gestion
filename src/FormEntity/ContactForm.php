@@ -10,32 +10,34 @@ class ContactForm
     private int $id;
 
     #[Assert\NotBlank]
-    #[Assert\Type('string')]
+    #[Assert\Type(type: 'string')]
     private string $nom;
 
-    #[Assert\Type('string')]
+    #[Assert\Type(type: 'string')]
+    #[Assert\Blank]
     private ?string $prenom = null;
 
     #[Assert\NotBlank]
-    #[Assert\Email(checkMX: true,  message: "Aucun serveur mail n'a été trouvé pour ce domaine")]
-    #[Assert\Email(strict: true, message: "Le format de l'email est incorrect")]
+    #[Assert\Type(type: 'string')]
+    #[Assert\Email(mode: 'strict')]
     private string $adr_courriel;
 
-    #[Assert\Type('string')]
+    #[Assert\Type(type: 'string')]
+    #[Assert\Blank]
     private ?string $telephone = "";
 
-    #[Assert\Type('bool')]
+    #[Assert\Type(type: 'bool')]
     private bool $contact_me = false;
 
-    #[Assert\Type('bool')]
+    #[Assert\Type(type: 'bool')]
     private bool $newsletter = false;
 
     #[Assert\NotBlank]
-    #[Assert\Type('string')]
+    #[Assert\Type(type: 'string')]
     private string $sujet;
 
     #[Assert\NotBlank]
-    #[Assert\Type('string')]
+    #[Assert\Type(type: 'string')]
     private string $demande;
 
     public function getId(): int
