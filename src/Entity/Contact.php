@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Celtic34fr\ContactCore\Entity\CliInfos;
 use Celtic34fr\ContactGestion\Repository\ContactRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 #[ORM\Table(name:'contacts')]
@@ -17,32 +18,43 @@ class Contact
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\DateTime]
     private DateTimeImmutable $created_at;         //date de création
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[Assert\DateTime]
     private ?DateTimeImmutable $treated_at = null; // date de traitement
 
-    #[ORM\Column(type: Types::TEXT, length: 255)]
+    #[ORM\Column(type: Types::TEXT, length: 255, nullable: true)]
+    #[Assert\Type('string')]
     private ?string $sujet = null;                  // sujet de la demande de contact
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Assert\Type('string')]
     private ?string $demande = null;                // texte de la demande de contact
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
+    #[Assert\Type('boolean')]
     private ?bool $contact_me = null;               // top pour demande de contact téléphonique (true) ou non (false)
 
     #[ORM\OneToOne(mappedBy: 'contact', cascade: ['persist', 'remove'])]
+    #[Assert\Type(Response::class)]
     private ?Response $reponse = null;             // lien vers la réponse saisie si existe
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[Assert\DateTime]
     private ?DateTimeImmutable $send_at = null;    // date d'envoi de la réponse si lieu
 
     #[ORM\OneToOne(targetEntity: CliInfos::class)]
     #[ORM\JoinColumn(name: 'client_id', referencedColumnName: 'id', nullable: false)]
+    #[Assert\Type(CliInfos::class)]
     private ?CliInfos $client = null;               // lien vers l'interanute (informations non fixes)
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[Assert\DateTime]
     private ?DateTimeImmutable $closed_at = null;  // date de clôture de la demande
 
     public function __construct()

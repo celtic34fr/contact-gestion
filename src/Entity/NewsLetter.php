@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Celtic34fr\ContactCore\Entity\Clientele;
 use Celtic34fr\ContactGestion\Repository\NewsLetterRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: NewsLetterRepository::class)]
 #[ORM\Table(name:'newsletters')]
@@ -18,13 +19,20 @@ class NewsLetter
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\DateTime]
     private DateTime $created_at;          // date de création
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[Assert\DateTime]
     private ?DateTime $ended_at = null;    // date de fin ou clôture d'envoi de la lettre d'informations
 
     #[ORM\OneToOne(targetEntity: Clientele::class)]
-    #[ORM\JoinColumn(name: 'client_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'client_id', referencedColumnName: 'id', nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Type(Clientele::class)]
     private Clientele $client;              // lien vers l'internaute (informations fixes)
 
     public function __construct()

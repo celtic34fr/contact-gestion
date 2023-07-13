@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Celtic34fr\ContactGestion\Repository\ResponsesRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ResponsesRepository::class)]
 #[ORM\Table(name:'responses')]
@@ -20,23 +21,27 @@ class Response
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $reponse = null;                // texte de la réponse proprement dite
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $send_at = null;    // date d'envoi de la réponse
+    #[Assert\DateTime]
+    private ?DateTimeImmutable $send_at = null;     // date d'envoi de la réponse
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $closed_at = null;  // date de clôture de la demande
+    #[Assert\DateTime]
+    private ?DateTimeImmutable $closed_at = null;   // date de clôture de la demande
 
     #[ORM\OneToOne(targetEntity: Contact::class, inversedBy: 'reponse', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Contact $contact = null;              // lien vers la demande de contact
+    #[Assert\Type(Contact::class)]
+    private Contact $contact;                       // lien vers la demande de contact
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'responses')]
     private Collection $categories;                 // ensemble des catégories qualifiant la réponse si lieu
 
     #[ORM\ManyToOne(targetEntity: User::class)]
+    #[Assert\Type(User::class)]
     private User $operateur;                        // opérateur ayant saisi la réponse
 
     /**

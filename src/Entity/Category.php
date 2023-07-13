@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ORM\Table('categories')]
@@ -17,7 +18,10 @@ class Category
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::TEXT, length: 255)]
+    #[ORM\Column(type: Types::TEXT, length: 255, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Type('string')]
     private string $category;       // libellé de la catégorie
 
     #[ORM\ManyToMany(targetEntity: Response::class, mappedBy: 'categories')]
