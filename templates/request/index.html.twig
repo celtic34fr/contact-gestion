@@ -66,7 +66,7 @@
                             <div class="col-2 text-center r-td">
                                 {{ request.getTreatedAt() ? request.getTreatedAt()|date("d/m/Y") : "" }}
                             </div>
-                            <div class="col-2 text-center r-td row">
+                            <div class="col-2 text-center r-td row m-0 p-0">
                                 {{ forms.btn('edit'~request.id, '<i class="fa fa-pen"></i>',
                                     {'class': 'edit-request w-6 px-1 col-4 btn btn-success text-center',
                                         'title': 'Répondre à la demande', 'type': 'button',
