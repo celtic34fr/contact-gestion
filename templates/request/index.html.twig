@@ -31,21 +31,6 @@
             border-spacing: unset;
         }
 
-        .button-success {
-            color: white;
-            background-color: green;
-        }
-
-        .button-info {
-            color: white;
-            background-color: blue;
-        }
-
-        .button-warning {
-            color: black;
-            background-color: orange;
-        }
-
         .col-2 {
             width: 16.67%;
             float: left;
@@ -83,19 +68,19 @@
                             </div>
                             <div class="col-2 text-center r-td row">
                                 {{ forms.btn('edit'~request.id, '<i class="fa fa-pen"></i>',
-                                    {'class': 'edit-request w-6 px-1 col-4 button-success text-center',
+                                    {'class': 'edit-request w-6 px-1 col-4 btn btn-success text-center',
                                         'title': 'Répondre à la demande', 'type': 'button',
                                         'event': 'onClick', 'codeJS': 'redirect("'~canonical('request_answer',
                                         {'id': request.id})~'");',
                                     }) }}
                                 {{ forms.btn('send'~request.id, '<i class="fa fa-envelope"></i>',
-                                    {'class': 'send-request w-6 px-1 col-4 button-info text-center',
+                                    {'class': 'send-request w-6 px-1 col-4 btn btn-info text-center',
                                         'title': 'Envoyer la réponse', 'type': 'button',
                                         'event': 'onClick', 'codeJS': 'redirect("'~canonical('send_answer',
                                         {'id': request.id})~'");',
                                     }) }}
                                 {{ forms.btn('close'~request.id, '<i class="fa fa-times"></i>',
-                                    {'class': 'send-request w-6 px-1 col-4 button-warning text-center',
+                                    {'class': 'send-request w-6 px-1 col-4 btn btn-warning text-center',
                                         'title': 'Clôturer la réponse', 'type': 'button',
                                         'event': 'onClick', 'codeJS': 'redirect("'~canonical('request_close',
                                         {'id': request.id})~'");',
