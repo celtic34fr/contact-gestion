@@ -6,13 +6,13 @@ use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Celtic34fr\ContactCore\Entity\CliInfos;
 use Celtic34fr\ContactCore\Entity\Clientele;
-use Celtic34fr\ContactCore\Traits\Utilities;
 use Celtic34fr\ContactGestion\Entity\Contact;
 use Symfony\Component\HttpFoundation\Request;
 use Celtic34fr\ContactCore\Enum\CustomerEnums;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Celtic34fr\ContactGestion\Entity\NewsLetter;
+use Celtic34fr\ContactCore\Traits\UtilitiesTrait;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
 use Celtic34fr\ContactGestion\Form\ContactFormType;
 use Celtic34fr\ContactGestion\FormEntity\ContactForm;
@@ -33,7 +33,7 @@ class ContactController extends AbstractController
     {
     }
 
-    use Utilities;
+    use UtilitiesTrait;
 
     #[Route('/', name: 'contact')]
     public function __invoke(Request $request): Response

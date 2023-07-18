@@ -9,7 +9,6 @@ use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
 use Twig\Error\RuntimeError;
 use Doctrine\ORM\EntityManagerInterface;
-use Celtic34fr\ContactCore\Traits\Utilities;
 use Celtic34fr\ContactGestion\Entity\Contact;
 use Symfony\Component\HttpFoundation\Request;
 use Celtic34fr\ContactCore\Service\SendMailer;
@@ -20,6 +19,7 @@ use Celtic34fr\ContactGestion\Form\ResponseType;
 use Celtic34fr\ContactGestion\Form\SearchFormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Celtic34fr\ContactCore\Traits\UtilitiesTrait;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +38,7 @@ class RequestController extends AbstractController
         $this->schemaManager = $entityManager->getConnection()->getSchemaManager();
     }
 
-    use Utilities;
+    use UtilitiesTrait;
 
     /** liste des demande de contacts à traiter ou en cours de traitement */
     #[Route('/list/{page}', name: 'request_list')]
