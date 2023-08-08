@@ -23,6 +23,7 @@ class ExtractMailingController extends AbstractController
         if (!\is_resource($tmpFile)) {
             throw new \RuntimeException('Unable to create a temporary file.');
         }
+        $msgError = [];
 
         $datasSource = [
             ['nom', 'Nom'],
@@ -44,17 +45,22 @@ class ExtractMailingController extends AbstractController
                 $fileName = $form->get("fileName")->getData();
                 if (!str_contains($fileName, '.csv')) $fileName .= '.csv';
                 $mailingDatas = $repoNewsletter->findMailingInfos();
-                $$tmpFile = $this->generateMailingFile($list, $mailingDatas, $tmpFile);
-                $response = $this->file($tmpFileName, $fileName);
-                $response->headers->set('Content-type', 'application/csv');
-                fclose($tmpFile);
-                return $response;
+                if ($mailingDatas) {
+                    $$tmpFile = $this->generateMailingFile($list, $mailingDatas, $tmpFile);
+                    $response = $this->file($tmpFileName, $fileName);
+                    $response->headers->set('Content-type', 'application/csv');
+                    fclose($tmpFile);
+                    return $response;
+                } else {
+                    $msgError = ['Pas de données de liste de diffusion'];
+                }
             }
         }
 
         return $this->renderForm('@contact-gestion/extract-mailing/index.html.twig', [
             'datasSource' => $datasSource,
             'form' => $form,
+            'msgError' => $msgError,
         ]);
     }
 

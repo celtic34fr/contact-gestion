@@ -55,6 +55,16 @@
 {% endblock %}
 
 {% block main %}
+	{% if msgError is defined and msgError is not empty %}
+	<div class="error">
+		{% for msgError in error %}
+			<div class="text-danger bg-danger">
+				<span>{{ error }}</span>
+			</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+
 	<div id="regorg" class="col12 row mx-0 px-0">
 		<h1 class="col-12 mx-0 px-0 text-center">Réorganisation de structure du fichier d'extraction CSV</h1>
 		<div class="col-6 row">
