@@ -89,7 +89,13 @@
                                 </p>
                             </div>
                             {% endif %}
-                            {% if courriel is not empty %}
+                            {% if ouverture is not empty %}
+                            <div class="col-12 mb-2 px-2">
+                                <h3 class="text-lg">Nous sommes disponible le</h3>
+                                {% for jour, dispo in ouverture %}
+                                    <strong><em>{{ jour }}</em></strong>&nbsp;:&nbsp;{{ dispo }}<br>
+                                {% endfor %}
+                            </div>
                             {% endif %}
                             <div class="col-12 mb-2 px-2">
                                 <h3 class="text-lg">Notre Adresse</h3>

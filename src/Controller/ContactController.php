@@ -97,6 +97,19 @@ class ContactController extends AbstractController
             }
         }
 
+        $ouverture = $this->extConfig->get('celtic34fr-contactcore/ouverture');
+        if (!empty($ouverture)) {
+            $opening = [];
+            foreach ($ouverture as $key => $value) {
+                if (strlen($value) > 1 || $value != "-") {
+                    $opening[$key] = $value;
+                }
+            }
+            $ouverture = $opening;
+        } else {
+            $ouverture = [];
+        }
+
         $adresse = $this->extConfig->get('celtic34fr-contactgestion/adresse');
         $OSM_params = $this->extConfig->get('celtic34fr-contactgestion/OSM');
         $template = $this->extConfig->get('celtic34fr-contactgestion/contact_form_template');
@@ -109,6 +122,7 @@ class ContactController extends AbstractController
             'breadcrumbs' => [],
             'coordonnees' => $coordonnees,
             'adresse' => $adresse,
+            'ouverture' =>$ouverture,
             'OSM_params' => $OSM_params,
             'newsletter' => $newsletter,
         ]);
