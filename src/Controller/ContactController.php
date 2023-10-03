@@ -2,22 +2,23 @@
 
 namespace Celtic34fr\ContactGestion\Controller;
 
-use Symfony\Component\Form\FormError;
-use Doctrine\ORM\EntityManagerInterface;
-use Celtic34fr\ContactCore\Entity\CliInfos;
 use Celtic34fr\ContactCore\Entity\Clientele;
-use Celtic34fr\ContactGestion\Entity\Contact;
-use Symfony\Component\HttpFoundation\Request;
+use Celtic34fr\ContactCore\Entity\CliInfos;
 use Celtic34fr\ContactCore\Enum\CustomerEnums;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Celtic34fr\ContactGestion\Entity\NewsLetter;
-use Celtic34fr\ContactCore\Traits\UtilitiesTrait;
+use Celtic34fr\ContactCore\FormEntity\EntrepriseInfosFE;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Celtic34fr\ContactCore\Traits\UtilitiesTrait;
+use Celtic34fr\ContactGestion\Entity\Contact;
+use Celtic34fr\ContactGestion\Entity\NewsLetter;
 use Celtic34fr\ContactGestion\Form\ContactFormType;
 use Celtic34fr\ContactGestion\FormEntity\ContactForm;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /** classe de mise en oeuvre et gestion du frontal de demande de contact */
 #[Route('/contact')]
@@ -83,6 +84,19 @@ class ContactController extends AbstractController
         }
 
         $coordonnees = $this->extConfig->get('celtic34fr-contactgestion/coordonnees');
+        $entreprise = $this->extConfig->get('celtic34fr-contactcore/entreprise');
+        /** alimentation des champs nécessaires absents de coordonnees par ceux de entreprise si présent */
+        if (!array_key_exists('tel', $coordonnees) || empty($coordonnees['tel'])) {
+            if (array_key_exists('telephone', $entreprise) && !empty($entreprise['telephone'])) {
+                $coordonnees['tel'] = $entreprise['telephone'];
+            }
+        }
+        if (!array_key_exists('courriel', $coordonnees) || empty($coordonnees['courriel'])) {
+            if (array_key_exists('courriel', $entreprise) && !empty($entreprise['courriel'])) {
+                $coordonnees['courriel'] = $entreprise['courriel'];
+            }
+        }
+
         $adresse = $this->extConfig->get('celtic34fr-contactgestion/adresse');
         $OSM_params = $this->extConfig->get('celtic34fr-contactgestion/OSM');
         $template = $this->extConfig->get('celtic34fr-contactgestion/contact_form_template');
