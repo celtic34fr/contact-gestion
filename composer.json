@@ -17,7 +17,8 @@
     "egulias/email-validator": "^3.2"
   },
   "require-dev": {
-    "symplify/easy-coding-standard": "^8.3"
+    "symplify/easy-coding-standard": "^8.3",
+    "phpunit/phpunit": "^9.6"
   },
   "autoload": {
     "psr-4": {
