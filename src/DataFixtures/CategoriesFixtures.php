@@ -1,12 +1,12 @@
 <?php
 
-namespace App\DataFixtures\ContactGestion;
+namespace Bolt\Extension\Celtic34fr\ContactGestion\DataFixtures\ContactGestion;
 
-use Celtic34fr\ContactGestion\Entity\Category;
-use Doctrine\Persistence\ObjectManager;
+use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Persistence\ObjectManager;
 
 class CategoriesFixtures extends Fixture implements FixtureGroupInterface, DependentFixtureInterface
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace Celtic34fr\ContactGestion\Entity;
+namespace Bolt\Extension\Celtic34fr\ContactGestion\Entity;
 
 use Bolt\Entity\User;
+use Bolt\Extension\Celtic34fr\ContactGestion\Repository\ResponsesRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
-use Celtic34fr\ContactGestion\Repository\ResponsesRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ResponsesRepository::class)]

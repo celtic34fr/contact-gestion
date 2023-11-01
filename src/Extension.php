@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Celtic34fr\ContactGestion;
+namespace Bolt\Extension\Celtic34fr\ContactGestion;
 
 use Bolt\Extension\BaseExtension;
+use Bolt\Extension\Celtic34fr\ContactGestion\Widget\ContactWidget;
 use Symfony\Component\Filesystem\Filesystem;
-use Celtic34fr\ContactGestion\Widget\ContactWidget;
 
 /** classe de déclaration et initialisation de l'extension Bolt CMS */
 class Extension extends BaseExtension

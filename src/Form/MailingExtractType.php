@@ -1,13 +1,13 @@
 <?php
 
-namespace Celtic34fr\ContactGestion\Form;
+namespace Bolt\Extension\Celtic34fr\ContactGestion\Form;
 
+use Bolt\Extension\Celtic34fr\ContactGestion\FormEntity\MailingExtract;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Celtic34fr\ContactGestion\FormEntity\MailingExtract;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class MailingExtractType extends AbstractType
 {

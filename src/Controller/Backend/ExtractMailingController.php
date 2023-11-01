@@ -1,16 +1,15 @@
 <?php
 
-namespace Celtic34fr\ContactGestion\Controller\Backend;
+namespace Bolt\Extension\Celtic34fr\ContactGestion\Controller\Backend;
 
+use Bolt\Extension\Celtic34fr\ContactGestion\Form\MailingExtractType;
+use Bolt\Extension\Celtic34fr\ContactGestion\FormEntity\MailingExtract;
+use Bolt\Extension\Celtic34fr\ContactGestion\Repository\NewsLetterRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Celtic34fr\ContactGestion\Form\MailingExtractType;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Celtic34fr\ContactGestion\FormEntity\MailingExtract;
-use Celtic34fr\ContactGestion\Repository\NewsLetterRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('extract_mailing')]
 class ExtractMailingController extends AbstractController

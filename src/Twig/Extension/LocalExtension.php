@@ -1,8 +1,8 @@
 <?php
 
-namespace Celtic34fr\ContactGestion\Twig\Extension;
+namespace Bolt\Extension\Celtic34fr\ContactGestion\Twig\Extension;
 
-use Celtic34fr\ContactGestion\Twig\Runtime\LocalExtensionRuntime;
+use Bolt\Extension\Celtic34fr\ContactGestion\Twig\Runtime\LocalExtensionRuntime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 

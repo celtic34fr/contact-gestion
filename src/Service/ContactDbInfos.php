@@ -1,9 +1,9 @@
 <?php
 
-namespace Celtic34fr\ContactGestion\Service;
+namespace Bolt\Extension\Celtic34fr\ContactGestion\Service;
 
-use Celtic34fr\ContactCore\Traits\DbPaginateTrait;
-use Celtic34fr\ContactGestion\Repository\ContactRepository;
+use Bolt\Extension\Celtic34fr\ContactCore\Traits\DbPaginateTrait;
+use Bolt\Extension\Celtic34fr\ContactGestion\Repository\ContactRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 

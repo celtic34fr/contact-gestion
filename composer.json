@@ -21,13 +21,19 @@
   },
   "autoload": {
     "psr-4": {
-      "Celtic34fr\\ContactGestion\\": "src/"
+      "Bolt\\Extension\\Celtic34fr\\ContactGestion\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+        "Bolt\\Extension\\Celtic34fr\\ContactGestion\\Tests\\": "tests",
+        "Bolt\\Tests\\": "vendor/bolt/bolt/tests/phpunit/unit/"
     }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
-    "entrypoint": "Celtic34fr\\ContactGestion\\Extension"
+    "entrypoint": "Bolt\\Extension\\Celtic34fr\\ContactGestion\\Extension"
   },
   "config": {
     "allow-plugins": {

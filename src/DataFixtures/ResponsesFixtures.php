@@ -1,16 +1,16 @@
 <?php
 
-namespace App\DataFixtures\ContactGestion;
+namespace Bolt\Extension\Celtic34fr\ContactGestion\DataFixtures\ContactGestion;
 
 use Bolt\Entity\User;
-use Celtic34fr\ContactGestion\Entity\Contact;
-use Celtic34fr\ContactGestion\Entity\Response;
-use Celtic34fr\ContactGestion\Entity\Category;
-use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
-use Doctrine\Persistence\ObjectManager;
+use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Category;
+use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Contact;
+use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Response;
+use Bolt\Extension\Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Persistence\ObjectManager;
 use Loremizer\loremizer;
 
 class ResponsesFixtures extends Fixture implements FixtureGroupInterface, DependentFixtureInterface

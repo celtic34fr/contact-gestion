@@ -1,8 +1,8 @@
 <?php
 
-namespace Celtic34fr\ContactGestion\Entity;
+namespace Bolt\Extension\Celtic34fr\ContactGestion\Entity;
 
-use Celtic34fr\ContactGestion\Repository\CategoryRepository;
+use Bolt\Extension\Celtic34fr\ContactGestion\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;

@@ -1,10 +1,10 @@
 <?php
 
-namespace Celtic34fr\ContactGestion\Service;
+namespace Bolt\Extension\Celtic34fr\ContactGestion\Service;
 
 use Bolt\Extension\BaseExtension;
+use Bolt\Extension\Celtic34fr\ContactGestion\Extension;
 use Bolt\Extension\ExtensionRegistry;
-use Celtic34fr\ContactGestion\Extension;
 
 class ConfigService
 {

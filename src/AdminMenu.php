@@ -1,9 +1,9 @@
 <?php
 
-namespace Celtic34fr\ContactGestion;
+namespace Bolt\Extension\Celtic34fr\ContactGestion;
 
+use Bolt\Extension\Celtic34fr\ContactCore\Traits\AdminMenuTrait;
 use Bolt\Menu\ExtensionBackendMenuInterface;
-use Celtic34fr\ContactCore\Traits\AdminMenuTrait;
 use Exception;
 use Knp\Menu\MenuItem;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

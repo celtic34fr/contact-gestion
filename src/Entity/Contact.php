@@ -1,12 +1,12 @@
 <?php
 
-namespace Celtic34fr\ContactGestion\Entity;
+namespace Bolt\Extension\Celtic34fr\ContactGestion\Entity;
 
+use Bolt\Extension\Celtic34fr\ContactCore\Entity\CliInfos;
+use Bolt\Extension\Celtic34fr\ContactGestion\Repository\ContactRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Celtic34fr\ContactCore\Entity\CliInfos;
-use Celtic34fr\ContactGestion\Repository\ContactRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]

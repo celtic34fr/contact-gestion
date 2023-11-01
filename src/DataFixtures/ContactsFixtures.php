@@ -1,16 +1,16 @@
 <?php
 
-namespace App\DataFixtures\ContactGestion;
+namespace Bolt\Extension\Celtic34fr\ContactGestion\DataFixtures\ContactGestion;
 
-use Loremizer\loremizer;
-use Doctrine\Persistence\ObjectManager;
-use Celtic34fr\ContactCore\Entity\CliInfos;
+use Bolt\Extension\Celtic34fr\ContactCore\Entity\Clientele;
+use Bolt\Extension\Celtic34fr\ContactCore\Entity\CliInfos;
+use Bolt\Extension\Celtic34fr\ContactGestion\DataFixtures\ContactCore\ClientelesFixtures;
+use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Contact;
+use Bolt\Extension\Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Celtic34fr\ContactCore\Entity\Clientele;
-use Celtic34fr\ContactGestion\Entity\Contact;
-use App\DataFixtures\ContactCore\ClientelesFixtures;
-use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
+use Doctrine\Persistence\ObjectManager;
+use Loremizer\loremizer;
 
 class ContactsFixtures extends Fixture implements FixtureGroupInterface
 {

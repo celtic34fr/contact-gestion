@@ -1,8 +1,8 @@
 <?php
 
-namespace Celtic34fr\ContactGestion\Twig\Extension;
+namespace Bolt\Extension\Celtic34fr\ContactGestion\Twig\Extension;
 
-use Celtic34fr\ContactGestion\Twig\Runtime\SymfonyAdvanceExtensionRuntime;
+use Bolt\Extension\Celtic34fr\ContactGestion\Twig\Runtime\SymfonyAdvanceExtensionRuntime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;

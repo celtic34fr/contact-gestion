@@ -1,6 +1,6 @@
 <?php
 
-namespace Celtic34fr\ContactGestion\Twig\Runtime;
+namespace Bolt\Extension\Celtic34fr\ContactGestion\Twig\Runtime;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
