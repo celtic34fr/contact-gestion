@@ -1,9 +1,9 @@
 <?php
 
-namespace Bolt\Extension\Celtic34fr\ContactGestion\Entity;
+namespace Celtic34fr\ContactGestion\Entity;
 
-use Bolt\Extension\Celtic34fr\ContactCore\Entity\CliInfos;
-use Bolt\Extension\Celtic34fr\ContactGestion\Repository\ContactRepository;
+use Celtic34fr\ContactCore\Entity\CliInfos;
+use Celtic34fr\ContactGestion\Repository\ContactRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;

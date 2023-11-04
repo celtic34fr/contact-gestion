@@ -1,8 +1,8 @@
 <?php
 
-namespace Bolt\Extension\Celtic34fr\ContactGestion\Twig\Runtime;
+namespace Celtic34fr\ContactGestion\Twig\Runtime;
 
-use Bolt\Extension\Celtic34fr\ContactGestion\Service\ContactDbInfos;
+use Celtic34fr\ContactGestion\Service\ContactDbInfos;
 use Twig\Extension\RuntimeExtensionInterface;
 
 /** classe d'extension TWIG spécifique à l'extension Bolt CMS */

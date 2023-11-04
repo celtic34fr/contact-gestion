@@ -1,10 +1,10 @@
 <?php
 
-namespace Bolt\Extension\Celtic34fr\ContactGestion\Controller\Backend;
+namespace Celtic34fr\ContactGestion\Controller\Backend;
 
-use Bolt\Extension\Celtic34fr\ContactGestion\Form\MailingExtractType;
-use Bolt\Extension\Celtic34fr\ContactGestion\FormEntity\MailingExtract;
-use Bolt\Extension\Celtic34fr\ContactGestion\Repository\NewsLetterRepository;
+use Celtic34fr\ContactGestion\Form\MailingExtractType;
+use Celtic34fr\ContactGestion\FormEntity\MailingExtract;
+use Celtic34fr\ContactGestion\Repository\NewsLetterRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;

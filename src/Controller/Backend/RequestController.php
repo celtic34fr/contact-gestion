@@ -1,17 +1,17 @@
 <?php
 
-namespace Bolt\Extension\Celtic34fr\ContactGestion\Controller\Backend;
+namespace Celtic34fr\ContactGestion\Controller\Backend;
 
 use Bolt\Entity\User;
-use Bolt\Extension\Celtic34fr\ContactCore\Service\ExtensionConfig;
-use Bolt\Extension\Celtic34fr\ContactCore\Service\SendMailer;
-use Bolt\Extension\Celtic34fr\ContactCore\Traits\UtilitiesTrait;
-use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Category;
-use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Contact;
-use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Response;
-use Bolt\Extension\Celtic34fr\ContactGestion\Form\ResponseType;
-use Bolt\Extension\Celtic34fr\ContactGestion\Form\SearchFormType;
-use Bolt\Extension\Celtic34fr\ContactGestion\Service\ManageTntIndexes;
+use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Celtic34fr\ContactCore\Service\SendMailer;
+use Celtic34fr\ContactCore\Traits\UtilitiesTrait;
+use Celtic34fr\ContactGestion\Entity\Category;
+use Celtic34fr\ContactGestion\Entity\Contact;
+use Celtic34fr\ContactGestion\Entity\Response;
+use Celtic34fr\ContactGestion\Form\ResponseType;
+use Celtic34fr\ContactGestion\Form\SearchFormType;
+use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

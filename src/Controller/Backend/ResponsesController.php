@@ -1,15 +1,15 @@
 <?php
 
-namespace Bolt\Extension\Celtic34fr\ContactGestion\Controller\Backend;
+namespace Celtic34fr\ContactGestion\Controller\Backend;
 
 use Bolt\Controller\Backend\BackendZoneInterface;
-use Bolt\Extension\Celtic34fr\ContactCore\Traits\DbPaginateTrait;
-use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Category;
-use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Contact;
-use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Response;
-use Bolt\Extension\Celtic34fr\ContactGestion\Form\SearchFormType;
-use Bolt\Extension\Celtic34fr\ContactGestion\FormEntity\SearchForm;
-use Bolt\Extension\Celtic34fr\ContactGestion\Service\ManageTntIndexes;
+use Celtic34fr\ContactCore\Traits\DbPaginateTrait;
+use Celtic34fr\ContactGestion\Entity\Category;
+use Celtic34fr\ContactGestion\Entity\Contact;
+use Celtic34fr\ContactGestion\Entity\Response;
+use Celtic34fr\ContactGestion\Form\SearchFormType;
+use Celtic34fr\ContactGestion\FormEntity\SearchForm;
+use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

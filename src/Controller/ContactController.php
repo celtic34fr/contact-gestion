@@ -1,17 +1,17 @@
 <?php
 
-namespace Bolt\Extension\Celtic34fr\ContactGestion\Controller;
+namespace Celtic34fr\ContactGestion\Controller;
 
-use Bolt\Extension\Celtic34fr\ContactCore\Entity\Clientele;
-use Bolt\Extension\Celtic34fr\ContactCore\Entity\CliInfos;
-use Bolt\Extension\Celtic34fr\ContactCore\Enum\CustomerEnums;
-use Bolt\Extension\Celtic34fr\ContactCore\Service\ExtensionConfig;
-use Bolt\Extension\Celtic34fr\ContactCore\Traits\UtilitiesTrait;
-use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Contact;
-use Bolt\Extension\Celtic34fr\ContactGestion\Entity\NewsLetter;
-use Bolt\Extension\Celtic34fr\ContactGestion\Form\ContactFormType;
-use Bolt\Extension\Celtic34fr\ContactGestion\FormEntity\ContactForm;
-use Bolt\Extension\Celtic34fr\ContactGestion\Service\ManageTntIndexes;
+use Celtic34fr\ContactCore\Entity\Clientele;
+use Celtic34fr\ContactCore\Entity\CliInfos;
+use Celtic34fr\ContactCore\Enum\CustomerEnums;
+use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Celtic34fr\ContactCore\Traits\UtilitiesTrait;
+use Celtic34fr\ContactGestion\Entity\Contact;
+use Celtic34fr\ContactGestion\Entity\NewsLetter;
+use Celtic34fr\ContactGestion\Form\ContactFormType;
+use Celtic34fr\ContactGestion\FormEntity\ContactForm;
+use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;

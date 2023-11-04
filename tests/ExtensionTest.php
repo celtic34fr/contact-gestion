@@ -1,8 +1,8 @@
 <?php
 
-namespace Bolt\Extension\Celtic34fr\ContactCore\Tests;
+namespace Celtic34fr\ContactCore\Tests;
 
-use Bolt\Extension\Celtic34fr\ContactGestion\Extension;
+use Celtic34fr\ContactGestion\Extension;
 use PHPUnit\Framework\TestCase;
 
 /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace Bolt\Extension\Celtic34fr\ContactGestion\Repository;
+namespace Celtic34fr\ContactGestion\Repository;
 
-use Bolt\Extension\Celtic34fr\ContactGestion\Entity\NewsLetter;
+use Celtic34fr\ContactGestion\Entity\NewsLetter;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;

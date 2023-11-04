@@ -10,7 +10,7 @@ doctrine:
         is_bundle: false
         type: attribute
         dir: '%kernel.project_dir%/vendor/celtic34fr/contact-gestion/src/Entity'
-        prefix: 'Bolt\Extension\Celtic34fr\ContactGestion'
+        prefix: 'Celtic34fr\ContactGestion'
         alias: ContactGestion
 
 services:
@@ -18,7 +18,7 @@ services:
     autowire: true      # Automatically injects dependencies in your services.
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-  Bolt\Extension\Celtic34fr\ContactGestion\AdminMenu:
-    class: Bolt\Extension\Celtic34fr\ContactGestion\AdminMenu
+  Celtic34fr\ContactGestion\AdminMenu:
+    class: Celtic34fr\ContactGestion\AdminMenu
     arguments: [ '@Symfony\Component\Routing\Generator\UrlGeneratorInterface' ]
     tags: [ 'bolt.extension_backend_menu' ]

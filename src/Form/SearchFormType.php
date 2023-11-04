@@ -1,9 +1,9 @@
 <?php
 
-namespace Bolt\Extension\Celtic34fr\ContactGestion\Form;
+namespace Celtic34fr\ContactGestion\Form;
 
-use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Category;
-use Bolt\Extension\Celtic34fr\ContactGestion\FormEntity\SearchForm;
+use Celtic34fr\ContactGestion\Entity\Category;
+use Celtic34fr\ContactGestion\FormEntity\SearchForm;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

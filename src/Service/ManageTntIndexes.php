@@ -1,12 +1,12 @@
 <?php
 
-namespace Bolt\Extension\Celtic34fr\ContactGestion\Service;
+namespace Celtic34fr\ContactGestion\Service;
 
-use Bolt\Extension\Celtic34fr\ContactCore\Doctrine\ConnectionConfig;
-use Bolt\Extension\Celtic34fr\ContactCore\Service\ExtensionConfig;
-use Bolt\Extension\Celtic34fr\ContactCore\Service\IndexGenerator;
-use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Contact;
-use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Response;
+use Celtic34fr\ContactCore\Doctrine\ConnectionConfig;
+use Celtic34fr\ContactCore\Service\ExtensionConfig;
+use Celtic34fr\ContactCore\Service\IndexGenerator;
+use Celtic34fr\ContactGestion\Entity\Contact;
+use Celtic34fr\ContactGestion\Entity\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use TeamTNT\TNTSearch\TNTSearch;

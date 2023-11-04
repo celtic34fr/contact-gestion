@@ -1,8 +1,8 @@
 <?php
 
-namespace Bolt\Extension\Celtic34fr\ContactGestion\Form;
+namespace Celtic34fr\ContactGestion\Form;
 
-use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Response;
+use Celtic34fr\ContactGestion\Entity\Response;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

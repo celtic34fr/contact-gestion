@@ -1,9 +1,9 @@
 <?php
 
-namespace Bolt\Extension\Celtic34fr\ContactGestion\Repository;
+namespace Celtic34fr\ContactGestion\Repository;
 
-use Bolt\Extension\Celtic34fr\ContactCore\Traits\DbPaginateTrait;
-use Bolt\Extension\Celtic34fr\ContactGestion\Entity\Response;
+use Celtic34fr\ContactCore\Traits\DbPaginateTrait;
+use Celtic34fr\ContactGestion\Entity\Response;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
