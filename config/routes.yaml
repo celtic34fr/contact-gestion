@@ -1,6 +1,6 @@
 contact:
   path: /contact
-  controller: Bolt\Extension\Celtic34fr\ContactGestion\Controller\ContactController
+  controller: Celtic34fr\ContactGestion\Controller\ContactController
 
 reference_extension:
   resource: '../../vendor/celtic34fr/contact-gestion/src/Controller/Backend/'
