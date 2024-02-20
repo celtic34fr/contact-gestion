@@ -5,12 +5,15 @@ namespace Celtic34fr\ContactGestion\Entity;
 use Celtic34fr\ContactCore\Entity\Clientele;
 use Celtic34fr\ContactGestion\Repository\NewsLetterRepository;
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: NewsLetterRepository::class)]
 #[ORM\Table(name:'newsletters')]
+#[ORM\HasLifecycleCallbacks]
 class NewsLetter
 {
     #[ORM\Id]
@@ -35,9 +38,12 @@ class NewsLetter
     #[Assert\Type(Clientele::class)]
     private Clientele $client;              // lien vers l'internaute (informations fixes)
 
-    public function __construct()
+
+    #[ORM\PrePersist]
+    public function beforPersist(PrePersistEventArgs $eventArgs)
     {
-        $this->created_at = new \DateTime('now');
+        $entity = $eventArgs->getObject();
+        $this->created_at = new DateTimeImmutable('now');
     }
 
     public function getId(): ?int

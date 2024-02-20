@@ -77,10 +77,10 @@ class RequestController extends AbstractController
      * @throws \Exception
      */
     #[Route('/answer/{id}', name: 'request_answer')]
-    public function answer(string $id, Request $request, ExtensionConfig $extConfig, ManageTntIndexes $manageIdx): HttpResponse
+    public function answer(Contact $requete, Request $request, ExtensionConfig $extConfig, ManageTntIndexes $manageIdx): HttpResponse
     {
-        $id = (int) $id;
-        $requete = $this->entityManager->getRepository(Contact::class)->find($id);
+        // $id = (int) $id;
+        // $requete = $this->entityManager->getRepository(Contact::class)->find($id);
         $response = $requete?->getReponse();
         $dbCategories = [];
         $err_msg = [];
@@ -218,7 +218,7 @@ class RequestController extends AbstractController
      * @throws \Exception
      */
     #[Route('/send/{id}', name: 'send_answer')]
-    public function send(string $id): HttpResponse
+    public function send(Contact $demande): HttpResponse
     {
         $sendMail = new SendMailer();
         $dbPrefix = $this->getParameter('bolt.table_prefix');

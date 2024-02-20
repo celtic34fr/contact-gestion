@@ -6,11 +6,14 @@ use Celtic34fr\ContactCore\Entity\CliInfos;
 use Celtic34fr\ContactGestion\Repository\ContactRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Event\PrePersistEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 #[ORM\Table(name:'contacts')]
+#[ORM\HasLifecycleCallbacks]
 class Contact
 {
     #[ORM\Id]
@@ -57,10 +60,21 @@ class Contact
     #[Assert\DateTime]
     private ?DateTimeImmutable $closed_at = null;  // date de clôture de la demande
 
-    public function __construct()
+
+    #[ORM\PrePersist]
+    public function beforPersist(PrePersistEventArgs $eventArgs)
     {
+        $entity = $eventArgs->getObject();
         $this->created_at = new DateTimeImmutable('now');
     }
+
+    #[ORM\PreUpdate]
+    public function beforeUpdate(PreUpdateEventArgs $eventArgs)
+    {
+        $entity = $eventArgs->getObject();
+        if (empty($entity->getTreatedAt())) $this->treated_at = new DateTimeImmutable('now');
+    }
+
 
     public function getId(): ?int
     {
