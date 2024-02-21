@@ -33,8 +33,6 @@ class RequestController extends AbstractController
     public function __construct(private EntityManagerInterface $entityManager, private Environment $twigEnvironment,
     private ExtensionConfig $extConfig)
     {
-        $this->entityManager = $entityManager;
-        $this->twigEnvironment = $twigEnvironment;
         $this->schemaManager = $entityManager->getConnection()->getSchemaManager();
     }
 
