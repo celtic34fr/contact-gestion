@@ -4,7 +4,6 @@ namespace Celtic34fr\ContactGestion\Entity;
 
 use Bolt\Entity\User;
 use Celtic34fr\ContactGestion\Repository\ResponseRepository;
-use Celtic34fr\ContactGestion\Repository\ResponsesRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -23,28 +22,63 @@ class Response
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $reponse = null;                // texte de la réponse proprement dite
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    /**
+     * texte de la réponse proprement dite, champ obligatoire
+     * @var string
+     */
+    private string $reponse;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Assert\DateTime]
-    private ?DateTimeImmutable $send_at = null;     // date d'envoi de la réponse
+    /**
+     * date d'envoi de la réponse, champ facultatif
+     * @var DateTimeImmutable|null
+     */
+    private ?DateTimeImmutable $send_at = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Assert\DateTime]
-    private ?DateTimeImmutable $closed_at = null;   // date de clôture de la demande
+    /**
+     * date de clôture de la demande, champ facultatif
+     * @var DateTimeImmutable|null
+     */
+    private ?DateTimeImmutable $closed_at = null;
 
     #[ORM\OneToOne(targetEntity: Contact::class, inversedBy: 'reponse', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Assert\Type(Contact::class)]
-    private Contact $contact;                       // lien vers la demande de contact
+    /**
+     * lien vers la demande de contact, champ obligatoire
+     * @var Contact
+     */
+    private Contact $contact;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'responses')]
-    private Collection $categories;                 // ensemble des catégories qualifiant la réponse si lieu
+    #[ORM\JoinColumn(nullable: true)]
+    /**
+     * ensemble des catégories qualifiant la réponse si lieu, champ facultatif
+     * @var Collection|null
+     */
+    private ?Collection $categories = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Assert\Type(User::class)]
-    private User $operateur;                        // opérateur ayant saisi la réponse
+    /**
+     * opérateur ayant saisi la réponse, champ obligatoire
+     *
+     * @var User
+     */
+    private User $operateur;
 
+
+    
     /**
      * constructeur de l'objet entité Responses.
      */

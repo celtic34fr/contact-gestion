@@ -25,18 +25,31 @@ class NewsLetter
     #[Assert\NotBlank]
     #[Assert\NotNull]
     #[Assert\DateTime]
-    private DateTime $created_at;          // date de création
+    /**
+     * date de création, champ obligatoire
+     * @var DateTime
+     */
+    private DateTime $created_at;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Assert\DateTime]
-    private ?DateTime $ended_at = null;    // date de fin ou clôture d'envoi de la lettre d'informations
+    /**
+     * date de fin ou clôture d'envoi de la lettre d'informations, champ facultatif
+     * @var DateTime|null
+     */
+    private ?DateTime $ended_at = null;
 
     #[ORM\OneToOne(targetEntity: Clientele::class)]
     #[ORM\JoinColumn(name: 'client_id', referencedColumnName: 'id', nullable: false)]
     #[Assert\NotBlank]
     #[Assert\NotNull]
     #[Assert\Type(Clientele::class)]
-    private Clientele $client;              // lien vers l'internaute (informations fixes)
+    /**
+     * lien vers l'internaute (informations fixes), champ obligatoire
+     * @var Clientele
+     */
+    private Clientele $client;
+
 
 
     #[ORM\PrePersist]
@@ -45,6 +58,8 @@ class NewsLetter
         $entity = $eventArgs->getObject();
         $this->created_at = new DateTimeImmutable('now');
     }
+
+    
 
     public function getId(): ?int
     {

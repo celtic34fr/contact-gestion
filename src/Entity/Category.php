@@ -22,10 +22,22 @@ class Category
     #[Assert\NotBlank]
     #[Assert\NotNull]
     #[Assert\Type('string')]
-    private string $category;       // libellé de la catégorie
+    /**
+     * libellé de la catégorie, champ obligatoire
+     * @var string
+     */
+    private string $category;
 
     #[ORM\ManyToMany(targetEntity: Response::class, mappedBy: 'categories')]
-    private Collection $responses;  // ensemble des réponses qualifiées par cette catégorie
+    #[ORM\JoinColumn(nullable: true)]
+    /**
+     * ensemble des réponses qualifiées par cette catégorie, champ facultatif
+     * @var Collection|null
+     */
+    #[Assert\Type(Response::class)]
+    private ?Collection $responses = null;
+
+
 
     public function __construct()
     {
@@ -51,7 +63,7 @@ class Category
     /**
      * @return Collection<int, Response>
      */
-    public function getResponses(): Collection
+    public function getResponses(): ?Collection
     {
         return $this->responses;
     }

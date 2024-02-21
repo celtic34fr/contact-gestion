@@ -25,40 +25,79 @@ class Contact
     #[Assert\NotBlank]
     #[Assert\NotNull]
     #[Assert\DateTime]
-    private DateTimeImmutable $created_at;         //date de création
+    /**
+     * date de création, champ obligatoire
+     * @var DateTimeImmutable
+     */
+    private DateTimeImmutable $created_at;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Assert\DateTime]
-    private ?DateTimeImmutable $treated_at = null; // date de traitement
+    /**
+     * date de traitement, champ facultatif
+     * @var DateTimeImmutable|null
+     */
+    private ?DateTimeImmutable $treated_at = null;
 
     #[ORM\Column(type: Types::TEXT, length: 255, nullable: true)]
     #[Assert\Type('string')]
-    private ?string $sujet = null;                  // sujet de la demande de contact
+    /**
+     * sujet de la demande de contact, champ facultatif
+     * @var string|null
+     */
+    private ?string $sujet = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Assert\Type('string')]
-    private ?string $demande = null;                // texte de la demande de contact
+    /**
+     * texte de la demande de contact, cahmp facultatif
+     * @var string|null
+     */
+    private ?string $demande = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
     #[Assert\Type('boolean')]
-    private ?bool $contact_me = null;               // top pour demande de contact téléphonique (true) ou non (false)
+    /**
+     * top pour demande de contact téléphonique (true) ou non (false), champ obligatoire initialisé à FAUX
+     * @var boolean
+     */
+    private bool $contact_me = false;
 
     #[ORM\OneToOne(mappedBy: 'contact', cascade: ['persist', 'remove'])]
     #[Assert\Type(Response::class)]
-    private ?Response $reponse = null;             // lien vers la réponse saisie si existe
+    /**
+     * lien vers la réponse saisie si existe, champ facultatif
+     * @var Response|null
+     */
+    private ?Response $reponse = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Assert\DateTime]
-    private ?DateTimeImmutable $send_at = null;    // date d'envoi de la réponse si lieu
+    /**
+     * date d'envoi de la réponse si lieu, champ facultatif
+     * @var DateTimeImmutable|null
+     */
+    private ?DateTimeImmutable $send_at = null;
 
     #[ORM\OneToOne(targetEntity: CliInfos::class)]
     #[ORM\JoinColumn(name: 'client_id', referencedColumnName: 'id', nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Assert\Type(CliInfos::class)]
-    private ?CliInfos $client = null;               // lien vers l'interanute (informations non fixes)
+    /**
+     * lien vers l'interanute (informations non fixes), champ obligatoire
+     * @var CliInfos
+     */
+    private CliInfos $client;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Assert\DateTime]
-    private ?DateTimeImmutable $closed_at = null;  // date de clôture de la demande
+    /**
+     * date de clôture de la demande, champ facultatif
+     * @var DateTimeImmutable|null
+     */
+    private ?DateTimeImmutable $closed_at = null;
+
 
 
     #[ORM\PrePersist]
@@ -75,13 +114,14 @@ class Contact
         if (empty($entity->getTreatedAt())) $this->treated_at = new DateTimeImmutable('now');
     }
 
+    
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->created_at;
     }
@@ -119,7 +159,7 @@ class Contact
         return $this->sujet;
     }
 
-    public function setSujet(string $sujet): self
+    public function setSujet(?string $sujet): self
     {
         $this->sujet = $sujet;
         return $this;
@@ -130,7 +170,7 @@ class Contact
         return $this->demande;
     }
 
-    public function setDemande(string $demande): self
+    public function setDemande(?string $demande): self
     {
         $this->demande = $demande;
         return $this;
@@ -141,9 +181,9 @@ class Contact
         return empty($this->demande);
     }
 
-    public function isContactMe(): ?bool
+    public function isContactMe(): bool
     {
-        return $this->contact_me ?? false;
+        return $this->contact_me;
     }
 
     public function setContactMe(bool $contact_me): self
@@ -157,7 +197,7 @@ class Contact
         return $this->reponse;
     }
 
-    public function setReponse(Response $reponse): self
+    public function setReponse(?Response $reponse): self
     {
         // set the owning side of the relation if necessary
         if ($reponse->getContact() !== $this) {
@@ -183,7 +223,7 @@ class Contact
         return $this->client;
     }
 
-    public function setClient(CliInfos $client): self
+    public function setClient(?CliInfos $client): self
     {
         $this->client = $client;
         return $this;
@@ -194,37 +234,39 @@ class Contact
      */
     public function getNom(): string
     {
-        return $this->client->getNom();
+        return $this->client ? $this->client->getNom() : "";
     }
 
     public function getPrenom(): ?string
     {
-        return $this->client->getPrenom();
+        return $this->client ? $this->client->getPrenom(): null;
     }
 
     public function isEmptyPrenom(): bool
     {
-        return empty($this->client->getPrenom());
+        return $this->client ? empty($this->client->getPrenom()) : true;
     }
 
     public function getFullname(): string
     {
-        return $this->client->getNom().(empty($this->client->getPrenom()) ? '' : ' '.$this->client->getPrenom());
+        return $this->client 
+            ? $this->client->getNom().(empty($this->client->getPrenom()) ? '' : ' '.$this->client->getPrenom())
+            : false;
     }
 
     public function getTelephone(): ?string
     {
-        return $this->client->getTelephone();
+        return $this->client ? $this->client->getTelephone() : null;
     }
 
     public function isEmptyTelephone(): bool
     {
-        return empty($this->client->getTelephone());
+        return $this->client ? empty($this->client->getTelephone()): true;
     }
 
     public function getCourriel(): ?string
     {
-        return $this->client->getClient()->getCourriel();
+        return $this->client ? $this->client->getClient()->getCourriel() : null;
     }
 
     public function getClosedAt(): ?DateTimeImmutable
