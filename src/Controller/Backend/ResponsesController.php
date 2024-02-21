@@ -19,11 +19,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('response')]
 class ResponsesController extends AbstractController implements BackendZoneInterface
 {
+    use DbPaginateTrait;
+
     public function __construct(private EntityManagerInterface $entityManager, private ManageTntIndexes $manageIdx)
     {
     }
-
-    use DbPaginateTrait;
 
     /** formulaire de recherche d'informations dans le desmandes (questions) et/ou réponses enregistées en base */
     #[Route('/searchIn', name: 'search_responses')]
