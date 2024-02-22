@@ -10,6 +10,7 @@ class ContactForm
     private int $id;
 
     #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Assert\Type(type: 'string')]
     private string $nom;
 
@@ -17,6 +18,7 @@ class ContactForm
     private ?string $prenom = null;
 
     #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Assert\Type(type: 'string')]
     #[Assert\Email(mode: 'strict')]
     private string $adr_courriel;
@@ -31,10 +33,12 @@ class ContactForm
     private bool $newsletter = false;
 
     #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Assert\Type(type: 'string')]
     private string $sujet;
 
     #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Assert\Type(type: 'string')]
     private string $demande;
 
