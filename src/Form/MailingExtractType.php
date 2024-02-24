@@ -30,7 +30,6 @@ class MailingExtractType extends AbstractType
                 'choices' => $customerEnums,
             ])
             ->add('active', CheckboxType::class, [
-                'require' => true,
             ])
             ->add('list', HiddenType::class, [
                 'required' => false,
