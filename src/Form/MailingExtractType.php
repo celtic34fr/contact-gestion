@@ -15,7 +15,7 @@ class MailingExtractType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $newsEnums = NewsEnums::array();
+        $newsEnums = NewsEnums::reflexArray();
 
         $builder
             ->add('type', ChoiceType::class, [
