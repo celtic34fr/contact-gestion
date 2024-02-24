@@ -59,7 +59,7 @@ class MailingExtract
         return $this;
     }
     
-    public function getClosed(): bool
+    public function getClosed(): int
     {
         return (bool) $this->closed;
     }
