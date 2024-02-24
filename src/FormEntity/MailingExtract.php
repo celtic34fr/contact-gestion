@@ -16,7 +16,7 @@ class MailingExtract
     protected bool $active;
 
     #[Assert\Type('int')]
-    protected int $closed;
+    protected int $close_from;
 
     #[Assert\Type('string')]
     protected string $list;
@@ -59,14 +59,14 @@ class MailingExtract
         return $this;
     }
     
-    public function getClosed(): int
+    public function getCloseFrom(): int
     {
-        return (bool) $this->closed;
+        return (bool) $this->close_from;
     }
 
-    public function setClosed(int $closed): self
+    public function setCloseFrom(int $close_from): self
     {
-        $this->closed = $closed;
+        $this->close_from = $close_from;
         return $this;
     }
     
