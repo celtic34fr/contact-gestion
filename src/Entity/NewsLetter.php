@@ -3,7 +3,9 @@
 namespace Celtic34fr\ContactGestion\Entity;
 
 use Celtic34fr\ContactCore\Entity\Clientele;
+use Celtic34fr\ContactGestion\Enum\NewsEnums;
 use Celtic34fr\ContactGestion\Repository\NewsLetterRepository;
+use Celtic34fr\ContactGestion\Validator\Constraint as CustomAssert;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
@@ -50,6 +52,16 @@ class NewsLetter
      */
     private Clientele $client;
 
+    #[ORM\Column(type: Types::TEXT, length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Type('string')]
+    #[CustomAssert\NewsType]
+    /**
+     * type de l'internaute, Cf. Enum CustomerEnums, champ obligatoire
+     * @var string
+     */
+    private string $news;
 
 
     #[ORM\PrePersist]
@@ -97,5 +109,19 @@ class NewsLetter
     {
         $this->client = $client;
         return $this;
+    }
+
+    public function getNews(): string
+    {
+        return $this->news;
+    }
+
+    public function setNews(string $news): bool|self
+    {
+        if (NewsEnums::isValid($news)) {
+            $this->news = $news;
+            return $this;
+        }
+        return false;
     }
 }

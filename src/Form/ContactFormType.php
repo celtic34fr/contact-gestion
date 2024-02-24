@@ -39,6 +39,9 @@ class ContactFormType extends AbstractType
             ->add('newsletter', CheckboxType::class, [
                 'required' => false,
             ])
+            ->add('othersInfo', CheckboxType::class, [
+                'required' => false,
+            ])
             ->add('sujet', TextType::class, [
                 'required' => true,
             ])

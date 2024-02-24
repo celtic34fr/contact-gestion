@@ -32,6 +32,9 @@ class ContactForm
     #[Assert\Type(type: 'bool')]
     private bool $newsletter = false;
 
+    #[Assert\Type(type: 'bool')]
+    private bool $othersInfo = false;
+
     #[Assert\NotBlank]
     #[Assert\NotNull]
     #[Assert\Type(type: 'string')]
@@ -126,6 +129,17 @@ class ContactForm
     public function setNewsLetter(bool $newsletter): self
     {
         $this->newsletter = $newsletter;
+        return $this;
+    }
+
+    public function isOthersInfo(): bool
+    {
+        return $this->othersInfo ?? false;
+    }
+
+    public function setOthersInfo(bool $othersInfo): self
+    {
+        $this->othersInfo = $othersInfo;
         return $this;
     }
 

@@ -14,6 +14,26 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('extract_mailing')]
 class ExtractMailingController extends AbstractController
 {
+    // TODO
+    // -> comme des informations complémentaires ont été ajouté à Clientele & CliInfos, et CliSocialNetwork a été crée,
+    //    la procédure d'extraction de liste de relation (client /prospect) doit pouvoir faire des filtres sur les
+    //    données ajoutées si présente
+    // ---> 2 types d'extraction :
+    //    --> extraction pour lettre d'informations
+    //    --> extraction pour campagne d'information / promotion commerciale
+    //   |=> dans le formulaire de contact ajouter la demande si l'internaute veut recevoir toutes informations de la
+    //       structure => besoin d'enregistrer cette information pour différentiation dans les extractions
+    //   les critères de filtrages seront commun aux deux type d'extraction sauf que dans le premier cas 
+
+    // => filtrage sur le type de relation : Clientele.type ==> énumération comme liste déroulante de choix
+    // =>              la date de création de la fiche relation : clientele.create_at via datepicker limité par dates
+    //                      présentes en table
+    // =>              relation encore active : Clientele.closed_at toujours à null
+    // =>              relation inactive depuis temps en jours par rapport à la date du jour (si non donnée = toutes)
+    // =>              relation ayant un siteweb
+    // =>              relation présente sur un réseau social, avec ou sans choix ==> liste des réseaux sociaux avec
+    //                      table Parameter avec PArameter.cle à SocialNetwork::CLE
+
     #[Route('/', name: 'extract_mailing')]
     public function indexAction(Request $request, NewsLetterRepository $repoNewsletter): Response
     {

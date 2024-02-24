@@ -9,6 +9,7 @@ use Celtic34fr\ContactCore\Service\ExtensionConfig;
 use Celtic34fr\ContactCore\Traits\UtilitiesTrait;
 use Celtic34fr\ContactGestion\Entity\Contact;
 use Celtic34fr\ContactGestion\Entity\NewsLetter;
+use Celtic34fr\ContactGestion\Enum\NewsEnums;
 use Celtic34fr\ContactGestion\Form\ContactFormType;
 use Celtic34fr\ContactGestion\FormEntity\ContactForm;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
@@ -113,6 +114,7 @@ class ContactController extends AbstractController
         $OSM_params = $this->extConfig->get('celtic34fr-contactgestion/OSM');
         $template = $this->extConfig->get('celtic34fr-contactgestion/contact_form_template');
         $newsletter = $this->extConfig->get('celtic34fr-contactgestion/newsletter');
+        $othersInfo = $this->extConfig->get('celtic34fr-contactgestion/othersInfo');
 
         return $this->render('@'.$template, [
             'controller_name' => 'ContactController',
@@ -124,6 +126,7 @@ class ContactController extends AbstractController
             'ouverture' =>$ouverture,
             'OSM_params' => $OSM_params,
             'newsletter' => $newsletter,
+            'othersInfo' => $othersInfo,
         ]);
     }
 
@@ -168,11 +171,20 @@ class ContactController extends AbstractController
             $demande->setContactMe($contact->isContactMe());
             $demande->setClient($cliInfos);
 
-            if ($contact->isNewsLetter()) {
+            $newsletter = $contact->isNewsLetter();
+            $othersInfo = $contact->isOthersInfo();
+            if ($newsletter || $othersInfo) {
                 $newsletter = $this->entityManager->getRepository(NewsLetter::class)->findOneBy(['client' => $clientele]);
                 if (null === $newsletter) {
                     $newsletter = new NewsLetter();
                     $newsletter->setClient($clientele);
+                    if ($newsletter && $othersInfo) {
+                        $newsletter->setNews(NewsEnums::All->_toString());
+                    } elseif ($newsletter) {
+                        $newsletter->setNews(NewsEnums::NewsLetter->_toString());
+                    } else {
+                        $newsletter->setNews(NewsEnums::Commercial->_toString());
+                    }
                     $this->entityManager->persist($newsletter);
                 }
             }
