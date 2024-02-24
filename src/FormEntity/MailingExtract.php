@@ -7,6 +7,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class MailingExtract
 {
     #[Assert\Type('string')]
+    protected string $type;
+
+    #[Assert\Type('string')]
     protected string $list;
 
     #[Assert\Type('string')]
