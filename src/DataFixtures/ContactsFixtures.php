@@ -50,7 +50,7 @@ class ContactsFixtures extends Fixture implements FixtureGroupInterface
         $cliinfos = new CliInfos();
         $cliinfos->setNom('TEST ' . $noCliinfo);
         $cliinfos->setPrenom('Ptest' . $noCliinfo);
-        $cliinfos->setTelephone('0467378812');
+        $cliinfos->setTelephone('0102030405');
         $cliinfos->setClient($client);
         $client->addCliInfos($cliinfos);
         $manager->persist($cliinfos);
