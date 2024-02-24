@@ -10,6 +10,15 @@ class MailingExtract
     protected string $type;
 
     #[Assert\Type('string')]
+    protected string $customer;
+
+    #[Assert\Type('bool')]
+    protected bool $active;
+
+    #[Assert\Type('int')]
+    protected int $closed;
+
+    #[Assert\Type('string')]
     protected string $list;
 
     #[Assert\Type('string')]
@@ -25,6 +34,39 @@ class MailingExtract
     public function setType(string $type): self
     {
         $this->type = $type;
+        return $this;
+    }
+    
+    public function getCustomer(): string
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(string $customer): self
+    {
+        $this->customer = $customer;
+        return $this;
+    }
+    
+    public function getActive(): bool
+    {
+        return (bool) $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+        return $this;
+    }
+    
+    public function getClosed(): bool
+    {
+        return (bool) $this->closed;
+    }
+
+    public function setClosed(int $closed): self
+    {
+        $this->closed = $closed;
         return $this;
     }
     

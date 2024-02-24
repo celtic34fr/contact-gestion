@@ -69,12 +69,26 @@
 		<h1 class="col-12 mx-0 px-0 text-center">Réorganisation de structure du fichier d'extraction CSV</h1>
 		<div class="col-12 row">
 			<h2 class="col-12 mx-0 px-0">Critères d'extraction</h2>
-			<dic class="criteria col-12 row mx-0 px-0">
+			<div class="criteria col-12 row mx-0 px-0">
 				{{ fields.select(form.type, "Type d'extraction", {
 					'class': 'col-6 mx-0 px-0', 'default': 'AC',
 					'sl_class': {'label': 'col-4', 'select': 'col-8'}
 				}) }}
-			</dic>
+				{{ fields.select(form.customer, "Type de relation", {
+					'class': 'col-6 mx-0 px-0',
+					'sl_class': {'label': 'col-4', 'select': 'col-8'}
+				}) }}
+			</div>
+			<div class="criteria col-12 row mx-0 px-0">
+				{{ fields.checkbox(form.active, "Relation active ?", {
+					'class': 'col-6 mx-0 px-0', 'default': 'false',
+					'sl_class': {'label': 'col-4', 'select': 'col-8'}
+				}) }}
+				{{ fields.field(form.closed, "Relation close depuis", {
+					'class': 'col-6 mx-0 px-0',
+					'sl_class': {'label': 'col-4', 'select': 'col-8'}
+				}) }}
+			</div>
 		</div>
 		<div class="col-6 row">
 			<h2 class="col-12 mx-0 px-0">Liste des champs disponibles</h2>
