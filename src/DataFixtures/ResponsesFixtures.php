@@ -1,6 +1,6 @@
 <?php
 
-namespace Celtic34fr\ContactGestion\DataFixtures\ContactGestion;
+namespace Celtic34fr\ContactGestion\DataFixtures;
 
 use Bolt\Entity\User;
 use Celtic34fr\ContactGestion\Entity\Category;

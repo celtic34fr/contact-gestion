@@ -1,10 +1,10 @@
 <?php
 
-namespace Celtic34fr\ContactGestion\DataFixtures\ContactGestion;
+namespace Celtic34fr\ContactGestion\DataFixtures;
 
+use Celtic34fr\ContactCore\DataFixtures\ClientelesFixtures;
 use Celtic34fr\ContactCore\Entity\Clientele;
 use Celtic34fr\ContactCore\Entity\CliInfos;
-use Celtic34fr\ContactGestion\DataFixtures\ContactCore\ClientelesFixtures;
 use Celtic34fr\ContactGestion\Entity\Contact;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\Bundle\FixturesBundle\Fixture;

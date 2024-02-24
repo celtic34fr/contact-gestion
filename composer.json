@@ -14,7 +14,8 @@
     "twig/twig": "^2.12 | ^3.0",
     "bolt/core": ">=5.1",
     "celtic34fr/contact-core": "dev-master",
-    "egulias/email-validator": "^3.2"
+    "egulias/email-validator": "^3.2",
+    "grosay/loremizer": "^0.1.0"
   },
   "require-dev": {
     "symplify/easy-coding-standard": "^8.3",
