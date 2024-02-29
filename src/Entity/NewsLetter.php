@@ -16,6 +16,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: NewsLetterRepository::class)]
 #[ORM\Table(name:'newsletters')]
 #[ORM\HasLifecycleCallbacks]
+/**
+ * classe NewsLetter
+ * 
+ * - created_at : date de création de l'enregistrement et de début de l'accord
+ * - ended_at   : date de fin de l'accord, champ facultatif
+ * - client     : relation globale ayant donné son accord, relation ManyToOne vers la table Clientele
+ * - news       : nature de l'accord, Cf. l'énumération NewsEnums
+ */
 class NewsLetter
 {
     #[ORM\Id]
@@ -41,7 +49,7 @@ class NewsLetter
      */
     private ?DateTime $ended_at = null;
 
-    #[ORM\OneToOne(targetEntity: Clientele::class)]
+    #[ORM\ManyToOne(targetEntity: Clientele::class)]
     #[ORM\JoinColumn(name: 'client_id', referencedColumnName: 'id', nullable: false)]
     #[Assert\NotBlank]
     #[Assert\NotNull]
@@ -58,7 +66,7 @@ class NewsLetter
     #[Assert\Type('string')]
     #[CustomAssert\NewsType]
     /**
-     * type de l'internaute, Cf. Enum CustomerEnums, champ obligatoire
+     * type de l'internaute, Cf. Enum NewsEnums, champ obligatoire
      * @var string
      */
     private string $news;

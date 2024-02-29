@@ -14,6 +14,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 #[ORM\Table(name:'contacts')]
 #[ORM\HasLifecycleCallbacks]
+/**
+ * classe Contact
+ * 
+ * - created-at     : date de création de la demande de contact par l'internaute
+ * - treated_at     : date de traitement de la demande
+ * - sujet          : sujet saisi par l'internaute
+ * - demande        : demande proprement dite
+ * - contact_me     : booléen indiquant si l'on doit contacter par téléphone ou non l'internaute
+ * - reponse        : réponse à la demande, relation OneToOne avec la table Response
+ * - send_at        : date d'envoi de la réponse
+ * - client         : relation qualifiée demandeur du contact, relation ManyToOne avec la table CliInfos
+ * - closed_at      : date de fermeture de la demande
+ * 
+ * TODO
+ * - ajout d'un top ou lien vers la table consignant les accord pour envoi de lettre d'informations et/ou
+ *      communication commerciale (newsletter) relation unidirectionnelle table NewsLetter, UTILE ??
+ */
 class Contact
 {
     #[ORM\Id]

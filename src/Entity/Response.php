@@ -14,6 +14,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ResponseRepository::class)]
 #[ORM\Table(name:'responses')]
 #[ORM\Index(columns: ['reponse'], name: 'search_idx', flags: ['fulltext'])]
+/**
+ * classe Response
+ * 
+ * - reponse    : réponse proprement dite
+ * - send_at    : date d'envoi de la réponse
+ * - closed_at  : date de fermeture de la demande de contact par envoi de la réponse
+ * - contact    : demande de contact, relation OneToOne avec la table Contact
+ * - categories : relation bidirectionnelle ManyToMany avec la table Category
+ * - operateur  : opérauetur ayant saisi la réponse, relation unidirectionnelle ManyToOne avec la table Bolt User
+ */
 class Response
 {
     #[ORM\Id]

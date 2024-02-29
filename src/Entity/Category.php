@@ -11,6 +11,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ORM\Table('categories')]
+/**
+ * classe Category
+ * 
+ * - category  : libellé de la catégorie proprement dite
+ * - responses : relation bidirectionnelle ManyToOne avec la table Response
+ */
 class Category
 {
     #[ORM\Id]
