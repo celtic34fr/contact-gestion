@@ -4,16 +4,34 @@ Author: Gilbert ARMENGAUD
 
 This Bolt extension provide a Contact Form and all the method to manage communication between visitors and the website.
 
-Installation:
+## Requierement:
+Create a Bolt CMS project according the official documentation. 
 
-for last stable version
+Then install the make-bundle from Symfony
 ```bash
-composer require celtic34fr/contact-gestion
+composer require --dev symfony/maker-bundle
 ```
-for current development version
+If the current version is not published as stable, change the stability requirement in the composer.json file to 'dev'
+
+## Installation:
+
 ```bash
-composer req celtic34fr/contact-gestion:dev-master
+composer require celtic34fr/contact-core
 ```
+If composer return some errors that notice to you that the module cannot be install, use the following command :
+```bash
+composer -W require celtic34fr/contact-core
+```
+
+After, if you use Doctrine ORM, you must update your database with the following command :
+```bash
+symfony console make:migration
+```
+And after :
+```bash
+composer console doctrine:migrations:migrate
+```
+Now the installation is quiet finish.
 
 ## Running PHPStan and Easy Codings Standard
 
