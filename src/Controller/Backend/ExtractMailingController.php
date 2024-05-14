@@ -15,16 +15,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class ExtractMailingController extends AbstractController
 {
     // TODO
-    // -> comme des informations complémentaires ont été ajouté à Clientele & CliInfos, et CliSocialNetwork a été crée,
+    // -> comme des informations complémentaires ont été ajoutées à Clientele & CliInfos, et CliSocialNetwork a été crée,
     //    la procédure d'extraction de liste de relation (client /prospect) doit pouvoir faire des filtres sur les
-    //    données ajoutées si présente
+    //    données ajoutées si présentes
     // ---> 2 types d'extraction :
     //    --> extraction pour lettre d'informations
     //    --> extraction pour campagne d'information / promotion commerciale
     //   |=> dans le formulaire de contact ajouter la demande si l'internaute veut recevoir toutes informations de la
     //       structure => besoin d'enregistrer cette information pour différentiation dans les extractions
-    //   les critères de filtrages seront commun aux deux type d'extraction sauf que dans le premier cas 
-
+    //   les critères de filtrages seront commun aux deux types d'extraction sauf que dans le premier cas 
+    //
     // => filtrage sur le type de relation : Clientele.type ==> énumération comme liste déroulante de choix
     // =>              la date de création de la fiche relation : clientele.create_at via datepicker limité par dates
     //                      présentes en table
@@ -35,6 +35,11 @@ class ExtractMailingController extends AbstractController
     //                      table Parameter avec PArameter.cle à SocialNetwork::CLE
 
     #[Route('/', name: 'extract_mailing')]
+    /**
+     * @param Request $request
+     * @param NewsLetterRepository $repoNewsletter
+     * @return Response
+     */
     public function indexAction(Request $request, NewsLetterRepository $repoNewsletter): Response
     {
         $tmpFileName = (new Filesystem())->tempnam(sys_get_temp_dir(), 'sb_');
@@ -83,6 +88,10 @@ class ExtractMailingController extends AbstractController
         ]);
     }
 
+    /**
+     * @param array $list
+     * @return array
+     */
     private function buildTransfertTab(array $list): array
     {
         $transfertTab = [];
@@ -92,6 +101,12 @@ class ExtractMailingController extends AbstractController
         return $transfertTab;
     }
 
+    /**
+     * @param array $listFields
+     * @param array $mailingDatas
+     * @param [type] $file
+     * @return void
+     */
     private function generateMailingFile(array $listFields, array $mailingDatas, $file)
     {
         // génération entête fichier CSV
