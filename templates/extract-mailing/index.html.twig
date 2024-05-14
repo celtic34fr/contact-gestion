@@ -83,13 +83,13 @@
 					sl_class: {label: 'col-4', select: 'col-8'}
 				}) }}
 			</div>
-			<div class="criteria col-12 row mx-0 px-0">
+			<div class="criteria col-12 row mx-0 px-0 pt-2">
 				{{ fields.checkbox(form.active, "Relation active ?", {
 					class: 'col-6 mx-0 px-0 isactive', default: 'false', side: 'right',
 					sl_class: {label: 'col-4', select: 'col-8'}, inline: true,
 				}) }}
 				{{ datepickerBlk.datepickerField(form.close_from, "Relation close depuis", {
-					class: 'col-6 mx-0 px-0 close_from', date_max: "now"|date("Y/m/D"),
+					class: 'col-6 mx-0 px-0 ps-2 close_from', date_max: "now"|date("Y/m/D"),
 				}) }}
 			</div>
 		</div>
