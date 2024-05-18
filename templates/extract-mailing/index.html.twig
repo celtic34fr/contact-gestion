@@ -1,7 +1,7 @@
 {% extends '@contact-core/layout_backend.html.twig' %}
 {% import "@contact-core/macros/form_type.html.twig" as fields %}
 {% import "@contact-core/macros/datepicker_resources.html.twig" as dp_resources %}
-{% import "@contact-core/macros/datepicker_type.html.twig" as dp_type %}
+{% import "@contact-core/macros/datepicker_type.html.twig" as dp_fields %}
 
 {% block shoulder %}
 	{{ "Extraction liste Mailing Newsletter" }}
@@ -88,7 +88,7 @@
 					class: 'col-6 mx-0 px-0 isactive', default: 'false', side: 'left',
 					sl_class: {label: 'col-4', select: 'col-8'}, inline: true,
 				}) }}
-				{{ dp_type.datepicker(form.close_from, "Relation close depuis", {
+				{{ dp_fields.datepicker(form.close_from, "Relation close depuis", {
 					class: 'col-6 mx-0 px-0 ps-2 close_from', date_max: "now"|date("Y/m/D"),
 				}) }}
 			</div>
@@ -137,6 +137,10 @@
 	{{ parent() }}
 
 	{{ dp_resources.datepickerJavaScripts() }}
+
+	{{ dp_resources.datepickerJSinit({
+		format: "dd/mm/yyyy", authide: true, language: "fr", clearButton: true, todayButton: true,
+	})}}
 
 	<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 	<script src=" {{asset('contact-assets/js/main.js') }}"></script>
