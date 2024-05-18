@@ -1,7 +1,7 @@
 {% extends '@contact-core/layout_backend.html.twig' %}
 {% import "@contact-core/macros/form_type.html.twig" as fields %}
-{% import "@contact-core/macros/datepicker_resources.html.twig" as datepickerRes %}
-{% import "@contact-core/macros/datepicker_blocks.html.twig" as datepickerBlk %}
+{% import "@contact-core/macros/datepicker_resources.html.twig" as dp_resources %}
+{% import "@contact-core/macros/datepicker_type.html.twig" as dp_type %}
 
 {% block shoulder %}
 	{{ "Extraction liste Mailing Newsletter" }}
@@ -15,7 +15,7 @@
 {% block stylesheets %}
 	{{ parent() }}
 
-	{{ datepickerRes.datepickerStylesheets() }}
+	{{ dp_resources.datepickerStylesheets() }}
 
 	<style>
 		.w50p {
@@ -88,7 +88,7 @@
 					class: 'col-6 mx-0 px-0 isactive', default: 'false', side: 'left',
 					sl_class: {label: 'col-4', select: 'col-8'}, inline: true,
 				}) }}
-				{{ datepickerBlk.datepickerField(form.close_from, "Relation close depuis", {
+				{{ dp_type.datepicker(form.close_from, "Relation close depuis", {
 					class: 'col-6 mx-0 px-0 ps-2 close_from', date_max: "now"|date("Y/m/D"),
 				}) }}
 			</div>
@@ -136,7 +136,7 @@
 {% block javascripts %}
 	{{ parent() }}
 
-	{{ datepickerRes.datepickerJavaScripts() }}
+	{{ dp_resources.datepickerJavaScripts() }}
 
 	<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 	<script src=" {{asset('contact-assets/js/main.js') }}"></script>
