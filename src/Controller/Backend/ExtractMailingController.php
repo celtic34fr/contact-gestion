@@ -34,7 +34,7 @@ class ExtractMailingController extends AbstractController
     // =>              relation présente sur un réseau social, avec ou sans choix ==> liste des réseaux sociaux avec
     //                      table Parameter avec PArameter.cle à SocialNetwork::CLE
 
-    #[Route('/', name: 'extract_mailing')]
+    #[Route('/', name: 'home')]
     /**
      * @param Request $request
      * @param NewsLetterRepository $repoNewsletter

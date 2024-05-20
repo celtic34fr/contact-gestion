@@ -24,11 +24,22 @@ class MailingExtractType extends AbstractType
         $builder
             ->add('type', ChoiceType::class, [
                 'required' => true,
-                'choices' => $newsEnums,
+                'choices' => [
+                    "Tous"          => 'AC',
+                    "NewLetter"     => 'NL',
+                    "Commercial"    => 'CI'
+                
+                ],
             ])
             ->add('customer', ChoiceType::class, [
                 'required' => false,
-                'choices' => $customerEnums,
+                'choices' => [
+                    "Client"         => 'CL',
+                    'Prospect'       => 'PP',
+                    "Fournisseur"    => 'FR',
+                    "Partenaire"     => 'PR'
+                
+                ],
             ])
             ->add('active', CheckboxType::class, [
                 'required' => false,
