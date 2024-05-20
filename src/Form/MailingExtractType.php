@@ -45,6 +45,8 @@ class MailingExtractType extends AbstractType
                 'required' => false,
             ])
             ->add('close_from', DateType::class, [
+                'widget' => 'single_text',
+                'input' => 'datetime_immutable',
                 'required' => false,
             ])
             ->add('list', HiddenType::class, [

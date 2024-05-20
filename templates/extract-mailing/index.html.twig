@@ -91,7 +91,8 @@
 					sl_class: {label: 'col-4', select: 'col-8'}, inline: true,
 				}) }}
 				{{ dp_fields.datepicker(form.close_from, "Relation close depuis", {
-					class: 'col-6 mx-0 px-0 ps-2 close_from', date_max: "now"|date("Y/m/D"),
+					class: 'col-6 mx-0 px-0 ps-2 close_from', date_max: "now"|date("Y-m-d"),
+					autohide: true,
 				}) }}
 			</div>
 		</div>
@@ -141,7 +142,7 @@
 	{{ dp_resources.datepickerJavaScripts() }}
 
 	{{ dp_resources.datepickerJSinit({
-		format: "dd/mm/yyyy", authide: true, language: "fr", clearButton: true, todayButton: true,
+		format: "yyyy/mm/dd", autohide: true, language: "fr", clearButton: true, todayButton: true,
 	})}}
 
 	<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>

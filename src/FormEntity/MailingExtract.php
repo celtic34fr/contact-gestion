@@ -2,7 +2,6 @@
 
 namespace Celtic34fr\ContactGestion\FormEntity;
 
-use DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class MailingExtract
@@ -16,8 +15,8 @@ class MailingExtract
     #[Assert\Type('bool')]
     protected bool $active;
 
-    #[Assert\Type('DateTime')]
-    protected DateTime $close_from;
+    #[Assert\Type('date')]
+    protected ?string $close_from = null;
 
     #[Assert\Type('string')]
     protected string $list;
@@ -60,12 +59,12 @@ class MailingExtract
         return $this;
     }
     
-    public function getCloseFrom(): DateTime
+    public function getCloseFrom(): ?string
     {
         return $this->close_from;
     }
 
-    public function setCloseFrom(DateTime $close_from): self
+    public function setCloseFrom(string $close_from): self
     {
         $this->close_from = $close_from;
         return $this;
