@@ -1,0 +1,37 @@
+.w50p {
+    width: 49% !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#cible,
+#origin {
+    min-height: 13.4rem !important;
+    display: table;
+}
+
+#origin {
+    background-color: #d9d9d9;
+}
+
+#cible {
+    background-color: #f3e3d2;
+}
+
+#cible .list-group-item {
+    max-height: 2.4rem !important;
+}
+
+.list-group-item {
+    max-height: 2.4rem !important;
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+    margin-top: 0.15rem !important;
+    margin-bottom: 0.15rem !important;
+}
+
+.required {
+    color: red;
+}

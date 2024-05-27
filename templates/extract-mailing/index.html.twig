@@ -4,58 +4,19 @@
 {% import "@contact-core/macros/datepicker_type.html.twig" as dp_fields %}
 
 {% block shoulder %}
-	{{ "Extraction liste Mailing Newsletter" }}
+	{{ title }}
 {% endblock shoulder %}
 
 {% block title %}
 	<i class="fas mr-2 link--icon fa-clipboard-question"></i>
-	Extraction liste Mailing Newsletter
+	{{ title }}
 {% endblock %}
 
 {% block stylesheets %}
 	{{ parent() }}
 
 	{{ dp_resources.datepickerStylesheets() }}
-
-	<style>
-		.w50p {
-			width: 49% !important;
-		}
-
-		.hidden {
-			display: none !important;
-		}
-
-		#cible,
-		#origin {
-			min-height: 13.4rem !important;
-			display: table;
-		}
-
-		#origin {
-			background-color: #d9d9d9;
-		}
-
-		#cible {
-			background-color: #f3e3d2;
-		}
-
-		#cible .list-group-item {
-			max-height: 2.4rem !important;
-		}
-
-		.list-group-item {
-			max-height: 2.4rem !important;
-			padding-top: 0.25rem !important;
-			padding-bottom: 0.25rem !important;
-			margin-top: 0.15rem !important;
-			margin-bottom: 0.15rem !important;
-		}
-
-		.required {
-			color: red;
-		}
-	</style>
+	<link href="{{ asset('contact-assets/css/extract_mailing.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block main %}
@@ -131,7 +92,7 @@
 
 	<input type="submit" value="Créer le fichier CSV" class="btn btn-success col-6 offset-3 py-2">
 
-	{{ form_end(form, {render_rest: false}) }}
+	{{ fields.form_end(form, true) }}
 
 {% endblock %}
 
@@ -148,6 +109,28 @@
 	<script src=" {{asset('contact-assets/js/main.js') }}"></script>
 
 	<script>
+		function submitForm(evt) {
+			evt.preventDefault
+			evt.stopPropagation
+			let notif_area = document.querySelector(".admin__notifications")
+
+			let url = "/bcknd/extract_mailing/"
+			let formDatas = new FormData(evt.target)
+            fetch(url, { 
+				method: "POST",
+				headers: {'X-Requested-With': 'XMLHttpRequest'},
+				body: formDatas
+	  		}).then(function (response) {
+				return response.json()
+			}).then(function(reponse){
+				if (reponse.type == "success") {
+					location.reload()
+				} else {
+					show_toast(reponse.type, reponse.message, notif_area)
+				}
+            })
+		}
+
 		document.addEventListener("DOMContentLoaded", () => {
 			document.querySelector(".isactive").addEventListener("change", (event) => {
 				if (event.target.value) {
@@ -157,5 +140,11 @@
 				}
 			});
 		});
+
+		document.addEventListener('submit', function (event) {
+			event.preventDefault()
+			event.stopPropagation
+			submitForm(event)
+		})
 	</script>
 {% endblock %}

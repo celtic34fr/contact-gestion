@@ -85,6 +85,7 @@ class ExtractMailingController extends AbstractController
             'datasSource' => $datasSource,
             'form' => $form,
             'msgError' => $msgError,
+            'title' => " Extraction liste Mailing",
         ]);
     }
 
