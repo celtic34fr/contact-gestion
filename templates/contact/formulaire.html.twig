@@ -1,4 +1,5 @@
 {% extends '@theme/partials/_master.twig' %}
+{% import "@theme/partials/_macros.twig" as macro %}
 {% import "@contact-core/macros/form_type.html.twig" as fields %}
 {% import "@contact-core/macros/open_street_map.twig" as OSM %}
 
@@ -34,7 +35,8 @@
                 {% set coordonnees_visu = coordonnees.visu ?? false %}
                 {% if coordonnees_visu %}
                     <div class="col-6 h-auto">
-                        <div class="col-12">
+                        <div class="col-12">{% import "@theme/partials/_macros.twig" as macro %}
+
                             <div class="col-12 mb-2 px-2">
                                 <h2 class="text-xl">Nous contacter</h2>
                                 <p class="text-xs">Vous pouvez nous contacter en remplissant le formulaire si contre ou
