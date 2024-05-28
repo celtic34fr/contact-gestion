@@ -1,0 +1,46 @@
+textarea {
+    max-width: 100%;
+}
+
+.map-section {
+    padding-bottom: 5em;
+}
+
+.errors-form {
+    padding: 1em;
+}
+
+.errors-form .error-line {
+    color: red;
+}
+
+.w-20p {
+    width: 20%;
+    float: left;
+}
+
+.w-50p {
+    width: 50%;
+    float: left;
+}
+
+.w-80p {
+    width: 80%;
+    float: left;
+}
+
+.h-8 {
+    height: 2rem
+}
+
+.h-12 {
+    height: 3rem
+}
+
+.no-float {
+    float: none;
+}
+
+.lmt-8 {
+    position: relative;
+}

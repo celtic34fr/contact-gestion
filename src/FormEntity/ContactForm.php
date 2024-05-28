@@ -27,7 +27,7 @@ class ContactForm
     private ?string $telephone = "";
 
     #[Assert\Type(type: 'bool')]
-    private bool $contact_me = false;
+    private bool $contactMe = false;
 
     #[Assert\Type(type: 'bool')]
     private bool $newsletter = false;
@@ -112,12 +112,12 @@ class ContactForm
 
     public function isContactMe(): bool
     {
-        return $this->contact_me ?? false;
+        return $this->contactMe ?? false;
     }
 
-    public function setContactMe(bool $contact_me): self
+    public function setContactMe(bool $contactMe): self
     {
-        $this->contact_me = $contact_me;
+        $this->contactMe = $contactMe;
         return $this;
     }
 
