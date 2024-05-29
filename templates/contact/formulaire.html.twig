@@ -199,7 +199,7 @@
 		})
 
         function submitFor(evt) {
-			let url = "{{ path('contact-form') }}"
+			let url = "{{ path('contact') }}"
 			let formDatas = new FormData(evt.target)
 
             fetch(url, { 
