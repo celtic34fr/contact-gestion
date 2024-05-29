@@ -11,6 +11,8 @@ use Celtic34fr\ContactGestion\Entity\Contact;
 use Celtic34fr\ContactGestion\Entity\Response;
 use Celtic34fr\ContactGestion\Form\ResponseType;
 use Celtic34fr\ContactGestion\Form\SearchFormType;
+use Celtic34fr\ContactGestion\Repository\CategoryRepository;
+use Celtic34fr\ContactGestion\Repository\ContactRepository;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,7 +33,7 @@ class RequestController extends AbstractController
     private $schemaManager;
 
     public function __construct(private EntityManagerInterface $entityManager, private Environment $twigEnvironment,
-    private ExtensionConfig $extConfig)
+    private ExtensionConfig $extConfig, private CategoryRepository $categoriesRepo, private ContactRepository $contactRepo)
     {
         $this->schemaManager = $entityManager->getConnection()->getSchemaManager();
     }
@@ -53,7 +55,7 @@ class RequestController extends AbstractController
         // dd($currentPage);
 
         if (true == $this->existsTable($dbPrefix.'contacts')) {
-            $requests = $this->entityManager->getRepository(Contact::class)->findRequestAll($currentPage);
+            $requests = $this->categoriesRepo->findRequestAll($currentPage);
             /*
              * avoir une case à cocher pour montrer les demandes déjà traitées
              * module de recherche dans les requêtes : date (format français), nom de l'internaute, sujet
@@ -78,7 +80,7 @@ class RequestController extends AbstractController
     public function answer(Contact $requete, Request $request, ExtensionConfig $extConfig, ManageTntIndexes $manageIdx): HttpResponse
     {
         // $id = (int) $id;
-        // $requete = $this->entityManager->getRepository(Contact::class)->find($id);
+        // $requete = $this->contactRepo->find($id);
         $response = $requete?->getReponse();
         $dbCategories = [];
         $err_msg = [];
@@ -95,7 +97,7 @@ class RequestController extends AbstractController
                 $response->setContact($requete);
                 $operation = 'i';
             }
-            $categories = $this->entityManager->getRepository(Category::class)->findAll();
+            $categories = $this->categoriesRepo->findAll();
             if ($categories) {
                 foreach ($categories as $category) {
                     $dbCategories[] = ['value' => $category->getCategory(), 'label' => $category->getCategory()];
@@ -118,7 +120,7 @@ class RequestController extends AbstractController
                     /* traitement pour création lien avec catégories dans réponse voir création de catégorie avant */
                     if (array_key_exists('reponse', $_POST) && array_key_exists('categories', $_POST['reponse'])) {
                         foreach ($_POST['reponse']['categories'] as $category) {
-                            $record = $this->entityManager->getRepository(Categories::class)->findOneBy(['category' => $category]);
+                            $record = $this->categoriesRepo->findOneBy(['category' => $category]);
                             if (!$record) {
                                 $record = new Category();
                                 $record->setCategory($category);
@@ -222,11 +224,10 @@ class RequestController extends AbstractController
         $dbPrefix = $this->getParameter('bolt.table_prefix');
 
         if ($this->existsTable($dbPrefix.'demandes')) {
-            $flashMessage = $this->isEmptyReponse($id);
+            $flashMessage = $this->isEmptyReponse($demande->getId());
             if ($flashMessage) {
                 $this->addFlash($flashMessage['type'], $flashMessage['corps']);
             } else {
-                $demande = $this->entityManager->getRepository(Contacts::class)->find($id);
                 $bodyContext = [
                     'client' => $demande->getClient(),
                     'demande' => $demande,
@@ -267,7 +268,7 @@ class RequestController extends AbstractController
             if ($flashMessage) {
                 $this->addFlash($flashMessage['type'], $flashMessage['corps']);
             } else {
-                $demande = $this->entityManager->getRepository(Contacts::class)->find($id);
+                $demande = $this->contactRepo->find($id);
                 $demande->setClosedAt(new \DateTimeImmutable('now'));
                 $this->entityManager->flush();
                 $corps = 'la demande du '.$demande->getCreatedAt()->format('d/m/Y').' de '.$demande->getFullname();
@@ -308,7 +309,7 @@ class RequestController extends AbstractController
             $results = $this->formatList($results);
             $response->setData($results);
         } else {
-            $reponse = new JsonResponse('no results found', Response::HTTP_NOT_FOUND);
+            $reponse = new JsonResponse('no results found', HttpResponse::HTTP_NOT_FOUND);
         }
         return $response;
     }
@@ -340,7 +341,7 @@ class RequestController extends AbstractController
 
     private function isEmptyReponse(string $id): array
     {
-        $demande = $this->entityManager->getRepository(Contact::class)->find($id);
+        $demande = $this->contactRepo->find($id);
         if (empty($demande->getReponse())) {
             $titre = 'Une erreur est survenue';
             $type = 'danger';
