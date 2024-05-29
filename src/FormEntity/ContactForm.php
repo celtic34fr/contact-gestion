@@ -115,9 +115,9 @@ class ContactForm
         return $this->contactMe ?? false;
     }
 
-    public function setContactMe(bool $contactMe): self
+    public function setContactMe($contactMe): self
     {
-        $this->contactMe = $contactMe;
+        $this->contactMe = $contactMe == "false" ? false : (bool) $contactMe;
         return $this;
     }
 
@@ -126,9 +126,9 @@ class ContactForm
         return $this->newsletter ?? false;
     }
 
-    public function setNewsLetter(bool $newsletter): self
+    public function setNewsLetter($newsletter): self
     {
-        $this->newsletter = $newsletter;
+        $this->newsletter = $newsletter == "false" ? false : (bool) $newsletter;
         return $this;
     }
 
@@ -137,9 +137,9 @@ class ContactForm
         return $this->othersInfo ?? false;
     }
 
-    public function setOthersInfo(bool $othersInfo): self
+    public function setOthersInfo($othersInfo): self
     {
-        $this->othersInfo = $othersInfo;
+        $this->othersInfo = $othersInfo == "false" ? false : (bool) $othersInfo;
         return $this;
     }
 

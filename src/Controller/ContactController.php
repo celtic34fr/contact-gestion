@@ -44,6 +44,7 @@ class ContactController extends AbstractController
         $form = $this->createForm(ContactFormType::class, $contact);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $contact = $this->reformat('contact_form', $_POST);
             if (array_key_exists('contact_demande', $_POST)) {
                 $contact->setDemande($_POST['contact_demande']);
             }
@@ -203,5 +204,18 @@ class ContactController extends AbstractController
         }
 
         return $rc;
+    }
+
+    private function reformat(string $formName, array $post): ContactForm
+    {
+        $reform = new ContactForm();
+        $datas = $post[$formName] ?? [];
+        foreach ($datas as $idx => $data) {
+            if ($idx[0] != "_") {
+                $setMethod = "set".ucfirst($idx);
+                $reform->$setMethod($data);
+            }
+        }
+        return $reform;
     }
 }

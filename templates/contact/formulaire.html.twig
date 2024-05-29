@@ -34,49 +34,49 @@
             <div class="px-2 mt-4 mb-2 row mx-0">
                 {% set coordonnees_visu = coordonnees.visu ?? false %}
                 {% if coordonnees_visu %}
-                    <div class="col-6 h-auto">
-                        <div class="col-12">{% import "@theme/partials/_macros.twig" as macro %}
+                <div class="col-6 h-auto">
+                    <div class="col-12">{% import "@theme/partials/_macros.twig" as macro %}
 
-                            <div class="col-12 mb-2 px-2">
-                                <h2 class="text-xl">Nous contacter</h2>
-                                <p class="text-xs">Vous pouvez nous contacter en remplissant le formulaire si contre ou
-                                    par l'un des
-                                    moyens suivant.</p>
-                            </div>
-                            {% set tel = coordonnees.tel is defined ? coordonnees.tel : '' %}
-                            {% if tel is not empty %}
-                            <div class="col-12 mb-2 px-2">
-                                <h3 class="text-md">Nous appeler</h3>
-                                    <p class="text-xs">au : {{ coordonnees.tel ?? '' }}</p>
-                            </div>
+                        <div class="col-12 mb-2 px-2">
+                            <h2 class="text-xl">Nous contacter</h2>
+                            <p class="text-xs">Vous pouvez nous contacter en remplissant le formulaire si contre ou
+                                par l'un des
+                                moyens suivant.</p>
+                        </div>
+                        {% set tel = coordonnees.tel is defined ? coordonnees.tel : '' %}
+                        {% if tel is not empty %}
+                        <div class="col-12 mb-2 px-2">
+                            <h3 class="text-md">Nous appeler</h3>
+                                <p class="text-xs">au : {{ coordonnees.tel ?? '' }}</p>
+                        </div>
+                        {% endif %}
+                        {% set courriel = coordonnees.courriel is defined ? coordonnees.courriel : '' %}
+                        {% if courriel is not empty %}
+                        <div class="col-12 mb-2 px-2">
+                            <h3 class="text-md">Nous écrire</h3>
+                            <p class="text-xs"><a href="mailto:{{ coordonnees.courriel ?? '' }}" class="__cf_email__"
+                                                    data-cfemail="8ce5e2eae3cce1ede5e0a2efe3e1">{{ coordonnees.courriel }}</a>
+                            </p>
+                        </div>
+                        {% endif %}
+                        {% if ouverture is not empty %}
+                        <div class="col-12 mb-2 px-2">
+                            <h3 class="text-md">Nous sommes disponible le</h3>
+                            {% for jour, dispo in ouverture %}
+                                <strong><em>{{ jour }}</em></strong>&nbsp;:&nbsp;{{ dispo }}<br>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <div class="col-12 mb-2 px-2">
+                            <h3 class="text-md">Notre Adresse</h3>
+                            <p class="text-xs">{{ adresse.adresse }}</p>
+                            {% if adresse.complement is not empty %}
+                                <p class="text-xs">{{ adresse.complement }}</p>
                             {% endif %}
-                            {% set courriel = coordonnees.courriel is defined ? coordonnees.courriel : '' %}
-                            {% if courriel is not empty %}
-                            <div class="col-12 mb-2 px-2">
-                                <h3 class="text-md">Nous écrire</h3>
-                                <p class="text-xs"><a href="mailto:{{ coordonnees.courriel ?? '' }}" class="__cf_email__"
-                                                      data-cfemail="8ce5e2eae3cce1ede5e0a2efe3e1">{{ coordonnees.courriel }}</a>
-                                </p>
-                            </div>
-                            {% endif %}
-                            {% if ouverture is not empty %}
-                            <div class="col-12 mb-2 px-2">
-                                <h3 class="text-md">Nous sommes disponible le</h3>
-                                {% for jour, dispo in ouverture %}
-                                    <strong><em>{{ jour }}</em></strong>&nbsp;:&nbsp;{{ dispo }}<br>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
-                            <div class="col-12 mb-2 px-2">
-                                <h3 class="text-md">Notre Adresse</h3>
-                                <p class="text-xs">{{ adresse.adresse }}</p>
-                                {% if adresse.complement is not empty %}
-                                    <p class="text-xs">{{ adresse.complement }}</p>
-                                {% endif %}
-                                <p class="text-xs">{{ adresse['code-post'] }} {{ adresse.ville }}</p>
-                            </div>
+                            <p class="text-xs">{{ adresse['code-post'] }} {{ adresse.ville }}</p>
                         </div>
                     </div>
+                </div>
                 {% endif %}
                 <div class="{% if coordonnees_visu %}col-6 lmt-8{% else %}col-12 mt-1{% endif %}">
                     <div class="col-12 row">
@@ -85,78 +85,76 @@
                             {{ form_row(form._token) }}
                             {% set errors = formErrors(form) %}
                             {% if errors|length %}
-                                <ul class="errors-form col12 row px-0 mx-0">
-                                    {% for champ, erreur in errors %}
-                                        <li class="error-line col-12 text-xs">
-                                            champ <strong>{{ champ }}</strong> : {{ erreur }}
-                                        </li>
-                                    {% endfor %}
-                                </ul>
+                        <ul class="errors-form col12 row px-0 mx-0">
+                            {% for champ, erreur in errors %}
+                            <li class="error-line col-12 text-xs">
+                                champ <strong>{{ champ }}</strong> : {{ erreur }}
+                            </li>
+                            {% endfor %}
+                        </ul>
                             {% endif %}
-                            <div class="col-12 mt-2 row px-0 mx-0">
-                                {{ fields.field(form.nom, "", {
-                                    'class': 'col-6 mb-2 mx-0 ps-0 pe-1', 'placeholder': 'Nom*',
-                                    'il_class': {'input': 'col-12 text-sm'},
-                                }) }}
-                                {{ fields.field(form.prenom, '', {
-                                    'class': 'col-6 mb-2 mx-0 pe-0 ps-1', 'placeholder': 'Prénom',
-                                    'il_class': {'input': 'col-12 text-sm'}
-                                }) }}
-                            </div>
-                            <div class="col-12 mt-2 row px-0 mx-0">
-                                {{ fields.field(form.adrCourriel, '', {
-                                    'class': 'col-6 mb-2 ps-0 pe-1 mx-0 require',
-                                    'placeholder': "@mail*",
-                                    'il_class': {'input': 'col-12 text-sm'}
-                                }) }}
-                                {{ fields.field(form.telephone, '', {
-                                    'class': 'col-6 mb-2 pe-0 ps-1 mx-0', 'placeholder': 'Téléphone',
-                                    'il_class': {'input': 'col-12 text-sm'}
-                                }) }}
-                            </div>
-                            <div class="col-12 row mt-2 px-0 mx-0">
-                                {{ fields.field(form.sujet, '', {
-                                    'class': 'col-12 mb-2 row px-0 mx-0',
-                                    'placeholder': "L'objet de votre demande*",
-                                    'il_class': {'label': '', 'input': ''}
-                                }) }}
-                                {% set classTextArea = coordonnees_visu ? 'col-12 px-0' : '' %}
-                                {{ fields.textarea(form.demande, '', {
-                                    'class': classTextArea, 'cols': "72", 'rows': "5",
-                                    'placeholder': " Saisissez votre demande*",
-                                }) }}
-                            </div>
-                            <div class="col-12 row mt-2 text-center px-0 mx-0">
-                                {{ fields.checkbox(form.contactMe, 'Je souhaite que vous me contactiez', {
-                                    'class': '', 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
-                                }) }}
-                            </div>
-                            {% set newsletter = newsletter.visu ?? false %}
-                            {% set newsletterClass = "" %}
-                            {% if newsletter == false %}
-                                {% set newsletterClass = "hidden" %}
-                            {% endif %}
-                            <div class="col-12 row mt-2 text-center px-0 mx-0">
-                                {{ fields.checkbox(form.newsletter, "Je souhaite recevoir votre lettre d'informations", {
-                                    'class': newsletterClass, 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
-                                }) }}
-                            </div>
-                            {% set othersInfo = othersInfo.visu ?? false %}
-                            {% if othersInfo %}
-                            {% set othersInfoClass = "" %}
-                            {% else %}
-                            {% set othersInfoClass = "hidden" %}
-                            {% endif %}
-                            <div class="col-12 row mt-2 text-center px-0 mx-0">
-                                {{ fields.checkbox(form.othersInfo, "Je souhaite recevoir vos propositions commerciales", {
-                                    'class': othersInfoClass, 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
-                                }) }}
-                            </div>
-                            <div class="col-12 row mt-2 px-0 mx-0">
-                                {{ fields.submitbtn(form.submit, "", {
-                                    'class': 'col-12 text-white gradient text-center btn btn-success',
-                                }) }}
-                            </div>
+                        <div class="col-12 mt-2 row px-0 mx-0">
+                            {{ fields.field(form.nom, "", {
+                                'class': 'col-6 mb-2 mx-0 ps-0 pe-1', 'placeholder': 'Nom*',
+                                'il_class': {'input': 'col-12 text-sm'},
+                            }) }}
+                            {{ fields.field(form.prenom, '', {
+                                'class': 'col-6 mb-2 mx-0 pe-0 ps-1', 'placeholder': 'Prénom',
+                                'il_class': {'input': 'col-12 text-sm'}
+                            }) }}
+                        </div>
+                        <div class="col-12 mt-2 row px-0 mx-0">
+                            {{ fields.field(form.adrCourriel, '', {
+                                'class': 'col-6 mb-2 ps-0 pe-1 mx-0 require',
+                                'placeholder': "@mail*",
+                                'il_class': {'input': 'col-12 text-sm'}
+                            }) }}
+                            {{ fields.field(form.telephone, '', {
+                                'class': 'col-6 mb-2 pe-0 ps-1 mx-0', 'placeholder': 'Téléphone',
+                                'il_class': {'input': 'col-12 text-sm'}
+                            }) }}
+                        </div>
+                        <div class="col-12 row mt-2 px-0 mx-0">
+                            {{ fields.field(form.sujet, '', {
+                                'class': 'col-12 mb-2 row px-0 mx-0',
+                                'placeholder': "L'objet de votre demande*",
+                                'il_class': {'label': '', 'input': ''}
+                            }) }}
+                            {{ fields.textarea(form.demande, '', {
+                                'class': 'col-12 px-0', 'cols': "72", 'rows': "5",
+                                'placeholder': " Saisissez votre demande*",
+                            }) }}
+                        </div>
+                        <div class="col-12 row mt-2 text-center px-0 mx-0">
+                            {{ fields.checkbox(form.contactMe, 'Je souhaite que vous me contactiez', {
+                                'class': 'contactMe', 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
+                            }) }}
+                        </div>
+                        {% set newsletter = newsletter.visu ?? false %}
+                        {% set newsletterClass = "newsletter" %}
+                        {% if newsletter == false %}
+                            {% set newsletterClass = newsletterClass ~ " hidden" %}
+                        {% endif %}
+                        <div class="col-12 row mt-2 text-center px-0 mx-0">
+                            {{ fields.checkbox(form.newsletter, "Je souhaite recevoir votre lettre d'informations", {
+                                'class': newsletterClass, 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
+                            }) }}
+                        </div>
+                        {% set othersInfo = othersInfo.visu ?? false %}
+                        {% set othersInfoClass = "othersInfo" %}
+                        {% if othersInfo == false %}
+                        {% set othersInfoClass = othersInfoClass ~ " hidden" %}
+                        {% endif %}
+                        <div class="col-12 row mt-2 text-center px-0 mx-0">
+                            {{ fields.checkbox(form.othersInfo, "Je souhaite recevoir vos propositions commerciales", {
+                                'class': othersInfoClass, 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
+                            }) }}
+                        </div>
+                        <div class="col-12 row mt-2 px-0 mx-0">
+                            {{ fields.submitbtn(form.submit, "", {
+                                'class': 'col-12 text-white gradient text-center btn btn-success',
+                            }) }}
+                        </div>
                         {{ form_end(form, {render_rest: false}) }}
                         <div class="col-12 row mt-2 text-right text-gray-600 px-0 mx-3">
                             * champs obligatoires
@@ -203,9 +201,15 @@
 			submitForm(event)
 		})
 
-        function submitFor(evt) {
+        function submitForm(evt) {
 			let url = "{{ path('contact') }}"
 			let formDatas = new FormData(evt.target)
+            let contactMe = document.querySelector('.contactMe input')
+            formDatas.append(contactMe.name, contactMe.checked)
+            let newsletter = document.querySelector('.newsletter input')
+            formDatas.append(newsletter.name, newsletter.checked)
+            let othersInfo = document.querySelector('.othersInfo input')
+            formDatas.append(othersInfo.name, othersInfo.checked)
 
             fetch(url, { 
 				method: "POST",

@@ -44,3 +44,7 @@ textarea {
 .lmt-8 {
     position: relative;
 }
+
+.hidden {
+    display: none;
+}
