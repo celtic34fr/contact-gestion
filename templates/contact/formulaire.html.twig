@@ -133,9 +133,9 @@
                             </div>
                             {% set newsletter = newsletter.visu ?? false %}
                             {% if newsletter == false %}
-                            {% set newsleterClass = "" %}
+                            {% set newsletterClass = "" %}
                             {% else %}
-                            {% set newsleterClass = "hidden" %}
+                            {% set newsletterClass = "hidden" %}
                             {% endif %}
                             <div class="col-12 row mt-2 text-center px-0 mx-0">
                                 {{ fields.checkbox(form.newsletter, "Je souhaite recevoir votre lettre d'informations", {
