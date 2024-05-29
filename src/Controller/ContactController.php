@@ -37,7 +37,7 @@ class ContactController extends AbstractController
     use UtilitiesTrait;
 
     #[Route('/', name: 'form')]
-    public function __invoke(Request $request): Response
+    public function index(Request $request): Response
     {
         $contact = new ContactForm();
         $no_error = true;
