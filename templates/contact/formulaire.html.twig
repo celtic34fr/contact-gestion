@@ -132,21 +132,27 @@
                                 }) }}
                             </div>
                             {% set newsletter = newsletter.visu ?? false %}
-                            {% if newsletter %}
+                            {% if newsletter == false %}
+                            {% set newsleterClass = "" %}
+                            {% else %}
+                            {% set newsleterClass = "hidden" %}
+                            {% endif %}
                             <div class="col-12 row mt-2 text-center px-0 mx-0">
                                 {{ fields.checkbox(form.newsletter, "Je souhaite recevoir votre lettre d'informations", {
-                                    'class': '', 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
+                                    'class': newsletterClass, 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
                                 }) }}
                             </div>
-                            {% endif %}
                             {% set othersInfo = othersInfo.visu ?? false %}
                             {% if othersInfo %}
+                            {% set othersInfoClass = "" %}
+                            {% else %}
+                            {% set othersInfoClass = "hidden" %}
+                            {% endif %}
                             <div class="col-12 row mt-2 text-center px-0 mx-0">
                                 {{ fields.checkbox(form.othersInfo, "Je souhaite recevoir toutes vos informations commerciales", {
-                                    'class': '', 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
+                                    'class': othersInfoClass, 'inline': true, 'cl_class': {'check': 'ms-0 me-2' }
                                 }) }}
                             </div>
-                            {% endif %}
                             <div class="col-12 row mt-2 px-0 mx-0">
                                 {{ fields.submitbtn(form.submit, "", {
                                     'class': 'col-12 text-white gradient text-center btn btn-success',
