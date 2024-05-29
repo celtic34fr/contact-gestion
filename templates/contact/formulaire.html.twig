@@ -190,4 +190,31 @@
     {{ parent() }}
     <script src="{{ asset('contact-assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('contact-assets/js/tom-select.complete.js') }}"></script>
+
+    <script>
+		document.addEventListener('submit', function (event) {
+			event.preventDefault()
+			event.stopPropagation()
+			submitForm(event)
+		})
+
+        function submitFor(evt) {
+			let url = "{{ path('contact-form') }}"
+			let formDatas = new FormData(evt.target)
+
+            fetch(url, { 
+				method: "POST",
+				headers: {'X-Requested-With': 'XMLHttpRequest'},
+				body: formDatas
+	  		}).then(function (response) {
+				return response.json()
+			}).then(function(reponse){
+				if (reponse.type == "success") {
+					location.reload()
+				} else {
+					show_toast(reponse.type, reponse.message, notif_area)
+				}
+            })
+		}
+</script>
 {% endblock %}
