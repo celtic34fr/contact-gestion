@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /** classe de mise en oeuvre et gestion du frontal de demande de contact */
-#[Route('/contact', name:'contact-')]
 class ContactController extends AbstractController
 {
     /**
@@ -36,7 +35,7 @@ class ContactController extends AbstractController
 
     use UtilitiesTrait;
 
-    #[Route('/', name: 'form')]
+    #[Route('/', name: 'contact')]
     public function index(Request $request): Response
     {
         $contact = new ContactForm();
