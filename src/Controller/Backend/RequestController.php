@@ -79,10 +79,9 @@ class RequestController extends AbstractController
     #[Route('/answer/{id}', name: 'request_answer')]
     public function answer(Contact $requete, Request $request, ExtensionConfig $extConfig, ManageTntIndexes $manageIdx): HttpResponse
     {
-        // $id = (int) $id;
-        // $requete = $this->contactRepo->find($id);
         $response = $requete?->getReponse();
         $dbCategories = [];
+        $respCategories = [];
         $err_msg = [];
         $dbPrefix = $this->getParameter('bolt.table_prefix');
         $operation = 'u';
@@ -96,6 +95,16 @@ class RequestController extends AbstractController
                 /* lien avec la requête de l'internaure */
                 $response->setContact($requete);
                 $operation = 'i';
+            } else {
+                $respCategories = $response->getCategories();
+            }
+            if ($respCategories) {
+                $tmpCategories = [];
+                /** @var Category $respCategory */
+                foreach ($respCategories as $idx => $respCategory) {
+                    $tmpCategories[] = ['value' => $respCategory->getCategory(), 'label' => $respCategory->getCategory()];
+                }
+                $respCategories = $tmpCategories;
             }
             $categories = $this->categoriesRepo->findAll();
             if ($categories) {
@@ -201,12 +210,13 @@ class RequestController extends AbstractController
         }
 
         return $this->render('@contact-gestion/request/form.html.twig', [
-            'requete' => $requete,
-            'dbCategories' => $dbCategories,
-            'form' => $form->createView(),
-            'errors' => $err_msg,
-            'formS' => $formS->createView(),
-            'okRdv' => $this->extConfig->isExtnsionInstall("contactrdv"),
+            'requete'           => $requete,
+            'dbCategories'      => $dbCategories,
+            'respCategories'    => $respCategories,
+            'form'              => $form->createView(),
+            'errors'            => $err_msg,
+            'formS'             => $formS->createView(),
+            'okRdv'             => $this->extConfig->isExtnsionInstall("contactrdv"),
         ]);
     }
 
