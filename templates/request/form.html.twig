@@ -19,8 +19,7 @@
             {{ forms.btn('news_rdv', '<i class="fas fa-calendar-alt m-auto"></i>', {
                 'class': 'button btn-success text-center', 'title': 'Prendre un rendez-vous',
                 'event': 'onclick', 'codeJS': 'openInNewTab("'~
-                path('custevts-new-meeting', {"customer": requete.getClient().getId(), "contact": requete.id})
-                                                            ~'");',
+                path('custevts-new-meeting', {"customer": requete.getClient().getId(), "contact": requete.id})~'");',
             }) }}
         {% endif %}
     {% endif %}
@@ -124,6 +123,10 @@
                 'class': 'col-12 p-2 m-0 categories', 'placeholder': 'Choisissez ou saisissez une catégorie',
                 'multiple': true, 'sl_class' : {'label': "col-4", 'select': 'col-8'}, 'choices': dbCategories,
             }) }}
+
+            <pre>
+                {{ dump(form.categories) }}
+            </pre>
         </div>
         <div class="col-12 row m-0 mt-5 p-0">
             <div class="col-3 row  m-0 p-2">
