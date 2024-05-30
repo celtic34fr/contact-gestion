@@ -122,6 +122,7 @@
             {{ fields.select(form.categories, "Catégories", {
                 'class': 'col-12 p-2 m-0 categories', 'placeholder': 'Choisissez ou saisissez une catégorie',
                 'multiple': true, 'sl_class' : {'label': "col-4", 'select': 'col-8'}, 'choices': dbCategories,
+                'default': respCategories, 
             }) }}
 
             <pre>

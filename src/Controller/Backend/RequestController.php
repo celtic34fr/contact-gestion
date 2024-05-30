@@ -102,7 +102,7 @@ class RequestController extends AbstractController
                 $tmpCategories = [];
                 /** @var Category $respCategory */
                 foreach ($respCategories as $idx => $respCategory) {
-                    $tmpCategories[] = ['value' => $respCategory->getCategory(), 'label' => $respCategory->getCategory()];
+                    $tmpCategories[] = $respCategory->getCategory();
                 }
                 $respCategories = $tmpCategories;
             }
