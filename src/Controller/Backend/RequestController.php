@@ -118,8 +118,8 @@ class RequestController extends AbstractController
                     }
 
                     /* traitement pour création lien avec catégories dans réponse voir création de catégorie avant */
-                    if (array_key_exists('reponse', $_POST) && array_key_exists('categories', $_POST['reponse'])) {
-                        foreach ($_POST['reponse']['categories'] as $category) {
+                    if (array_key_exists('response', $_POST) && array_key_exists('categories', $_POST['response'])) {
+                        foreach ($_POST['response']['categories'] as $category) {
                             $record = $this->categoriesRepo->findOneBy(['category' => $category]);
                             if (!$record) {
                                 $record = new Category();
