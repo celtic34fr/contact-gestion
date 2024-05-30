@@ -55,7 +55,7 @@ class RequestController extends AbstractController
         // dd($currentPage);
 
         if (true == $this->existsTable($dbPrefix.'contacts')) {
-            $requests = $this->categoriesRepo->findRequestAll($currentPage);
+            $requests = $this->contactRepo->findRequestAll($currentPage);
             /*
              * avoir une case à cocher pour montrer les demandes déjà traitées
              * module de recherche dans les requêtes : date (format français), nom de l'internaute, sujet
