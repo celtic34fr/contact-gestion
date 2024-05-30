@@ -136,6 +136,17 @@ class RequestController extends AbstractController
                                 $this->entityManager->persist($record);
                             }
                             $response->addCategory($record);
+                            if (in_array($record->getCategory(), $respCategories)) {
+                                unset($respCategories[array_search($record->getCategory(), $respCategories)]);
+                            } 
+                        }
+
+                        /** traitement des catégories supprimées */
+                        if ($respCategories) {
+                            foreach ($respCategories as $respCategory) {
+                                $record = $this->categoriesRepo->findOneBy(['category' => $respCategory]);
+                                $response->removeCategory($record);
+                            }
                         }
                     }
                     /* sauvegarde de la réponse */
