@@ -5,8 +5,10 @@ namespace Celtic34fr\ContactGestion\Form;
 use Celtic34fr\ContactGestion\FormEntity\ContactForm;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,10 +28,10 @@ class ContactFormType extends AbstractType
             ->add('prenom', TextType::class, [
                 'required' => false,
             ])
-            ->add('adrCourriel', TextType::class, [
+            ->add('adrCourriel', EmailType::class, [
                 'required' => true,
             ])
-            ->add('telephone', TextType::class, [
+            ->add('telephone', TelType::class, [
                 'required' => false,
                 'empty_data' => '',
             ])

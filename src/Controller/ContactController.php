@@ -45,9 +45,6 @@ class ContactController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $contact = $this->reformat('contact_form', $_POST);
-            if (array_key_exists('contact_demande', $_POST)) {
-                $contact->setDemande($_POST['contact_demande']);
-            }
             if ($contact->isEmptyDemande()) {
                 $msg = 'Veuillez saisir votre demande avant de la soumettre';
                 $form->get('demande')->addError(new FormError($msg));
@@ -213,9 +210,31 @@ class ContactController extends AbstractController
         foreach ($datas as $idx => $data) {
             if ($idx[0] != "_") {
                 $setMethod = "set".ucfirst($idx);
+                switch ($idx) {
+                    case "nom":
+                        $data = strtoupper($data);
+                        break;
+                    case "prenom":
+                        if (strpos("-", $data) != false && strpos(" ", $data) == " ") {
+                            $data = str_replace("-", " ", $data);
+                            $data = ucwords($data);
+                            $data = str_replace(" ", "-", $data);
+                        } else {
+                            $data = ucwords($data);
+                        }
+                        break;
+                    case "adrCourriel":
+                        $data = strtolower($data);
+                        break;
+                    case "telephone":
+                        break;
+                }
                 $reform->$setMethod($data);
             }
         }
-        return $reform;
+        if (array_key_exists('contact_demande', $post)) {
+            $reform->setDemande($post['contact_demande']);
+        }
+    return $reform;
     }
 }

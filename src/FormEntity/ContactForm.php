@@ -24,6 +24,8 @@ class ContactForm
     private string $adr_courriel;
 
     #[Assert\Type(type: 'string')]
+    #[Assert\Length(min: 8, max: 20, minMessage: "min_lenght", maxMessage: "max_lenght")]
+    #[Assert\Regex(pattern:"/^[0-9]*$/", message:"number_only")] 
     private ?string $telephone = "";
 
     #[Assert\Type(type: 'bool')]
