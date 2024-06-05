@@ -37,17 +37,17 @@ class NewsLetter
     #[Assert\DateTime]
     /**
      * date de création, champ obligatoire
-     * @var DateTime
+     * @var DateTimeImmutable
      */
-    private DateTime $created_at;
+    private DateTimeImmutable $created_at;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Assert\DateTime]
     /**
      * date de fin ou clôture d'envoi de la lettre d'informations, champ facultatif
-     * @var DateTime|null
+     * @var DateTimeImmutable|null
      */
-    private ?DateTime $ended_at = null;
+    private ?DateTimeImmutable $ended_at = null;
 
     #[ORM\ManyToOne(targetEntity: Clientele::class)]
     #[ORM\JoinColumn(name: 'client_id', referencedColumnName: 'id', nullable: false)]
@@ -86,23 +86,23 @@ class NewsLetter
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTime $created_at): self
+    public function setCreatedAt(DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
         return $this;
     }
 
-    public function getEndeddAt(): ?\DateTime
+    public function getEndeddAt(): ?DateTimeImmutable
     {
         return $this->ended_at;
     }
 
-    public function setEndedAt(?\DateTime $ended_at): self
+    public function setEndedAt(?DateTimeImmutable $ended_at): self
     {
         $this->ended_at = $ended_at;
         return $this;
