@@ -6,12 +6,12 @@ use Bolt\Entity\User;
 use Celtic34fr\ContactGestion\Entity\Category;
 use Celtic34fr\ContactGestion\Entity\Contact;
 use Celtic34fr\ContactGestion\Entity\Response;
+use Celtic34fr\ContactGestion\Service\Loremizer;
 use Celtic34fr\ContactGestion\Service\ManageTntIndexes;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Loremizer\loremizer;
 
 class ResponsesFixtures extends Fixture implements FixtureGroupInterface, DependentFixtureInterface
 {
@@ -54,7 +54,7 @@ class ResponsesFixtures extends Fixture implements FixtureGroupInterface, Depend
         var_dump($contact->getId());
 
         $response = new Response();
-        $response->setReponse(loremizer::getParagraph(3));
+        $response->setReponse(Loremizer::getParagraph(3));
         $response->setOperateur($operateur);
         $response->setContact($contact);
 
