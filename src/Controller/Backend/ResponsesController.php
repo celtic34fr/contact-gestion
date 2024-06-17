@@ -82,7 +82,7 @@ class ResponsesController extends AbstractController implements BackendZoneInter
         $filteredResults = $results;
 
         /* filtrage des résultats par catégories */
-        if ($categories instanceof Categories) {
+        if ($categories instanceof Category) {
             // choix d'une seule catégorie
             $categoriesIds[] = $categories->getId();
         } elseif (is_array($categories)) {

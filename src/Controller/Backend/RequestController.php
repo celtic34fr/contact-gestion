@@ -227,7 +227,7 @@ class RequestController extends AbstractController
             'form'              => $form->createView(),
             'errors'            => $err_msg,
             'formS'             => $formS->createView(),
-            'okRdv'             => $this->extConfig->isExtnsionInstall("contactrdv"),
+            'okRdv'             => $this->extConfig->isExtensionInstall('crmrdv'),
         ]);
     }
 
