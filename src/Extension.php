@@ -58,8 +58,7 @@ class Extension extends BaseExtension
         $destination = $projectDir . '/public/contact-assets';
         if (!$filesystem->exists($destination)) {
             $mkdirCmd = sprintf(
-                'mkdir -p %s && chgrp -R www-data %s && chmod -R 0777 %s',
-                escapeshellarg($destination),
+                'mkdir -p %s && chmod -R 0777 %s',
                 escapeshellarg($destination),
                 escapeshellarg($destination)
             );
