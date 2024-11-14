@@ -5,7 +5,7 @@ namespace Celtic34fr\ContactGestion\Service;
 use Celtic34fr\ContactCore\Doctrine\ConnectionConfig;
 use Celtic34fr\ContactCore\Service\ExtensionConfig;
 use Celtic34fr\ContactCore\Service\IndexGenerator;
-use Celtic34fr\ContactCore\Trait\ExecShellTrait;
+use Celtic34fr\ContactCore\Traits\ExecShellTrait;
 use Celtic34fr\ContactGestion\Entity\Contact;
 use Celtic34fr\ContactGestion\Entity\Response;
 use Doctrine\ORM\EntityManagerInterface;
