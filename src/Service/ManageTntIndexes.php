@@ -22,6 +22,8 @@ class ManageTntIndexes
     public $fuzzy_max_expansions = 50;
     public $fuzzy_distance = 2;
 
+    use ExecShellTrait;
+
     public function __construct(private IndexGenerator $idxGenerator, private ExtensionConfig $extensionConfig,
         private ConnectionConfig $connectionConfig, private EntityManagerInterface $entityManager) 
     {
@@ -45,9 +47,11 @@ class ManageTntIndexes
         $filesystem = new Filesystem();
         $config = $this->getTntConfig();
         if (!$filesystem->exists($config['storage'])) {
-            $filesystem->mkdir($config['storage']);
-            $filesystem->chgrp($config['storage'], 'www-data', true);
-            $filesystem->chmod($config['storage'], 0777);
+            $mkdirCmd = sprintf(
+                'mkdir -p %s && chmod -R 0777 %s',
+                escapeshellarg($config['storage']),
+                escapeshellarg($config['storage'])
+            );
             /** gération des index TNTSearch */
             $this->generate();
         }
